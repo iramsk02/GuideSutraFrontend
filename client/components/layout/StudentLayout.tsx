@@ -29,6 +29,7 @@ import {
   School,
   Sparkles,
   UsersRound,
+  HeartHandshake,
 } from "lucide-react";
 
 const interests = ["AI", "Robotics", "Math", "Entrepreneurship"];
@@ -39,6 +40,7 @@ const nav = [
   { to: "/colleges", label: "Colleges", icon: School },
   { to: "/scholarships", label: "Scholarships", icon: BookOpen },
   { to: "/mentorship", label: "Mentorship", icon: UsersRound },
+  { to: "/parents", label: "Parents", icon: HeartHandshake },
   { to: "/notifications", label: "Notifications", icon: Bell },
 ];
 
