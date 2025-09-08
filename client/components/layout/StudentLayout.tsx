@@ -20,7 +20,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation, useInRouterContext } from "react-router-dom";
 import {
   Bell,
   BookOpen,
@@ -45,11 +45,18 @@ const nav = [
 ];
 
 export function StudentLayout({ children }: { children: ReactNode }) {
-  const location = useLocation();
+  const inRouter = useInRouterContext();
+  const location = inRouter ? useLocation() : ({} as any);
   const title = useMemo(() => {
+    if (!inRouter) return "Dashboard";
     const found = nav.find((n) => n.to === location.pathname);
     return found?.label ?? "Dashboard";
-  }, [location.pathname]);
+  }, [inRouter, (location as any).pathname]);
+
+  if (!inRouter) {
+    // Fallback: render children without sidebar if Router isn't mounted yet (e.g., during testing/hmr edge cases)
+    return <div className="px-6 py-6">{children}</div>;
+  }
 
   return (
     <SidebarProvider>
