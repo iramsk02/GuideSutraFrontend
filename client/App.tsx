@@ -8,6 +8,11 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import StudentLayout from "./components/layout/StudentLayout";
+import CareerPathway from "./pages/CareerPathway";
+import Colleges from "./pages/Colleges";
+import Scholarships from "./pages/Scholarships";
+import Notifications from "./pages/Notifications";
 
 const queryClient = new QueryClient();
 
@@ -17,11 +22,17 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <StudentLayout>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/career-pathway" element={<CareerPathway />} />
+            <Route path="/colleges" element={<Colleges />} />
+            <Route path="/scholarships" element={<Scholarships />} />
+            <Route path="/notifications" element={<Notifications />} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </StudentLayout>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
