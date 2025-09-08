@@ -13,6 +13,7 @@ import CareerPathway from "./pages/CareerPathway";
 import Colleges from "./pages/Colleges";
 import Scholarships from "./pages/Scholarships";
 import Notifications from "./pages/Notifications";
+import Mentorship from "./pages/Mentorship";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ const App = () => (
             <Route path="/colleges" element={<Colleges />} />
             <Route path="/scholarships" element={<Scholarships />} />
             <Route path="/notifications" element={<Notifications />} />
+            <Route path="/mentorship" element={<Mentorship />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
