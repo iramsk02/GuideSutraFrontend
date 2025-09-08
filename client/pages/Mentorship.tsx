@@ -152,10 +152,10 @@ export default function Mentorship() {
                           <div key={i} className="flex items-start gap-3">
                             <Avatar className="h-7 w-7"><AvatarFallback>{r.author[0]}</AvatarFallback></Avatar>
                             <div className="rounded-md bg-muted/40 p-2 text-sm">
-                              <p>
-                                <span className="font-medium">{r.author}</span>{" "}
+                              <div className="flex items-center gap-2">
+                                <span className="font-medium">{r.author}</span>
                                 {r.mentor && <Badge className="ml-1" variant="secondary">Mentor</Badge>}
-                              </p>
+                              </div>
                               <p className="text-foreground/90">{r.text}</p>
                             </div>
                           </div>
