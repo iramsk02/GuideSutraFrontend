@@ -311,12 +311,21 @@ export default function Mentorship() {
                 </div>
               </div>
               <Separator />
-              <Calendar
+              {/* <Calendar
+              
                 mode="single"
                 selected={date}
                 onSelect={setDate}
-                className="rounded-md border"
-              />
+                className="rounded-md border w-fit"
+              /> */}
+                {/* <div className="flex items-center justify-center p-6"> */}
+      <Calendar
+        mode="single"
+        selected={date}
+        onSelect={setDate}
+        className="rounded-lg border shadow-lg bg-white dark:bg-neutral-900 p-3"
+      />
+    {/* </div> */}
               <div>
                 <p className="mb-2 text-sm font-medium">Available time slots</p>
                 <div className="grid grid-cols-3 gap-2">

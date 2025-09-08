@@ -419,7 +419,7 @@ export default function CareerPathway() {
       </div>
 
       {/* Center Diagram */}
-      <Card className="overflow-auto">
+      <Card className="w-full">
         <CardHeader className="pb-0">
           <CardTitle>Course → Career Roadmap</CardTitle>
           <CardDescription>

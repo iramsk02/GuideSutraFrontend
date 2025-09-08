@@ -27,14 +27,14 @@ const App = () => (
         <Sonner />
         <StudentLayout>
           <Routes>
-            <Route path="/" element={<Index />} />
+            <Route path="/dashboard" element={<Index />} />
             <Route path="/career-pathway" element={<CareerPathway />} />
             <Route path="/colleges" element={<Colleges />} />
             <Route path="/scholarships" element={<Scholarships />} />
             <Route path="/notifications" element={<Notifications />} />
             <Route path="/mentorship" element={<Mentorship />} />
             <Route path="/parents" element={<Parents />} />
-            <Route path="/landing" element={<Landing />} />
+            <Route path="/" element={<Landing />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
