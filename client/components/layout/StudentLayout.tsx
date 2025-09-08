@@ -28,6 +28,7 @@ import {
   LayoutDashboard,
   School,
   Sparkles,
+  UsersRound,
 } from "lucide-react";
 
 const interests = ["AI", "Robotics", "Math", "Entrepreneurship"];
@@ -37,6 +38,7 @@ const nav = [
   { to: "/career-pathway", label: "Career Pathway", icon: GraduationCap },
   { to: "/colleges", label: "Colleges", icon: School },
   { to: "/scholarships", label: "Scholarships", icon: BookOpen },
+  { to: "/mentorship", label: "Mentorship", icon: UsersRound },
   { to: "/notifications", label: "Notifications", icon: Bell },
 ];
 
