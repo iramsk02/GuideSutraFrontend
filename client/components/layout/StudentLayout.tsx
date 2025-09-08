@@ -54,8 +54,12 @@ export function StudentLayout({ children }: { children: ReactNode }) {
   }, [inRouter, (location as any).pathname]);
 
   if (!inRouter) {
-    // Fallback: render children without sidebar if Router isn't mounted yet (e.g., during testing/hmr edge cases)
     return <div className="px-6 py-6">{children}</div>;
+  }
+
+  const bypass = (location as any)?.pathname?.startsWith?.("/landing");
+  if (bypass) {
+    return <>{children}</>;
   }
 
   return (
