@@ -18,7 +18,14 @@ import {
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
-import { Banknote, GraduationCap, Medal, CalendarDays, BookmarkPlus, Save } from "lucide-react";
+import {
+  Banknote,
+  GraduationCap,
+  Medal,
+  CalendarDays,
+  BookmarkPlus,
+  Save,
+} from "lucide-react";
 
 // Types
 interface Scholarship {
@@ -153,7 +160,11 @@ export default function Scholarships() {
 
   const filtered = useMemo(() => {
     return SCHOLARSHIPS.filter((s) => {
-      const okStream = !stream || stream === "Any" || s.stream === stream || s.stream === "Any";
+      const okStream =
+        !stream ||
+        stream === "Any" ||
+        s.stream === stream ||
+        s.stream === "Any";
       const okCaste = !caste || caste === "Any" || s.caste === caste;
       const okGender = !gender || gender === "Any" || s.gender === gender;
       const okIncome = !income || (s.incomeMax ?? Infinity) <= income;
@@ -161,7 +172,10 @@ export default function Scholarships() {
     });
   }, [stream, caste, gender, income]);
 
-  const savedList = useMemo(() => SCHOLARSHIPS.filter((s) => saved[s.id]), [saved]);
+  const savedList = useMemo(
+    () => SCHOLARSHIPS.filter((s) => saved[s.id]),
+    [saved],
+  );
 
   function apply(s: Scholarship) {
     toast.success(`Opening application for ${s.title}`);
@@ -176,19 +190,26 @@ export default function Scholarships() {
         <Card>
           <CardHeader className="pb-2">
             <CardTitle>Scholarship Finder</CardTitle>
-            <CardDescription>Find scholarships that match your profile.</CardDescription>
+            <CardDescription>
+              Find scholarships that match your profile.
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid gap-3 md:grid-cols-4">
               <div>
                 <label className="mb-1 block text-sm font-medium">Stream</label>
-                <Select value={stream} onValueChange={(v) => setStream(v as any)}>
+                <Select
+                  value={stream}
+                  onValueChange={(v) => setStream(v as any)}
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="All" />
                   </SelectTrigger>
                   <SelectContent>
                     {STREAMS.map((s) => (
-                      <SelectItem key={s} value={s}>{s}</SelectItem>
+                      <SelectItem key={s} value={s}>
+                        {s}
+                      </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
@@ -201,33 +222,45 @@ export default function Scholarships() {
                   </SelectTrigger>
                   <SelectContent>
                     {CASTES.map((c) => (
-                      <SelectItem key={c} value={c}>{c}</SelectItem>
+                      <SelectItem key={c} value={c}>
+                        {c}
+                      </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
               </div>
               <div>
                 <label className="mb-1 block text-sm font-medium">Gender</label>
-                <Select value={gender} onValueChange={(v) => setGender(v as any)}>
+                <Select
+                  value={gender}
+                  onValueChange={(v) => setGender(v as any)}
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="All" />
                   </SelectTrigger>
-                    <SelectContent>
-                      {GENDERS.map((g) => (
-                        <SelectItem key={g} value={g}>{g}</SelectItem>
-                      ))}
-                    </SelectContent>
+                  <SelectContent>
+                    {GENDERS.map((g) => (
+                      <SelectItem key={g} value={g}>
+                        {g}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
                 </Select>
               </div>
               <div>
                 <label className="mb-1 block text-sm font-medium">Income</label>
-                <Select value={income?.toString()} onValueChange={(v) => setIncome(v ? Number(v) : undefined)}>
+                <Select
+                  value={income?.toString()}
+                  onValueChange={(v) => setIncome(v ? Number(v) : undefined)}
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="All" />
                   </SelectTrigger>
                   <SelectContent>
                     {INCOME.map((i) => (
-                      <SelectItem key={i.label} value={i.value.toString()}>{i.label}</SelectItem>
+                      <SelectItem key={i.label} value={i.value.toString()}>
+                        {i.label}
+                      </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
@@ -248,8 +281,12 @@ export default function Scholarships() {
                   <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                     <div className="min-w-0">
                       <div className="flex items-center gap-2">
-                        <h3 className="text-lg font-semibold leading-tight">{s.title}</h3>
-                        <Badge variant="secondary" className="gap-1"><GraduationCap className="h-3.5 w-3.5" /> {s.stream}</Badge>
+                        <h3 className="text-lg font-semibold leading-tight">
+                          {s.title}
+                        </h3>
+                        <Badge variant="secondary" className="gap-1">
+                          <GraduationCap className="h-3.5 w-3.5" /> {s.stream}
+                        </Badge>
                       </div>
                       <div className="mt-3 grid gap-4 md:grid-cols-2">
                         <div>
@@ -264,25 +301,53 @@ export default function Scholarships() {
                           <p className="text-sm font-medium">Benefits</p>
                           <ul className="mt-1 space-y-1 text-sm text-foreground/80">
                             {s.benefits.map((b, i) => (
-                              <li key={i} className="flex items-center gap-2"><Banknote className="h-4 w-4 text-emerald-600" /> {b}</li>
+                              <li key={i} className="flex items-center gap-2">
+                                <Banknote className="h-4 w-4 text-emerald-600" />{" "}
+                                {b}
+                              </li>
                             ))}
                           </ul>
                         </div>
                       </div>
                       <div className="mt-4 grid gap-3 sm:grid-cols-2 sm:items-center">
                         <div className="flex items-center gap-2 text-sm">
-                          <CalendarDays className="h-4 w-4" /> Deadline: {new Date(s.deadline).toLocaleDateString()}
-                          <Badge variant="outline" className={left <= 14 ? "border-transparent bg-red-500 text-white" : left <= 30 ? "border-transparent bg-amber-500 text-white" : "border-transparent bg-emerald-500 text-white"}>
+                          <CalendarDays className="h-4 w-4" /> Deadline:{" "}
+                          {new Date(s.deadline).toLocaleDateString()}
+                          <Badge
+                            variant="outline"
+                            className={
+                              left <= 14
+                                ? "border-transparent bg-red-500 text-white"
+                                : left <= 30
+                                  ? "border-transparent bg-amber-500 text-white"
+                                  : "border-transparent bg-emerald-500 text-white"
+                            }
+                          >
                             {left > 0 ? `${left} days left` : "Closed"}
                           </Badge>
                         </div>
-                        <div className="min-w-[160px]"><Progress value={pct} /></div>
+                        <div className="min-w-[160px]">
+                          <Progress value={pct} />
+                        </div>
                       </div>
                     </div>
                     <div className="shrink-0 flex flex-col gap-2">
-                      <Button onClick={() => apply(s)} className="gap-2">Apply Now</Button>
-                      <Button variant={isSaved ? "secondary" : "outline"} onClick={() => setSaved((x) => ({ ...x, [s.id]: !isSaved }))} className="gap-2">
-                        {isSaved ? <Save className="h-4 w-4" /> : <BookmarkPlus className="h-4 w-4" />} {isSaved ? "Saved" : "Save"}
+                      <Button onClick={() => apply(s)} className="gap-2">
+                        Apply Now
+                      </Button>
+                      <Button
+                        variant={isSaved ? "secondary" : "outline"}
+                        onClick={() =>
+                          setSaved((x) => ({ ...x, [s.id]: !isSaved }))
+                        }
+                        className="gap-2"
+                      >
+                        {isSaved ? (
+                          <Save className="h-4 w-4" />
+                        ) : (
+                          <BookmarkPlus className="h-4 w-4" />
+                        )}{" "}
+                        {isSaved ? "Saved" : "Save"}
                       </Button>
                     </div>
                   </div>
@@ -291,7 +356,11 @@ export default function Scholarships() {
             );
           })}
           {filtered.length === 0 && (
-            <Card><CardContent className="py-10 text-center text-muted-foreground">No scholarships match your filters.</CardContent></Card>
+            <Card>
+              <CardContent className="py-10 text-center text-muted-foreground">
+                No scholarships match your filters.
+              </CardContent>
+            </Card>
           )}
         </div>
       </div>
@@ -305,16 +374,28 @@ export default function Scholarships() {
           </CardHeader>
           <CardContent className="space-y-3">
             {savedList.length === 0 && (
-              <p className="text-sm text-muted-foreground">Nothing saved yet. Click “Save” on a scholarship to pin it here.</p>
+              <p className="text-sm text-muted-foreground">
+                Nothing saved yet. Click “Save” on a scholarship to pin it here.
+              </p>
             )}
             {savedList.map((s) => (
               <div key={s.id} className="rounded-md border p-3">
                 <div className="flex items-start justify-between gap-2">
                   <div>
-                    <p className="text-sm font-medium leading-tight">{s.title}</p>
-                    <p className="text-xs text-muted-foreground flex items-center gap-1"><GraduationCap className="h-3 w-3" /> {s.stream}</p>
+                    <p className="text-sm font-medium leading-tight">
+                      {s.title}
+                    </p>
+                    <p className="text-xs text-muted-foreground flex items-center gap-1">
+                      <GraduationCap className="h-3 w-3" /> {s.stream}
+                    </p>
                   </div>
-                  <Button size="sm" variant="outline" onClick={() => toast("Opening details…")}>View</Button>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => toast("Opening details…")}
+                  >
+                    View
+                  </Button>
                 </div>
               </div>
             ))}
@@ -322,12 +403,17 @@ export default function Scholarships() {
         </Card>
         <Card className="border-blue-200">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-blue-700"><Medal className="h-5 w-5" /> Tips</CardTitle>
+            <CardTitle className="flex items-center gap-2 text-blue-700">
+              <Medal className="h-5 w-5" /> Tips
+            </CardTitle>
             <CardDescription>Boost your chances</CardDescription>
           </CardHeader>
           <CardContent className="text-sm space-y-2">
             <p>• Apply early; many grants are first-come-first-serve.</p>
-            <p>• Prepare documents: income certificate, caste certificate, transcripts.</p>
+            <p>
+              • Prepare documents: income certificate, caste certificate,
+              transcripts.
+            </p>
             <p>• Write a concise statement highlighting impact and need.</p>
           </CardContent>
         </Card>

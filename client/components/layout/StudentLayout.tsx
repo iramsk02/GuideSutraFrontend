@@ -20,7 +20,12 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Link, NavLink, useLocation, useInRouterContext } from "react-router-dom";
+import {
+  Link,
+  NavLink,
+  useLocation,
+  useInRouterContext,
+} from "react-router-dom";
 import {
   Bell,
   BookOpen,
@@ -74,11 +79,17 @@ export function StudentLayout({ children }: { children: ReactNode }) {
             <div className="min-w-0">
               <div className="flex items-center gap-2">
                 <span className="font-semibold truncate">Iram Saba Khan</span>
-                <Badge variant="secondary" className="shrink-0">Grade 12</Badge>
+                <Badge variant="secondary" className="shrink-0">
+                  Grade 12
+                </Badge>
               </div>
               <div className="mt-2 flex flex-wrap gap-1.5">
                 {interests.map((tag) => (
-                  <Badge key={tag} variant="outline" className="bg-accent/40 border-transparent text-foreground/80">
+                  <Badge
+                    key={tag}
+                    variant="outline"
+                    className="bg-accent/40 border-transparent text-foreground/80"
+                  >
                     {tag}
                   </Badge>
                 ))}
@@ -127,7 +138,9 @@ export function StudentLayout({ children }: { children: ReactNode }) {
             <SidebarTrigger />
             <Separator orientation="vertical" className="mr-2 h-6" />
             <div className="flex items-center gap-2">
-              <span className="text-sm font-semibold text-primary">NovaPath</span>
+              <span className="text-sm font-semibold text-primary">
+                NovaPath
+              </span>
               <span className="text-muted-foreground">/</span>
               <span className="text-sm text-foreground/80">{title}</span>
             </div>

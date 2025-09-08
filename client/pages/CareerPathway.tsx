@@ -156,8 +156,26 @@ const DEGREE_OPTIONS = [
           label: "Higher Studies",
           branch: "higher",
           children: [
-            { id: "msc-math", label: "M.Sc Mathematics", branch: "higher", meta: { salary: "$50k–$90k", skills: ["Linear Algebra", "Probability"], opportunities: ["Academia", "Actuarial"] } },
-            { id: "phd-math", label: "PhD Mathematics", branch: "higher", meta: { salary: "$80k–$160k", skills: ["Research", "Proofs"], opportunities: ["Faculty", "Quant"] } },
+            {
+              id: "msc-math",
+              label: "M.Sc Mathematics",
+              branch: "higher",
+              meta: {
+                salary: "$50k–$90k",
+                skills: ["Linear Algebra", "Probability"],
+                opportunities: ["Academia", "Actuarial"],
+              },
+            },
+            {
+              id: "phd-math",
+              label: "PhD Mathematics",
+              branch: "higher",
+              meta: {
+                salary: "$80k–$160k",
+                skills: ["Research", "Proofs"],
+                opportunities: ["Faculty", "Quant"],
+              },
+            },
           ],
         },
         {
@@ -165,7 +183,16 @@ const DEGREE_OPTIONS = [
           label: "Govt Jobs",
           branch: "govt",
           children: [
-            { id: "stat", label: "Indian Statistical Service", branch: "govt", meta: { salary: "$9k–$15k/mo", skills: ["Statistics", "Econometrics"], opportunities: ["ISS", "RBI"] } },
+            {
+              id: "stat",
+              label: "Indian Statistical Service",
+              branch: "govt",
+              meta: {
+                salary: "$9k–$15k/mo",
+                skills: ["Statistics", "Econometrics"],
+                opportunities: ["ISS", "RBI"],
+              },
+            },
           ],
         },
         {
@@ -173,8 +200,26 @@ const DEGREE_OPTIONS = [
           label: "Private Jobs",
           branch: "private",
           children: [
-            { id: "quant", label: "Quant Analyst", branch: "private", meta: { salary: "$120k–$250k", skills: ["Stochastic Calc", "Python"], opportunities: ["Trading", "Risk"] } },
-            { id: "ds", label: "Data Scientist", branch: "private", meta: { salary: "$110k–$200k", skills: ["ML", "Python", "SQL"], opportunities: ["AI", "Product"] } },
+            {
+              id: "quant",
+              label: "Quant Analyst",
+              branch: "private",
+              meta: {
+                salary: "$120k–$250k",
+                skills: ["Stochastic Calc", "Python"],
+                opportunities: ["Trading", "Risk"],
+              },
+            },
+            {
+              id: "ds",
+              label: "Data Scientist",
+              branch: "private",
+              meta: {
+                salary: "$110k–$200k",
+                skills: ["ML", "Python", "SQL"],
+                opportunities: ["AI", "Product"],
+              },
+            },
           ],
         },
       ],
@@ -183,11 +228,34 @@ const DEGREE_OPTIONS = [
 ];
 
 // Colors per branch
-const BRANCH_COLORS: Record<Branch, { stroke: string; bg: string; text: string; border: string }> = {
-  degree: { stroke: "#64748b", bg: "bg-slate-50", text: "text-slate-800", border: "border-slate-200" },
-  higher: { stroke: "#3b82f6", bg: "bg-blue-50", text: "text-blue-700", border: "border-blue-200" },
-  govt: { stroke: "#10b981", bg: "bg-emerald-50", text: "text-emerald-700", border: "border-emerald-200" },
-  private: { stroke: "#fb923c", bg: "bg-orange-50", text: "text-orange-700", border: "border-orange-200" },
+const BRANCH_COLORS: Record<
+  Branch,
+  { stroke: string; bg: string; text: string; border: string }
+> = {
+  degree: {
+    stroke: "#64748b",
+    bg: "bg-slate-50",
+    text: "text-slate-800",
+    border: "border-slate-200",
+  },
+  higher: {
+    stroke: "#3b82f6",
+    bg: "bg-blue-50",
+    text: "text-blue-700",
+    border: "border-blue-200",
+  },
+  govt: {
+    stroke: "#10b981",
+    bg: "bg-emerald-50",
+    text: "text-emerald-700",
+    border: "border-emerald-200",
+  },
+  private: {
+    stroke: "#fb923c",
+    bg: "bg-orange-50",
+    text: "text-orange-700",
+    border: "border-orange-200",
+  },
 };
 
 function branchIcon(b: Branch) {
@@ -209,7 +277,12 @@ function layoutTree(root: TreeNode) {
   const xGap = 260;
   const yGap = 90;
 
-  type Tmp = TreeNode & { depth: number; width: number; x?: number; y?: number };
+  type Tmp = TreeNode & {
+    depth: number;
+    width: number;
+    x?: number;
+    y?: number;
+  };
   function annotate(n: TreeNode, depth = 0): Tmp {
     const nn: Tmp = { ...(n as any), depth, width: 1 };
     if (n.children?.length) {
@@ -257,7 +330,15 @@ function layoutTree(root: TreeNode) {
   return { nodes, edges: edges as Edge[], size: { width, height }, nodeSize };
 }
 
-function NodeView({ n, selected, onSelect }: { n: PositionedNode; selected?: boolean; onSelect: (n: PositionedNode) => void }) {
+function NodeView({
+  n,
+  selected,
+  onSelect,
+}: {
+  n: PositionedNode;
+  selected?: boolean;
+  onSelect: (n: PositionedNode) => void;
+}) {
   const colors = BRANCH_COLORS[n.branch];
   return (
     <foreignObject x={n.x} y={n.y} width={220} height={64}>
@@ -265,10 +346,16 @@ function NodeView({ n, selected, onSelect }: { n: PositionedNode; selected?: boo
         onClick={() => onSelect(n)}
         className={`cursor-pointer ${colors.bg} ${colors.border} border rounded-md shadow-sm px-3 py-2 flex items-start gap-2 hover:shadow-md transition-shadow ${selected ? "ring-2 ring-primary" : ""}`}
       >
-        <div className={`rounded-md p-1.5 ${colors.text} bg-white/60`}>{branchIcon(n.branch)}</div>
+        <div className={`rounded-md p-1.5 ${colors.text} bg-white/60`}>
+          {branchIcon(n.branch)}
+        </div>
         <div className="min-w-0">
-          <p className={`text-sm font-medium leading-tight ${colors.text}`}>{n.label}</p>
-          <p className="text-xs text-muted-foreground truncate">{n.meta?.salary ? `Avg: ${n.meta.salary}` : ""}</p>
+          <p className={`text-sm font-medium leading-tight ${colors.text}`}>
+            {n.label}
+          </p>
+          <p className="text-xs text-muted-foreground truncate">
+            {n.meta?.salary ? `Avg: ${n.meta.salary}` : ""}
+          </p>
         </div>
       </div>
     </foreignObject>
@@ -278,7 +365,10 @@ function NodeView({ n, selected, onSelect }: { n: PositionedNode; selected?: boo
 export default function CareerPathway() {
   const [degreeId, setDegreeId] = useState(DEGREE_OPTIONS[0].id);
   const degree = DEGREE_OPTIONS.find((d) => d.id === degreeId)!;
-  const { nodes, edges, size, nodeSize } = useMemo(() => layoutTree(degree.tree()), [degreeId]);
+  const { nodes, edges, size, nodeSize } = useMemo(
+    () => layoutTree(degree.tree()),
+    [degreeId],
+  );
   const [selected, setSelected] = useState<PositionedNode | null>(null);
 
   return (
@@ -310,9 +400,18 @@ export default function CareerPathway() {
             <div className="space-y-2">
               <p className="text-sm font-medium">Legend</p>
               <div className="flex flex-col gap-2 text-sm">
-                <div className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-blue-500"/> Higher Studies</div>
-                <div className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-emerald-500"/> Govt Jobs</div>
-                <div className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-orange-500"/> Private Jobs</div>
+                <div className="flex items-center gap-2">
+                  <span className="h-2 w-2 rounded-full bg-blue-500" /> Higher
+                  Studies
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="h-2 w-2 rounded-full bg-emerald-500" /> Govt
+                  Jobs
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="h-2 w-2 rounded-full bg-orange-500" />{" "}
+                  Private Jobs
+                </div>
               </div>
             </div>
           </CardContent>
@@ -323,7 +422,9 @@ export default function CareerPathway() {
       <Card className="overflow-auto">
         <CardHeader className="pb-0">
           <CardTitle>Course → Career Roadmap</CardTitle>
-          <CardDescription>Interactive flowchart. Click any node to see details.</CardDescription>
+          <CardDescription>
+            Interactive flowchart. Click any node to see details.
+          </CardDescription>
         </CardHeader>
         <CardContent className="pt-4">
           <div className="relative">
@@ -337,12 +438,23 @@ export default function CareerPathway() {
                 const y2 = (e.to as any).y + nodeSize.h / 2;
                 const mx = (x1 + x2) / 2;
                 return (
-                  <path key={idx} d={`M ${x1},${y1} C ${mx},${y1} ${mx},${y2} ${x2},${y2}`} stroke={c.stroke} strokeWidth={2} fill="none" />
+                  <path
+                    key={idx}
+                    d={`M ${x1},${y1} C ${mx},${y1} ${mx},${y2} ${x2},${y2}`}
+                    stroke={c.stroke}
+                    strokeWidth={2}
+                    fill="none"
+                  />
                 );
               })}
               {/* Nodes */}
               {nodes.map((n) => (
-                <NodeView key={n.id} n={n} selected={selected?.id === n.id} onSelect={setSelected} />
+                <NodeView
+                  key={n.id}
+                  n={n}
+                  selected={selected?.id === n.id}
+                  onSelect={setSelected}
+                />
               ))}
             </svg>
           </div>
@@ -354,45 +466,74 @@ export default function CareerPathway() {
         <Card>
           <CardHeader>
             <CardTitle>Career Details</CardTitle>
-            <CardDescription>Information about the selected node</CardDescription>
+            <CardDescription>
+              Information about the selected node
+            </CardDescription>
           </CardHeader>
           <CardContent>
             {!selected ? (
-              <p className="text-sm text-muted-foreground">Select any node in the roadmap to see average salary, skills, and opportunities.</p>
+              <p className="text-sm text-muted-foreground">
+                Select any node in the roadmap to see average salary, skills,
+                and opportunities.
+              </p>
             ) : (
               <div className="space-y-3">
                 <div className="flex items-center gap-2">
-                  <div className={`rounded-md p-2 ${BRANCH_COLORS[selected.branch].bg} ${BRANCH_COLORS[selected.branch].border} border`}>
+                  <div
+                    className={`rounded-md p-2 ${BRANCH_COLORS[selected.branch].bg} ${BRANCH_COLORS[selected.branch].border} border`}
+                  >
                     {branchIcon(selected.branch)}
                   </div>
                   <div>
-                    <p className="font-medium leading-tight">{selected.label}</p>
-                    <p className="text-xs text-muted-foreground capitalize">{selected.branch === "higher" ? "Higher Studies" : selected.branch === "govt" ? "Government" : selected.branch === "private" ? "Private" : "Degree"}</p>
+                    <p className="font-medium leading-tight">
+                      {selected.label}
+                    </p>
+                    <p className="text-xs text-muted-foreground capitalize">
+                      {selected.branch === "higher"
+                        ? "Higher Studies"
+                        : selected.branch === "govt"
+                          ? "Government"
+                          : selected.branch === "private"
+                            ? "Private"
+                            : "Degree"}
+                    </p>
                   </div>
                 </div>
                 {selected.meta?.salary && (
-                  <div className="text-sm"><span className="text-muted-foreground">Average salary:</span> {selected.meta.salary}</div>
+                  <div className="text-sm">
+                    <span className="text-muted-foreground">
+                      Average salary:
+                    </span>{" "}
+                    {selected.meta.salary}
+                  </div>
                 )}
                 {selected.meta?.skills && selected.meta.skills.length > 0 && (
                   <div className="space-y-1">
-                    <p className="text-sm text-muted-foreground">Required skills</p>
+                    <p className="text-sm text-muted-foreground">
+                      Required skills
+                    </p>
                     <div className="flex flex-wrap gap-2">
                       {selected.meta.skills.map((s) => (
-                        <Badge key={s} variant="outline">{s}</Badge>
+                        <Badge key={s} variant="outline">
+                          {s}
+                        </Badge>
                       ))}
                     </div>
                   </div>
                 )}
-                {selected.meta?.opportunities && selected.meta.opportunities.length > 0 && (
-                  <div className="space-y-1">
-                    <p className="text-sm text-muted-foreground">Opportunities</p>
-                    <ul className="list-disc pl-5 text-sm space-y-1">
-                      {selected.meta.opportunities.map((o) => (
-                        <li key={o}>{o}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+                {selected.meta?.opportunities &&
+                  selected.meta.opportunities.length > 0 && (
+                    <div className="space-y-1">
+                      <p className="text-sm text-muted-foreground">
+                        Opportunities
+                      </p>
+                      <ul className="list-disc pl-5 text-sm space-y-1">
+                        {selected.meta.opportunities.map((o) => (
+                          <li key={o}>{o}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
               </div>
             )}
           </CardContent>

@@ -1,15 +1,52 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Separator } from "@/components/ui/separator";
-import { GraduationCap, LineChart, BookOpenCheck, HeartHandshake, LifeBuoy, Phone, Globe2 } from "lucide-react";
+import {
+  GraduationCap,
+  LineChart,
+  BookOpenCheck,
+  HeartHandshake,
+  LifeBuoy,
+  Phone,
+  Globe2,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 
 const stats = [
-  { title: "Higher Education = Better Jobs", value: "2.1x", sub: "Increase in employment for graduates", icon: LineChart, color: "text-blue-600" },
-  { title: "Salary Boost", value: "+48%", sub: "Median salary uplift with a degree", icon: GraduationCap, color: "text-emerald-600" },
-  { title: "Career Flexibility", value: "3x", sub: "More roles open to graduates", icon: BookOpenCheck, color: "text-sky-600" },
+  {
+    title: "Higher Education = Better Jobs",
+    value: "2.1x",
+    sub: "Increase in employment for graduates",
+    icon: LineChart,
+    color: "text-blue-600",
+  },
+  {
+    title: "Salary Boost",
+    value: "+48%",
+    sub: "Median salary uplift with a degree",
+    icon: GraduationCap,
+    color: "text-emerald-600",
+  },
+  {
+    title: "Career Flexibility",
+    value: "3x",
+    sub: "More roles open to graduates",
+    icon: BookOpenCheck,
+    color: "text-sky-600",
+  },
 ];
 
 const articles = [
@@ -31,9 +68,18 @@ const articles = [
 ];
 
 const faqs = [
-  { q: "Is Arts a safe option?", a: "Yes. Arts opens doors to journalism, design, law, public policy, UPSC, and more. Success depends on skills, projects, and internships, not just the stream name." },
-  { q: "Should my child take a gap year?", a: "A planned gap year for test prep, projects, or internships can be helpful. Ensure a clear plan and timeline to maintain momentum." },
-  { q: "How do I evaluate college quality?", a: "Check accreditation, faculty, curriculum, internship pipelines, alumni outcomes, and total cost. Speak to current students and alumni when possible." },
+  {
+    q: "Is Arts a safe option?",
+    a: "Yes. Arts opens doors to journalism, design, law, public policy, UPSC, and more. Success depends on skills, projects, and internships, not just the stream name.",
+  },
+  {
+    q: "Should my child take a gap year?",
+    a: "A planned gap year for test prep, projects, or internships can be helpful. Ensure a clear plan and timeline to maintain momentum.",
+  },
+  {
+    q: "How do I evaluate college quality?",
+    a: "Check accreditation, faculty, curriculum, internship pipelines, alumni outcomes, and total cost. Speak to current students and alumni when possible.",
+  },
 ];
 
 const resources = [
@@ -52,11 +98,18 @@ export default function Parents() {
           <CardContent className="py-8">
             <div className="flex flex-col gap-4 items-start justify-between md:flex-row md:items-center">
               <div>
-                <h1 className="text-2xl font-semibold">Guidance for Parents – Help Your Child Choose Smartly</h1>
-                <p className="text-muted-foreground">Simple, reliable information to support informed decisions about higher education.</p>
+                <h1 className="text-2xl font-semibold">
+                  Guidance for Parents – Help Your Child Choose Smartly
+                </h1>
+                <p className="text-muted-foreground">
+                  Simple, reliable information to support informed decisions
+                  about higher education.
+                </p>
               </div>
               <Link to="/mentorship">
-                <Button className="gap-2"><HeartHandshake className="h-4 w-4"/> Talk to a Counselor</Button>
+                <Button className="gap-2">
+                  <HeartHandshake className="h-4 w-4" /> Talk to a Counselor
+                </Button>
               </Link>
             </div>
           </CardContent>
@@ -86,7 +139,9 @@ export default function Parents() {
         <Card>
           <CardHeader className="pb-2">
             <CardTitle>Articles for Parents</CardTitle>
-            <CardDescription>Short reads to understand streams, exams, and careers.</CardDescription>
+            <CardDescription>
+              Short reads to understand streams, exams, and careers.
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid gap-4 md:grid-cols-3">
@@ -94,8 +149,12 @@ export default function Parents() {
                 <Card key={a.title} className="border-blue-100">
                   <CardContent className="pt-6">
                     <h3 className="font-medium leading-tight">{a.title}</h3>
-                    <p className="mt-2 text-sm text-muted-foreground">{a.preview}</p>
-                    <Button variant="link" className="px-0 mt-2">Read More</Button>
+                    <p className="mt-2 text-sm text-muted-foreground">
+                      {a.preview}
+                    </p>
+                    <Button variant="link" className="px-0 mt-2">
+                      Read More
+                    </Button>
                   </CardContent>
                 </Card>
               ))}
@@ -113,8 +172,12 @@ export default function Parents() {
             <Accordion type="single" collapsible className="w-full">
               {faqs.map((f, i) => (
                 <AccordionItem value={`q${i}`} key={i}>
-                  <AccordionTrigger className="text-left">{f.q}</AccordionTrigger>
-                  <AccordionContent className="text-foreground/80">{f.a}</AccordionContent>
+                  <AccordionTrigger className="text-left">
+                    {f.q}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-foreground/80">
+                    {f.a}
+                  </AccordionContent>
                 </AccordionItem>
               ))}
             </Accordion>
@@ -126,27 +189,40 @@ export default function Parents() {
       <div className="space-y-4 lg:sticky lg:top-16 h-max">
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-blue-700"><LifeBuoy className="h-5 w-5"/> Recommended Resources</CardTitle>
+            <CardTitle className="flex items-center gap-2 text-blue-700">
+              <LifeBuoy className="h-5 w-5" /> Recommended Resources
+            </CardTitle>
             <CardDescription>Trusted links for parents</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3 text-sm">
             {resources.map((r) => (
-              <div key={r.label} className="flex items-center justify-between gap-2">
+              <div
+                key={r.label}
+                className="flex items-center justify-between gap-2"
+              >
                 <p className="leading-tight">{r.label}</p>
-                <Link to={r.href}><Button size="sm" variant="outline">Open</Button></Link>
+                <Link to={r.href}>
+                  <Button size="sm" variant="outline">
+                    Open
+                  </Button>
+                </Link>
               </div>
             ))}
           </CardContent>
         </Card>
         <Card className="border-emerald-200">
           <CardHeader>
-            <CardTitle className="text-emerald-700 flex items-center gap-2"><Phone className="h-5 w-5"/> Helpline</CardTitle>
+            <CardTitle className="text-emerald-700 flex items-center gap-2">
+              <Phone className="h-5 w-5" /> Helpline
+            </CardTitle>
             <CardDescription>Speak to a counselor</CardDescription>
           </CardHeader>
           <CardContent className="text-sm space-y-2">
             <p>Mon–Fri, 9am–6pm IST</p>
             <p>Call: +91-800-555-0101</p>
-            <Button asChild className="w-full"><a href="mailto:help@novapath.example">Email Us</a></Button>
+            <Button asChild className="w-full">
+              <a href="mailto:help@novapath.example">Email Us</a>
+            </Button>
           </CardContent>
         </Card>
       </div>

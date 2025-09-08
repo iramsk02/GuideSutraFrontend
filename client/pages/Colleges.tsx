@@ -25,7 +25,14 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { CalendarDays, DollarSign, GraduationCap, MapPin, Save, BookmarkPlus } from "lucide-react";
+import {
+  CalendarDays,
+  DollarSign,
+  GraduationCap,
+  MapPin,
+  Save,
+  BookmarkPlus,
+} from "lucide-react";
 
 // Types
 interface College {
@@ -41,22 +48,144 @@ interface College {
 }
 
 const COLLEGES: College[] = [
-  { id: "stanford", name: "Stanford University", location: "Stanford, CA", streams: ["Engineering", "Science"], degrees: ["B.S", "M.S", "PhD"], courses: ["Computer Science", "Data Science", "Robotics"], eligibility: "SAT/ACT optional, strong academics & activities", fees: 56700, deadline: "2025-01-05" },
-  { id: "mit", name: "Massachusetts Institute of Technology", location: "Cambridge, MA", streams: ["Engineering", "Science"], degrees: ["B.S", "M.S", "PhD"], courses: ["AI & Decision Making", "Aerospace", "Mathematics"], eligibility: "Holistic review with strong STEM background", fees: 55500, deadline: "2025-01-01" },
-  { id: "berkeley", name: "UC Berkeley", location: "Berkeley, CA", streams: ["Engineering", "Science", "Arts"], degrees: ["B.A", "B.S", "M.S"], courses: ["Data Science", "EECS", "Economics"], eligibility: "UC a-g requirements, high GPA", fees: 18700, deadline: "2024-11-30" },
-  { id: "cmu", name: "Carnegie Mellon University", location: "Pittsburgh, PA", streams: ["Engineering", "Science", "Design"], degrees: ["B.S", "M.S"], courses: ["Robotics", "Computer Science", "Design"], eligibility: "Strong math & CS background", fees: 59864, deadline: "2025-01-03" },
-  { id: "ucla", name: "UCLA", location: "Los Angeles, CA", streams: ["Science", "Arts"], degrees: ["B.A", "B.S"], courses: ["Biology", "Statistics", "Psychology"], eligibility: "UC a-g requirements, PIQs", fees: 13990, deadline: "2024-11-30" },
-  { id: "umich", name: "University of Michigan", location: "Ann Arbor, MI", streams: ["Engineering", "Science", "Business"], degrees: ["B.S", "BBA", "M.S"], courses: ["Mechanical", "CS", "Business"], eligibility: "High academic rigor, essays", fees: 26200, deadline: "2025-02-01" },
-  { id: "gatech", name: "Georgia Tech", location: "Atlanta, GA", streams: ["Engineering"], degrees: ["B.S", "M.S"], courses: ["Aerospace", "Industrial", "CS"], eligibility: "STEM coursework, essays", fees: 12552, deadline: "2025-01-04" },
-  { id: "ut-austin", name: "UT Austin", location: "Austin, TX", streams: ["Engineering", "Business"], degrees: ["B.S", "BBA"], courses: ["CS", "Business Honors", "ECE"], eligibility: "Top 6% auto admit for TX residents", fees: 11500, deadline: "2024-12-01" },
-  { id: "uci", name: "UC Irvine", location: "Irvine, CA", streams: ["Science", "Engineering"], degrees: ["B.S", "B.A"], courses: ["Informatics", "Biomedical", "Physics"], eligibility: "UC a-g requirements", fees: 13700, deadline: "2024-11-30" },
-  { id: "nyu", name: "New York University", location: "New York, NY", streams: ["Arts", "Business"], degrees: ["B.S", "BFA", "MBA"], courses: ["Film", "Business", "Data Science"], eligibility: "Holistic review", fees: 56800, deadline: "2025-01-05" },
-  { id: "purdue", name: "Purdue University", location: "West Lafayette, IN", streams: ["Engineering", "Science"], degrees: ["B.S", "M.S"], courses: ["Computer Engineering", "Ag Engg", "Physics"], eligibility: "STEM readiness", fees: 10411, deadline: "2024-11-01" },
-  { id: "asu", name: "Arizona State University", location: "Tempe, AZ", streams: ["Engineering", "Business"], degrees: ["B.S", "BBA"], courses: ["Software Eng", "Supply Chain"], eligibility: "Test optional", fees: 11200, deadline: "2025-02-15" },
+  {
+    id: "stanford",
+    name: "Stanford University",
+    location: "Stanford, CA",
+    streams: ["Engineering", "Science"],
+    degrees: ["B.S", "M.S", "PhD"],
+    courses: ["Computer Science", "Data Science", "Robotics"],
+    eligibility: "SAT/ACT optional, strong academics & activities",
+    fees: 56700,
+    deadline: "2025-01-05",
+  },
+  {
+    id: "mit",
+    name: "Massachusetts Institute of Technology",
+    location: "Cambridge, MA",
+    streams: ["Engineering", "Science"],
+    degrees: ["B.S", "M.S", "PhD"],
+    courses: ["AI & Decision Making", "Aerospace", "Mathematics"],
+    eligibility: "Holistic review with strong STEM background",
+    fees: 55500,
+    deadline: "2025-01-01",
+  },
+  {
+    id: "berkeley",
+    name: "UC Berkeley",
+    location: "Berkeley, CA",
+    streams: ["Engineering", "Science", "Arts"],
+    degrees: ["B.A", "B.S", "M.S"],
+    courses: ["Data Science", "EECS", "Economics"],
+    eligibility: "UC a-g requirements, high GPA",
+    fees: 18700,
+    deadline: "2024-11-30",
+  },
+  {
+    id: "cmu",
+    name: "Carnegie Mellon University",
+    location: "Pittsburgh, PA",
+    streams: ["Engineering", "Science", "Design"],
+    degrees: ["B.S", "M.S"],
+    courses: ["Robotics", "Computer Science", "Design"],
+    eligibility: "Strong math & CS background",
+    fees: 59864,
+    deadline: "2025-01-03",
+  },
+  {
+    id: "ucla",
+    name: "UCLA",
+    location: "Los Angeles, CA",
+    streams: ["Science", "Arts"],
+    degrees: ["B.A", "B.S"],
+    courses: ["Biology", "Statistics", "Psychology"],
+    eligibility: "UC a-g requirements, PIQs",
+    fees: 13990,
+    deadline: "2024-11-30",
+  },
+  {
+    id: "umich",
+    name: "University of Michigan",
+    location: "Ann Arbor, MI",
+    streams: ["Engineering", "Science", "Business"],
+    degrees: ["B.S", "BBA", "M.S"],
+    courses: ["Mechanical", "CS", "Business"],
+    eligibility: "High academic rigor, essays",
+    fees: 26200,
+    deadline: "2025-02-01",
+  },
+  {
+    id: "gatech",
+    name: "Georgia Tech",
+    location: "Atlanta, GA",
+    streams: ["Engineering"],
+    degrees: ["B.S", "M.S"],
+    courses: ["Aerospace", "Industrial", "CS"],
+    eligibility: "STEM coursework, essays",
+    fees: 12552,
+    deadline: "2025-01-04",
+  },
+  {
+    id: "ut-austin",
+    name: "UT Austin",
+    location: "Austin, TX",
+    streams: ["Engineering", "Business"],
+    degrees: ["B.S", "BBA"],
+    courses: ["CS", "Business Honors", "ECE"],
+    eligibility: "Top 6% auto admit for TX residents",
+    fees: 11500,
+    deadline: "2024-12-01",
+  },
+  {
+    id: "uci",
+    name: "UC Irvine",
+    location: "Irvine, CA",
+    streams: ["Science", "Engineering"],
+    degrees: ["B.S", "B.A"],
+    courses: ["Informatics", "Biomedical", "Physics"],
+    eligibility: "UC a-g requirements",
+    fees: 13700,
+    deadline: "2024-11-30",
+  },
+  {
+    id: "nyu",
+    name: "New York University",
+    location: "New York, NY",
+    streams: ["Arts", "Business"],
+    degrees: ["B.S", "BFA", "MBA"],
+    courses: ["Film", "Business", "Data Science"],
+    eligibility: "Holistic review",
+    fees: 56800,
+    deadline: "2025-01-05",
+  },
+  {
+    id: "purdue",
+    name: "Purdue University",
+    location: "West Lafayette, IN",
+    streams: ["Engineering", "Science"],
+    degrees: ["B.S", "M.S"],
+    courses: ["Computer Engineering", "Ag Engg", "Physics"],
+    eligibility: "STEM readiness",
+    fees: 10411,
+    deadline: "2024-11-01",
+  },
+  {
+    id: "asu",
+    name: "Arizona State University",
+    location: "Tempe, AZ",
+    streams: ["Engineering", "Business"],
+    degrees: ["B.S", "BBA"],
+    courses: ["Software Eng", "Supply Chain"],
+    eligibility: "Test optional",
+    fees: 11200,
+    deadline: "2025-02-15",
+  },
 ];
 
 const unique = (arr: string[]) => Array.from(new Set(arr)).sort();
-const allLocations = unique(COLLEGES.map((c) => c.location.split(", ").pop() || c.location));
+const allLocations = unique(
+  COLLEGES.map((c) => c.location.split(", ").pop() || c.location),
+);
 const allStreams = unique(COLLEGES.flatMap((c) => c.streams));
 const allDegrees = unique(COLLEGES.flatMap((c) => c.degrees));
 
@@ -88,7 +217,8 @@ export default function Colleges() {
   const filtered = useMemo(() => {
     const query = q.trim().toLowerCase();
     return COLLEGES.filter((c) => {
-      const matchQ = !query ||
+      const matchQ =
+        !query ||
         c.name.toLowerCase().includes(query) ||
         c.courses.some((x) => x.toLowerCase().includes(query));
       const city = c.location.split(", ").pop() || c.location;
@@ -101,7 +231,10 @@ export default function Colleges() {
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / perPage));
   const pageClamped = Math.min(page, totalPages);
-  const paged = filtered.slice((pageClamped - 1) * perPage, pageClamped * perPage);
+  const paged = filtered.slice(
+    (pageClamped - 1) * perPage,
+    pageClamped * perPage,
+  );
 
   return (
     <div className="space-y-6">
@@ -109,55 +242,88 @@ export default function Colleges() {
       <Card>
         <CardHeader className="pb-2">
           <CardTitle>College Directory</CardTitle>
-          <CardDescription>Filter and explore colleges. Save ones you like to your dashboard.</CardDescription>
+          <CardDescription>
+            Filter and explore colleges. Save ones you like to your dashboard.
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid gap-3 md:grid-cols-4">
             <div>
               <label className="mb-1 block text-sm font-medium">Location</label>
-              <Select value={loc} onValueChange={(v) => { setLoc(v === "all" ? undefined : v); setPage(1); }}>
+              <Select
+                value={loc}
+                onValueChange={(v) => {
+                  setLoc(v === "all" ? undefined : v);
+                  setPage(1);
+                }}
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="All locations" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All</SelectItem>
                   {allLocations.map((l) => (
-                    <SelectItem key={l} value={l}>{l}</SelectItem>
+                    <SelectItem key={l} value={l}>
+                      {l}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
             <div>
               <label className="mb-1 block text-sm font-medium">Stream</label>
-              <Select value={stream} onValueChange={(v) => { setStream(v === "all" ? undefined : v); setPage(1); }}>
+              <Select
+                value={stream}
+                onValueChange={(v) => {
+                  setStream(v === "all" ? undefined : v);
+                  setPage(1);
+                }}
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="All streams" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All</SelectItem>
                   {allStreams.map((s) => (
-                    <SelectItem key={s} value={s}>{s}</SelectItem>
+                    <SelectItem key={s} value={s}>
+                      {s}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
             <div>
               <label className="mb-1 block text-sm font-medium">Degree</label>
-              <Select value={degree} onValueChange={(v) => { setDegree(v === "all" ? undefined : v); setPage(1); }}>
+              <Select
+                value={degree}
+                onValueChange={(v) => {
+                  setDegree(v === "all" ? undefined : v);
+                  setPage(1);
+                }}
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="All degrees" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All</SelectItem>
                   {allDegrees.map((d) => (
-                    <SelectItem key={d} value={d}>{d}</SelectItem>
+                    <SelectItem key={d} value={d}>
+                      {d}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
             <div>
               <label className="mb-1 block text-sm font-medium">Search</label>
-              <Input value={q} onChange={(e) => { setQ(e.target.value); setPage(1); }} placeholder="Search by college or course" />
+              <Input
+                value={q}
+                onChange={(e) => {
+                  setQ(e.target.value);
+                  setPage(1);
+                }}
+                placeholder="Search by college or course"
+              />
             </div>
           </div>
         </CardContent>
@@ -176,7 +342,9 @@ export default function Colleges() {
                 <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                   <div className="min-w-0">
                     <div className="flex items-center gap-2">
-                      <h3 className="text-lg font-semibold leading-tight">{c.name}</h3>
+                      <h3 className="text-lg font-semibold leading-tight">
+                        {c.name}
+                      </h3>
                       <Badge variant="secondary">{c.degrees.join(" · ")}</Badge>
                     </div>
                     <div className="mt-1 flex items-center gap-1 text-sm text-muted-foreground">
@@ -184,19 +352,33 @@ export default function Colleges() {
                     </div>
                     <div className="mt-3 flex flex-wrap gap-2">
                       {c.courses.map((course) => (
-                        <Badge key={course} variant="outline">{course}</Badge>
+                        <Badge key={course} variant="outline">
+                          {course}
+                        </Badge>
                       ))}
                     </div>
                     <p className="mt-3 text-sm text-foreground/80">
-                      <span className="font-medium">Eligibility:</span> {c.eligibility}
+                      <span className="font-medium">Eligibility:</span>{" "}
+                      {c.eligibility}
                     </p>
                     <div className="mt-4 grid gap-3 sm:grid-cols-2 sm:items-center">
                       <div className="flex items-center gap-2 text-sm">
-                        <DollarSign className="h-4 w-4" /> Annual Fees: ${c.fees.toLocaleString()}
+                        <DollarSign className="h-4 w-4" /> Annual Fees: $
+                        {c.fees.toLocaleString()}
                       </div>
                       <div className="flex items-center gap-2 text-sm">
-                        <CalendarDays className="h-4 w-4" /> Deadline: {new Date(c.deadline).toLocaleDateString()}
-                        <Badge variant="outline" className={left <= 14 ? "border-transparent bg-red-500 text-white" : left <= 30 ? "border-transparent bg-amber-500 text-white" : ""}>
+                        <CalendarDays className="h-4 w-4" /> Deadline:{" "}
+                        {new Date(c.deadline).toLocaleDateString()}
+                        <Badge
+                          variant="outline"
+                          className={
+                            left <= 14
+                              ? "border-transparent bg-red-500 text-white"
+                              : left <= 30
+                                ? "border-transparent bg-amber-500 text-white"
+                                : ""
+                          }
+                        >
                           {left > 0 ? `${left} days left` : "Closed"}
                         </Badge>
                       </div>
@@ -206,8 +388,19 @@ export default function Colleges() {
                     </div>
                   </div>
                   <div className="shrink-0">
-                    <Button onClick={() => setSaved((s) => ({ ...s, [c.id]: !isSaved }))} variant={isSaved ? "secondary" : "default"} className="gap-2">
-                      {isSaved ? <Save className="h-4 w-4" /> : <BookmarkPlus className="h-4 w-4" />} {isSaved ? "Saved" : "Save to Dashboard"}
+                    <Button
+                      onClick={() =>
+                        setSaved((s) => ({ ...s, [c.id]: !isSaved }))
+                      }
+                      variant={isSaved ? "secondary" : "default"}
+                      className="gap-2"
+                    >
+                      {isSaved ? (
+                        <Save className="h-4 w-4" />
+                      ) : (
+                        <BookmarkPlus className="h-4 w-4" />
+                      )}{" "}
+                      {isSaved ? "Saved" : "Save to Dashboard"}
                     </Button>
                   </div>
                 </div>
@@ -217,7 +410,9 @@ export default function Colleges() {
         })}
         {paged.length === 0 && (
           <Card>
-            <CardContent className="py-10 text-center text-muted-foreground">No results match your filters.</CardContent>
+            <CardContent className="py-10 text-center text-muted-foreground">
+              No results match your filters.
+            </CardContent>
           </Card>
         )}
       </div>
@@ -227,17 +422,36 @@ export default function Colleges() {
         <Pagination>
           <PaginationContent>
             <PaginationItem>
-              <PaginationPrevious href="#" onClick={(e) => { e.preventDefault(); setPage((p) => Math.max(1, p - 1)); }} />
+              <PaginationPrevious
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setPage((p) => Math.max(1, p - 1));
+                }}
+              />
             </PaginationItem>
             {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
               <PaginationItem key={p}>
-                <PaginationLink href="#" isActive={p === pageClamped} onClick={(e) => { e.preventDefault(); setPage(p); }}>
+                <PaginationLink
+                  href="#"
+                  isActive={p === pageClamped}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setPage(p);
+                  }}
+                >
                   {p}
                 </PaginationLink>
               </PaginationItem>
             ))}
             <PaginationItem>
-              <PaginationNext href="#" onClick={(e) => { e.preventDefault(); setPage((p) => Math.min(totalPages, p + 1)); }} />
+              <PaginationNext
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setPage((p) => Math.min(totalPages, p + 1));
+                }}
+              />
             </PaginationItem>
           </PaginationContent>
         </Pagination>
