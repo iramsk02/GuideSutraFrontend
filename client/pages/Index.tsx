@@ -8,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
 import {
   ArrowRight,
   Banknote,
@@ -27,6 +28,9 @@ type Profile = {
   gender?: string;
   grade?: string;
   interests?: string[];
+  location?: string;
+  language?: string;
+  role?: string;
 };
 
 const colleges = [
@@ -84,11 +88,19 @@ const scholarships = [
 
 export default function Index() {
   const [profile, setProfile] = useState<Profile | null>(null);
+  const [quiz, setQuiz] = useState<{ stream?: string; score?: number } | null>(null);
 
   useEffect(() => {
     try {
       const raw = localStorage.getItem("novapath_profile");
       if (raw) setProfile(JSON.parse(raw));
+    } catch {}
+  }, []);
+
+  useEffect(() => {
+    try {
+      const rr = localStorage.getItem("novapath_quiz_result");
+      if (rr) setQuiz(JSON.parse(rr));
     } catch {}
   }, []);
 
@@ -139,10 +151,20 @@ export default function Index() {
       {/* Personalized header */}
       {profile && (
         <Card>
-          <CardContent className="py-4 flex flex-wrap items-center justify-between gap-2">
+          <CardContent className="py-4 flex flex-wrap items-center justify-between gap-4">
             <div>
               <p className="text-base font-semibold">Hi {profile.name?.split(" ")[0]} 👋</p>
-              <p className="text-sm text-muted-foreground">Welcome back</p>
+              <p className="text-sm text-muted-foreground">Your career roadmap awaits</p>
+              {quiz?.stream ? (
+                <p className="mt-1 text-sm"><span className="font-medium">Suggested Stream:</span> {quiz.stream} �� <span className="text-muted-foreground">{quiz.score}% match</span></p>
+              ) : null}
+            </div>
+            <div className="min-w-[240px]">
+              <div className="mb-1 flex items-center justify-between text-xs text-muted-foreground">
+                <span>Profile Progress</span>
+                <span>{(() => { const p = profile || {}; const checks = [p.name, p.email, p.age, p.gender, p.grade, p.location, p.language, (p.interests||[]).length>0, p.role, quiz?.stream]; const filled = checks.reduce((acc, v) => acc + Number(Boolean(v)), 0); return Math.round((filled / checks.length) * 100); })()}%</span>
+              </div>
+              <Progress value={(() => { const p = profile || {}; const checks = [p.name, p.email, p.age, p.gender, p.grade, p.location, p.language, (p.interests||[]).length>0, p.role, quiz?.stream]; const filled = checks.reduce((acc, v) => acc + Number(Boolean(v)), 0); return Math.round((filled / checks.length) * 100); })()} />
             </div>
             <div className="flex flex-wrap gap-2">
               {(profile.interests || []).slice(0, 4).map((t) => (
