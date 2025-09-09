@@ -83,7 +83,20 @@ export default function Signup() {
     const done = baseDone + extraDone;
     const pct = Math.round((done / total) * 100);
     return { percent: pct };
-  }, [name, email, password, confirm, role, age, gender, grade, location, language, interests, childEmail]);
+  }, [
+    name,
+    email,
+    password,
+    confirm,
+    role,
+    age,
+    gender,
+    grade,
+    location,
+    language,
+    interests,
+    childEmail,
+  ]);
 
   function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -137,13 +150,41 @@ export default function Signup() {
           <div className="order-2 md:order-1 hidden md:block">
             <div className="rounded-3xl border bg-white p-6 shadow-sm">
               <svg viewBox="0 0 500 320" className="w-full h-auto">
-                <rect x="0" y="0" width="500" height="320" rx="20" fill="#eef2ff" />
+                <rect
+                  x="0"
+                  y="0"
+                  width="500"
+                  height="320"
+                  rx="20"
+                  fill="#eef2ff"
+                />
                 <circle cx="120" cy="160" r="40" fill="#93c5fd" />
-                <rect x="180" y="130" width="120" height="16" rx="8" fill="#bbf7d0" />
-                <rect x="180" y="154" width="90" height="12" rx="6" fill="#e5e7eb" />
-                <polyline points="200,220 260,190 320,205 380,170" fill="none" stroke="#34d399" strokeWidth="5" />
+                <rect
+                  x="180"
+                  y="130"
+                  width="120"
+                  height="16"
+                  rx="8"
+                  fill="#bbf7d0"
+                />
+                <rect
+                  x="180"
+                  y="154"
+                  width="90"
+                  height="12"
+                  rx="6"
+                  fill="#e5e7eb"
+                />
+                <polyline
+                  points="200,220 260,190 320,205 380,170"
+                  fill="none"
+                  stroke="#34d399"
+                  strokeWidth="5"
+                />
               </svg>
-              <p className="mt-3 text-sm text-muted-foreground">Plan your future with friendly guidance and tools.</p>
+              <p className="mt-3 text-sm text-muted-foreground">
+                Plan your future with friendly guidance and tools.
+              </p>
             </div>
           </div>
 
@@ -154,7 +195,10 @@ export default function Signup() {
                 <span>{percent}%</span>
               </div>
               <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
-                <div className="h-full bg-primary" style={{ width: `${percent}%` }} />
+                <div
+                  className="h-full bg-primary"
+                  style={{ width: `${percent}%` }}
+                />
               </div>
             </div>
             <CardHeader className="pb-2">
@@ -187,21 +231,50 @@ export default function Signup() {
               <form onSubmit={submit} className="space-y-4">
                 <div className="grid gap-3">
                   <div>
-                    <label className="mb-1 block text-sm font-medium">Full Name</label>
-                    <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="Your name" required />
+                    <label className="mb-1 block text-sm font-medium">
+                      Full Name
+                    </label>
+                    <Input
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="Your name"
+                      required
+                    />
                   </div>
                   <div>
-                    <label className="mb-1 block text-sm font-medium">Email</label>
-                    <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" required />
+                    <label className="mb-1 block text-sm font-medium">
+                      Email
+                    </label>
+                    <Input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="you@example.com"
+                      required
+                    />
                   </div>
                   <div className="grid gap-3 sm:grid-cols-2">
                     <div>
-                      <label className="mb-1 block text-sm font-medium">Password</label>
-                      <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                      <label className="mb-1 block text-sm font-medium">
+                        Password
+                      </label>
+                      <Input
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                      />
                     </div>
                     <div>
-                      <label className="mb-1 block text-sm font-medium">Confirm Password</label>
-                      <Input type="password" value={confirm} onChange={(e) => setConfirm(e.target.value)} required />
+                      <label className="mb-1 block text-sm font-medium">
+                        Confirm Password
+                      </label>
+                      <Input
+                        type="password"
+                        value={confirm}
+                        onChange={(e) => setConfirm(e.target.value)}
+                        required
+                      />
                     </div>
                   </div>
                 </div>
@@ -209,13 +282,18 @@ export default function Signup() {
                 {role === "parent" ? (
                   <div>
                     <div className="flex items-center gap-2">
-                      <label className="mb-1 block text-sm font-medium">Child's Email</label>
+                      <label className="mb-1 block text-sm font-medium">
+                        Child's Email
+                      </label>
                       <Tooltip>
                         <TooltipTrigger asChild>
-                          <span className="inline-flex h-4 w-4 items-center justify-center rounded-full border text-[10px] cursor-help">?</span>
+                          <span className="inline-flex h-4 w-4 items-center justify-center rounded-full border text-[10px] cursor-help">
+                            ?
+                          </span>
                         </TooltipTrigger>
                         <TooltipContent>
-                          Use your child's registered email to connect your account.
+                          Use your child's registered email to connect your
+                          account.
                         </TooltipContent>
                       </Tooltip>
                     </div>
@@ -233,11 +311,22 @@ export default function Signup() {
                   <>
                     <div className="grid gap-3 sm:grid-cols-3">
                       <div>
-                        <label className="mb-1 block text-sm font-medium">Age</label>
-                        <Input type="number" min={8} max={60} value={age} onChange={(e) => setAge(e.target.value)} placeholder="16" />
+                        <label className="mb-1 block text-sm font-medium">
+                          Age
+                        </label>
+                        <Input
+                          type="number"
+                          min={8}
+                          max={60}
+                          value={age}
+                          onChange={(e) => setAge(e.target.value)}
+                          placeholder="16"
+                        />
                       </div>
                       <div>
-                        <label className="mb-1 block text-sm font-medium">Gender</label>
+                        <label className="mb-1 block text-sm font-medium">
+                          Gender
+                        </label>
                         <Select value={gender} onValueChange={setGender}>
                           <SelectTrigger>
                             <SelectValue placeholder="Select" />
@@ -246,18 +335,30 @@ export default function Signup() {
                             <SelectItem value="male">Male</SelectItem>
                             <SelectItem value="female">Female</SelectItem>
                             <SelectItem value="other">Other</SelectItem>
-                            <SelectItem value="na">Prefer not to say</SelectItem>
+                            <SelectItem value="na">
+                              Prefer not to say
+                            </SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
                       <div>
-                        <label className="mb-1 block text-sm font-medium">Class/Grade</label>
+                        <label className="mb-1 block text-sm font-medium">
+                          Class/Grade
+                        </label>
                         <Select value={grade} onValueChange={setGrade}>
                           <SelectTrigger>
                             <SelectValue placeholder="Select" />
                           </SelectTrigger>
                           <SelectContent>
-                            {["Class 8", "Class 9", "Class 10", "Class 11", "Class 12", "UG", "PG"].map((g) => (
+                            {[
+                              "Class 8",
+                              "Class 9",
+                              "Class 10",
+                              "Class 11",
+                              "Class 12",
+                              "UG",
+                              "PG",
+                            ].map((g) => (
                               <SelectItem key={g} value={g}>
                                 {g}
                               </SelectItem>
@@ -269,17 +370,32 @@ export default function Signup() {
 
                     <div className="grid gap-3 sm:grid-cols-2">
                       <div>
-                        <label className="mb-1 block text-sm font-medium">Location</label>
-                        <Input value={location} onChange={(e) => setLocation(e.target.value)} placeholder="City, State" />
+                        <label className="mb-1 block text-sm font-medium">
+                          Location
+                        </label>
+                        <Input
+                          value={location}
+                          onChange={(e) => setLocation(e.target.value)}
+                          placeholder="City, State"
+                        />
                       </div>
                       <div>
-                        <label className="mb-1 block text-sm font-medium">Preferred Language</label>
+                        <label className="mb-1 block text-sm font-medium">
+                          Preferred Language
+                        </label>
                         <Select value={language} onValueChange={setLanguage}>
                           <SelectTrigger>
                             <SelectValue placeholder="Select language" />
                           </SelectTrigger>
                           <SelectContent>
-                            {["English", "हिंदी (Hindi)", "বাংলা (Bengali)", "தமிழ் (Tamil)", "తెలుగు (Telugu)", "मराठी (Marathi)"].map((l) => (
+                            {[
+                              "English",
+                              "हिंदी (Hindi)",
+                              "বাংলা (Bengali)",
+                              "தமிழ் (Tamil)",
+                              "తెలుగు (Telugu)",
+                              "मराठी (Marathi)",
+                            ].map((l) => (
                               <SelectItem key={l} value={l}>
                                 {l}
                               </SelectItem>
@@ -293,9 +409,18 @@ export default function Signup() {
 
                 <div>
                   <label className="mb-2 block text-sm font-medium">Role</label>
-                  <ToggleGroup type="single" value={role} onValueChange={(v) => v && setRole(v)} className="flex flex-wrap gap-2">
+                  <ToggleGroup
+                    type="single"
+                    value={role}
+                    onValueChange={(v) => v && setRole(v)}
+                    className="flex flex-wrap gap-2"
+                  >
                     {["student", "parent", "counselor"].map((r) => (
-                      <ToggleGroupItem key={r} value={r} className="rounded-full px-3 py-1 data-[state=on]:bg-primary/10 data-[state=on]:text-primary border capitalize">
+                      <ToggleGroupItem
+                        key={r}
+                        value={r}
+                        className="rounded-full px-3 py-1 data-[state=on]:bg-primary/10 data-[state=on]:text-primary border capitalize"
+                      >
                         {r}
                       </ToggleGroupItem>
                     ))}
@@ -304,10 +429,21 @@ export default function Signup() {
 
                 {role === "student" ? (
                   <div>
-                    <label className="mb-2 block text-sm font-medium">Academic Interests</label>
-                    <ToggleGroup type="multiple" value={interests} onValueChange={setInterests} className="flex flex-wrap gap-2">
+                    <label className="mb-2 block text-sm font-medium">
+                      Academic Interests
+                    </label>
+                    <ToggleGroup
+                      type="multiple"
+                      value={interests}
+                      onValueChange={setInterests}
+                      className="flex flex-wrap gap-2"
+                    >
                       {INTERESTS.map((i) => (
-                        <ToggleGroupItem key={i} value={i} className="rounded-full px-3 py-1 data-[state=on]:bg-primary/10 data-[state=on]:text-primary border">
+                        <ToggleGroupItem
+                          key={i}
+                          value={i}
+                          className="rounded-full px-3 py-1 data-[state=on]:bg-primary/10 data-[state=on]:text-primary border"
+                        >
                           {i}
                         </ToggleGroupItem>
                       ))}
@@ -316,13 +452,29 @@ export default function Signup() {
                 ) : null}
 
                 <div className="flex items-start gap-2">
-                  <Checkbox id="agree" checked={agree} onCheckedChange={(v) => setAgree(Boolean(v))} />
-                  <label htmlFor="agree" className="text-sm text-muted-foreground">
-                    I agree to <a href="#" className="underline">Terms</a> & <a href="#" className="underline">Privacy Policy</a>
+                  <Checkbox
+                    id="agree"
+                    checked={agree}
+                    onCheckedChange={(v) => setAgree(Boolean(v))}
+                  />
+                  <label
+                    htmlFor="agree"
+                    className="text-sm text-muted-foreground"
+                  >
+                    I agree to{" "}
+                    <a href="#" className="underline">
+                      Terms
+                    </a>{" "}
+                    &{" "}
+                    <a href="#" className="underline">
+                      Privacy Policy
+                    </a>
                   </label>
                 </div>
 
-                <Button type="submit" className="w-full">Sign Up & Continue</Button>
+                <Button type="submit" className="w-full">
+                  Sign Up & Continue
+                </Button>
               </form>
             </CardContent>
           </Card>
@@ -331,12 +483,22 @@ export default function Signup() {
 
       <footer className="border-t bg-white">
         <div className="mx-auto max-w-5xl px-4 py-6 flex flex-wrap items-center justify-between gap-3 text-sm">
-          <div className="text-muted-foreground">© {new Date().getFullYear()} NovaPath</div>
+          <div className="text-muted-foreground">
+            © {new Date().getFullYear()} NovaPath
+          </div>
           <nav className="flex items-center gap-4">
-            <a href="#" className="hover:underline">About</a>
-            <a href="#" className="hover:underline">Contact</a>
-            <a href="#" className="hover:underline">Privacy</a>
-            <a href="#" className="hover:underline">FAQs</a>
+            <a href="#" className="hover:underline">
+              About
+            </a>
+            <a href="#" className="hover:underline">
+              Contact
+            </a>
+            <a href="#" className="hover:underline">
+              Privacy
+            </a>
+            <a href="#" className="hover:underline">
+              FAQs
+            </a>
           </nav>
         </div>
       </footer>
