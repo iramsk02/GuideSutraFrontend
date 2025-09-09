@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Card,
   CardContent,
@@ -208,6 +208,16 @@ function deadlineProgress(dateISO: string) {
 export default function Colleges() {
   const [q, setQ] = useState("");
   const [loc, setLoc] = useState<string | undefined>();
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem("novapath_profile");
+      if (raw) {
+        const p = JSON.parse(raw);
+        const city = (p.location || "").split(", ").pop();
+        if (city && allLocations.includes(city)) setLoc(city);
+      }
+    } catch {}
+  }, []);
   const [stream, setStream] = useState<string | undefined>();
   const [degree, setDegree] = useState<string | undefined>();
   const [saved, setSaved] = useState<Record<string, boolean>>({});
