@@ -19,7 +19,12 @@ import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 import { useEffect } from "react";
-import { getProfile, getQuizResult, normalizeStream, profileGenderToFilter } from "@/lib/user";
+import {
+  getProfile,
+  getQuizResult,
+  normalizeStream,
+  profileGenderToFilter,
+} from "@/lib/user";
 import {
   Banknote,
   GraduationCap,
@@ -165,7 +170,8 @@ export default function Scholarships() {
     const q = getQuizResult();
     const s = normalizeStream(q?.stream);
     const g = profileGenderToFilter(p?.gender);
-    if (s && (STREAMS as readonly string[]).includes(s as any)) setStream(s as any);
+    if (s && (STREAMS as readonly string[]).includes(s as any))
+      setStream(s as any);
     if (g) setGender(g as any);
   }, []);
 

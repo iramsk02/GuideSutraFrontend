@@ -40,7 +40,9 @@ export function normalizeStream(s?: string): string | undefined {
   return undefined;
 }
 
-export function profileGenderToFilter(g?: string): "Male" | "Female" | "Any" | undefined {
+export function profileGenderToFilter(
+  g?: string,
+): "Male" | "Female" | "Any" | undefined {
   if (!g) return undefined;
   const t = g.toLowerCase();
   if (t === "female") return "Female";
