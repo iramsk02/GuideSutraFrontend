@@ -156,7 +156,7 @@ export default function Index() {
               <p className="text-base font-semibold">Hi {profile.name?.split(" ")[0]} 👋</p>
               <p className="text-sm text-muted-foreground">Your career roadmap awaits</p>
               {quiz?.stream ? (
-                <p className="mt-1 text-sm"><span className="font-medium">Suggested Stream:</span> {quiz.stream} �� <span className="text-muted-foreground">{quiz.score}% match</span></p>
+                <p className="mt-1 text-sm"><span className="font-medium">Suggested Stream:</span> {quiz.stream} · <span className="text-muted-foreground">{quiz.score}% match</span></p>
               ) : null}
             </div>
             <div className="min-w-[240px]">
@@ -436,6 +436,27 @@ export default function Index() {
           </Card>
         </aside>
       </div>
+
+      {/* Suggested Next Steps */}
+      <section className="space-y-3">
+        <div className="flex items-end justify-between">
+          <div>
+            <h2 className="text-xl font-semibold">Suggested Next Steps</h2>
+            <p className="text-sm text-muted-foreground">Personalized actions to continue</p>
+          </div>
+        </div>
+        <div className="grid gap-4 sm:grid-cols-3">
+          {[
+            quiz?.stream ? { title: "Explore career roadmap", to: "/career-pathway" } : { title: "Take the Aptitude Quiz", to: "/career-quiz" },
+            { title: "Browse nearby colleges", to: "/colleges" },
+            { title: "Open your timeline", to: "/timeline" },
+          ].map((s) => (
+            <Card key={s.title} className="hover:shadow-md">
+              <CardContent className="p-4"><a href={s.to} className="text-sm font-medium hover:underline">{s.title}</a></CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
 
       {/* Scholarships */}
       <section className="space-y-3">
