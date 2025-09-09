@@ -160,6 +160,15 @@ export default function Scholarships() {
   const [income, setIncome] = useState<number | undefined>();
   const [saved, setSaved] = useState<Record<string, boolean>>({});
 
+  useEffect(() => {
+    const p = getProfile();
+    const q = getQuizResult();
+    const s = normalizeStream(q?.stream);
+    const g = profileGenderToFilter(p?.gender);
+    if (s && (STREAMS as readonly string[]).includes(s as any)) setStream(s as any);
+    if (g) setGender(g as any);
+  }, []);
+
   const filtered = useMemo(() => {
     return SCHOLARSHIPS.filter((s) => {
       const okStream =
