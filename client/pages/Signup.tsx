@@ -19,6 +19,7 @@ import {
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useState } from "react";
 import { toast } from "sonner";
+import Chatbot from "@/components/Chatbot";
 
 const INTERESTS = [
   "Science",
@@ -314,6 +315,7 @@ export default function Signup() {
           </nav>
         </div>
       </footer>
+      <Chatbot />
     </div>
   );
 }

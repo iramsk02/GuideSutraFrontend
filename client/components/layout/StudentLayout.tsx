@@ -37,6 +37,7 @@ import {
   HeartHandshake,
   Brain,
 } from "lucide-react";
+import Chatbot from "@/components/Chatbot";
 
 const interests = ["AI", "Robotics", "Math", "Entrepreneurship"];
 
@@ -70,12 +71,18 @@ export function StudentLayout({ children }: { children: ReactNode }) {
     path.startsWith("/signup") ||
     path.startsWith("/signin");
   if (bypass) {
-    return <>{children}</>;
+    return (
+      <>
+        {children}
+        <Chatbot />
+      </>
+    );
   }
 
   return (
-    <SidebarProvider>
-      <Sidebar className="border-r border-sidebar-border " collapsible="icon">
+    <>
+      <SidebarProvider>
+        <Sidebar className="border-r border-sidebar-border " collapsible="icon">
         <SidebarHeader>
           <div className="flex items-center gap-3 p-2">
             <Avatar className="h-12 w-12 ring-2 ring-primary/20">
@@ -153,8 +160,10 @@ export function StudentLayout({ children }: { children: ReactNode }) {
           </div>
         </div>
         <div className="px-6 py-6 lg:px-8">{children}</div>
-      </SidebarInset>
-    </SidebarProvider>
+        </SidebarInset>
+      </SidebarProvider>
+      <Chatbot />
+    </>
   );
 }
 
