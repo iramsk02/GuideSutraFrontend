@@ -22,6 +22,8 @@ import Signin from "./pages/Signin";
 import Timeline from "./pages/Timeline";
 import Recommendations from "./pages/Recommendations";
 import Outcomes from "./pages/Outcomes";
+import Resources from "./pages/Resources";
+import Admin from "./pages/admin/Admin";
 
 const queryClient = new QueryClient();
 
@@ -47,6 +49,8 @@ const App = () => (
             <Route path="/timeline" element={<Timeline />} />
             <Route path="/recommendations" element={<Recommendations />} />
             <Route path="/outcomes" element={<Outcomes />} />
+            <Route path="/resources" element={<Resources />} />
+            <Route path="/admin" element={<Admin />} />
             <Route path="/" element={<Navigate to="/landing" replace />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
