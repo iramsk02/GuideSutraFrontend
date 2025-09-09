@@ -74,10 +74,10 @@ const scholarships = [
 
 export default function Index() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 ">
       {/* Career Pathway */}
       <section>
-        <div className="mb-3 flex items-end justify-between">
+        <div className="mb-3 mt-20 flex items-end justify-between">
           <div>
             <h2 className="text-xl font-semibold">Career Pathway</h2>
             <p className="text-sm text-muted-foreground">

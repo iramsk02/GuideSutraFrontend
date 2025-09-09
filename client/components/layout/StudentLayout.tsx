@@ -41,7 +41,7 @@ import {
 const interests = ["AI", "Robotics", "Math", "Entrepreneurship"];
 
 const nav = [
-  { to: "/", label: "Dashboard", icon: LayoutDashboard },
+  { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { to: "/career-pathway", label: "Career Pathway", icon: GraduationCap },
   { to: "/colleges", label: "Colleges", icon: School },
   { to: "/scholarships", label: "Scholarships", icon: BookOpen },
@@ -71,7 +71,7 @@ export function StudentLayout({ children }: { children: ReactNode }) {
 
   return (
     <SidebarProvider>
-      <Sidebar className="border-r border-sidebar-border" collapsible="icon">
+      <Sidebar className="border-r border-sidebar-border " collapsible="icon">
         <SidebarHeader>
           <div className="flex items-center gap-3 p-2">
             <Avatar className="h-12 w-12 ring-2 ring-primary/20">
@@ -135,7 +135,7 @@ export function StudentLayout({ children }: { children: ReactNode }) {
         <SidebarRail />
       </Sidebar>
       <SidebarInset>
-        <div className="sticky top-0 z-10 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
+        <div className="fixed  top-0 z-10 w-screen bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
           <div className="flex h-14 items-center gap-3 px-4">
             <SidebarTrigger />
             <Separator orientation="vertical" className="mr-2 h-6" />

@@ -372,7 +372,7 @@ export default function CareerPathway() {
   const [selected, setSelected] = useState<PositionedNode | null>(null);
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[300px_1fr_340px]">
+    <div className="grid gap-6 lg:grid-cols-[300px_1fr_340px] mt-20">
       {/* Left Filters */}
       <div className="space-y-4">
         <Card>
@@ -419,7 +419,7 @@ export default function CareerPathway() {
       </div>
 
       {/* Center Diagram */}
-      <Card className="overflow-auto">
+      <Card className="w-full">
         <CardHeader className="pb-0">
           <CardTitle>Course → Career Roadmap</CardTitle>
           <CardDescription>

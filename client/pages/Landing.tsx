@@ -33,10 +33,11 @@ import {
 
 export default function Landing() {
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-blue-50/60 to-white">
+    <div className="min-h-screen  flex flex-col bg-gradient-to-b from-blue-50/60 to-white">
       {/* Header */}
-      <header className="sticky top-0 z-20 w-full border-b bg-white/80 backdrop-blur">
+      <header className="sticky top-0 z-20 w-full border-b mt-0 bg-white/80 backdrop-blur">
         <div className="mx-auto max-w-6xl px-4 h-14 flex items-center justify-between">
+        
           <Link to="/" className="font-semibold text-primary">
             NovaPath
           </Link>
@@ -62,12 +63,12 @@ export default function Landing() {
           </nav>
           <div className="flex items-center gap-2">
             <Link
-              to="/mentorship"
+              to="/dashboard"
               className="hidden text-sm text-muted-foreground md:block"
             >
               Login
             </Link>
-            <Link to="/colleges">
+            <Link to="/dashboard">
               <Button className="rounded-full px-5">Signup</Button>
             </Link>
           </div>
@@ -212,7 +213,7 @@ export default function Landing() {
       </section>
 
       {/* Quick Stats */}
-      <section id="features" className="mx-auto max-w-6xl px-4 pb-12">
+      <section id="features" className="mx-auto w-full px-4 pb-12">
         <div className="grid gap-4 sm:grid-cols-3">
           <Card className="rounded-2xl">
             <CardContent className="p-6 flex items-center gap-3">
@@ -251,7 +252,7 @@ export default function Landing() {
       </section>
 
       {/* How It Works */}
-      <section className="mx-auto max-w-6xl px-4 pb-12">
+      <section className="mx-auto w-full px-4 pb-12">
         <h2 className="text-xl font-semibold mb-4">How it works</h2>
         <div className="grid gap-4 md:grid-cols-4">
           {[
@@ -286,7 +287,7 @@ export default function Landing() {
       </section>
 
       {/* Features */}
-      <section id="about" className="mx-auto max-w-6xl px-4 pb-12">
+      <section id="about" className="mx-auto w-full px-4 pb-12">
         <h2 className="text-xl font-semibold mb-4">Features</h2>
         <div className="grid gap-4 md:grid-cols-4">
           {[
@@ -325,7 +326,7 @@ export default function Landing() {
       </section>
 
       {/* Testimonials */}
-      <section className="mx-auto max-w-6xl px-4 pb-12">
+      <section className="mx-auto w-full px-4 pb-12">
         <h2 className="text-xl font-semibold mb-4">What students say</h2>
         <div className="grid gap-4 md:grid-cols-3">
           {[
@@ -362,7 +363,7 @@ export default function Landing() {
       </section>
 
       {/* Roadmap preview */}
-      <section className="mx-auto max-w-6xl px-4 pb-12">
+      <section className="mx-auto w-full px-4 pb-12">
         <Card className="rounded-2xl">
           <CardContent className="p-6 md:p-8 grid gap-6 md:grid-cols-2 items-center">
             <div>
@@ -413,7 +414,7 @@ export default function Landing() {
       </section>
 
       {/* Blog */}
-      <section className="mx-auto max-w-6xl px-4 pb-12">
+      <section className="mx-auto w-full px-4 pb-12">
         <h2 className="text-xl font-semibold mb-4">Resources</h2>
         <div className="grid gap-4 md:grid-cols-3">
           {[
@@ -445,11 +446,11 @@ export default function Landing() {
       </section>
 
       {/* FAQ */}
-      <section className="mx-auto max-w-6xl px-4 pb-12">
+      <section className="mx-auto w-full px-4 pb-12">
         <h2 className="text-xl font-semibold mb-4">FAQs</h2>
-        <Accordion type="single" collapsible className="rounded-2xl border">
+        <Accordion type="single" collapsible className="p-2 rounded-2xl border">
           <AccordionItem value="q1">
-            <AccordionTrigger>Is the test free?</AccordionTrigger>
+            <AccordionTrigger >Is the test free?</AccordionTrigger>
             <AccordionContent>
               Yes, the career test is free and takes about 10 minutes.
             </AccordionContent>
@@ -472,7 +473,7 @@ export default function Landing() {
       </section>
 
       {/* Newsletter */}
-      <section className="mx-auto max-w-6xl px-4 pb-12">
+      <section className="mx-auto w-full px-4 pb-12">
         <Card className="rounded-2xl bg-gradient-to-r from-blue-50 to-emerald-50 border-blue-100">
           <CardContent className="p-6 md:p-8">
             <div className="md:flex md:items-center md:justify-between md:gap-6">
