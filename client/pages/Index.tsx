@@ -89,6 +89,23 @@ const scholarships = [
 export default function Index() {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [quiz, setQuiz] = useState<{ stream?: string; score?: number } | null>(null);
+  const completion = useMemo(() => {
+    const p = (profile || {}) as Profile;
+    const flags = [
+      !!p.name,
+      !!p.email,
+      typeof p.age === 'number' && !Number.isNaN(p.age),
+      !!p.gender,
+      !!p.grade,
+      !!p.location,
+      !!p.language,
+      (p.interests || []).length > 0,
+      !!p.role,
+      !!quiz?.stream,
+    ];
+    const filled = flags.reduce((acc, v) => acc + (v ? 1 : 0), 0);
+    return Math.round((filled / flags.length) * 100);
+  }, [profile, quiz]);
 
   useEffect(() => {
     try {
