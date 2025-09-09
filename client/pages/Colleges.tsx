@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { getQuizResult, normalizeStream } from "@/lib/user";
 import {
   Card,
   CardContent,
@@ -219,6 +220,11 @@ export default function Colleges() {
     } catch {}
   }, []);
   const [stream, setStream] = useState<string | undefined>();
+  useEffect(() => {
+    const qr = getQuizResult();
+    const norm = normalizeStream(qr?.stream);
+    if (norm && allStreams.includes(norm)) setStream(norm);
+  }, []);
   const [degree, setDegree] = useState<string | undefined>();
   const [saved, setSaved] = useState<Record<string, boolean>>({});
   const [page, setPage] = useState(1);
