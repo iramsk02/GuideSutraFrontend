@@ -17,6 +17,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -42,6 +43,7 @@ export default function Signup() {
   const [location, setLocation] = useState<string>("");
   const [language, setLanguage] = useState<string>("");
   const [grade, setGrade] = useState<string>("");
+  const [role, setRole] = useState<string>("student");
   const [interests, setInterests] = useState<string[]>([]);
   const [agree, setAgree] = useState(false);
   const navigate = useNavigate();
@@ -61,6 +63,7 @@ export default function Signup() {
       interests,
       location,
       language,
+      role,
     };
     try {
       localStorage.setItem("novapath_profile", JSON.stringify(profile));
@@ -132,6 +135,15 @@ export default function Signup() {
 
           {/* Form */}
           <Card className="order-1 md:order-2 shadow-sm">
+            <div className="px-6 pt-4">
+              <div className="mb-2 flex items-center justify-between text-xs text-muted-foreground">
+                <span>Profile completion</span>
+                <span>{Math.round(((Number(!!name)+Number(!!email)+Number(!!password)+Number(!!confirm)+Number(!!age)+Number(!!gender)+Number(!!grade)+Number(!!location)+Number(!!language)+Number(interests.length>0)+Number(!!role))/11)*100)}%</span>
+              </div>
+              <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
+                <div className="h-full bg-primary" style={{ width: `${Math.round(((Number(!!name)+Number(!!email)+Number(!!password)+Number(!!confirm)+Number(!!age)+Number(!!gender)+Number(!!grade)+Number(!!location)+Number(!!language)+Number(interests.length>0)+Number(!!role))/11)*100)}%` }} />
+              </div>
+            </div>
             <CardHeader className="pb-2">
               <CardTitle>Create your account</CardTitle>
               <CardDescription>It takes less than 2 minutes.</CardDescription>
@@ -298,6 +310,17 @@ export default function Signup() {
                       </SelectContent>
                     </Select>
                   </div>
+                </div>
+
+                <div>
+                  <label className="mb-2 block text-sm font-medium">Role</label>
+                  <ToggleGroup type="single" value={role} onValueChange={(v) => v && setRole(v)} className="flex flex-wrap gap-2">
+                    {["student","parent","counselor"].map((r) => (
+                      <ToggleGroupItem key={r} value={r} className="rounded-full px-3 py-1 data-[state=on]:bg-primary/10 data-[state=on]:text-primary border capitalize">
+                        {r}
+                      </ToggleGroupItem>
+                    ))}
+                  </ToggleGroup>
                 </div>
 
                 <div>
