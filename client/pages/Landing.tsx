@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Chatbot from "@/components/Chatbot";
+// import Chatbot from "@/components/Chatbot";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -558,7 +558,7 @@ export default function Landing() {
           </div>
         </div>
       </footer>
-      <Chatbot />
+      {/* <Chatbot /> */}
     </div>
   );
 }
