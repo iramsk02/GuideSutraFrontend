@@ -11,7 +11,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import Chatbot from "@/components/Chatbot";
 
 export default function Signin() {
   const [email, setEmail] = useState("");
@@ -188,7 +187,7 @@ export default function Signin() {
           </nav>
         </div>
       </footer>
-      <Chatbot />
+      
     </div>
   );
 }
