@@ -40,7 +40,8 @@ import {
 } from "lucide-react";
 import Chatbot from "@/components/Chatbot";
 
-const interests = ["AI", "Robotics", "Math", "Entrepreneurship"];
+type Profile = { name?: string; grade?: string; interests?: string[]; role?: string };
+const defaultInterests = ["AI", "Robotics", "Math", "Entrepreneurship"];
 
 const nav = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
