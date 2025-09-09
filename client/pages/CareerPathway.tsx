@@ -277,11 +277,12 @@ function layoutTree(root: TreeNode) {
   const xGap = 260;
   const yGap = 90;
 
-  type Tmp = TreeNode & {
+  type Tmp = Omit<TreeNode, "children"> & {
     depth: number;
     width: number;
     x?: number;
     y?: number;
+    children?: Tmp[];
   };
   function annotate(n: TreeNode, depth = 0): Tmp {
     const nn: Tmp = { ...(n as any), depth, width: 1 };
@@ -289,7 +290,7 @@ function layoutTree(root: TreeNode) {
       const kids = n.children.map((c) => annotate(c, depth + 1));
       const w = kids.reduce((acc, k) => acc + k.width, 0);
       nn.width = Math.max(1, w);
-      (nn as any).children = kids;
+      nn.children = kids;
     }
     return nn;
   }
@@ -302,7 +303,7 @@ function layoutTree(root: TreeNode) {
       currentY += 1;
     } else {
       n.children.forEach(position);
-      const ys = n.children.map((c) => c.y!);
+      const ys = (n.children as Tmp[]).map((c) => c.y!);
       n.y = (Math.min(...ys) + Math.max(...ys)) / 2;
     }
     n.x = n.depth * xGap;
@@ -313,9 +314,9 @@ function layoutTree(root: TreeNode) {
   const edges: Edge[] = [];
   function flatten(n: Tmp) {
     nodes.push({ ...(n as any), x: n.x!, y: n.y!, depth: n.depth });
-    n.children?.forEach((c) => {
+    (n.children as Tmp[] | undefined)?.forEach((c) => {
       edges.push({ from: n as any, to: c as any });
-      flatten(c);
+      flatten(c as Tmp);
     });
   }
   flatten(a);
