@@ -88,13 +88,15 @@ const scholarships = [
 
 export default function Index() {
   const [profile, setProfile] = useState<Profile | null>(null);
-  const [quiz, setQuiz] = useState<{ stream?: string; score?: number } | null>(null);
+  const [quiz, setQuiz] = useState<{ stream?: string; score?: number } | null>(
+    null,
+  );
   const completion = useMemo(() => {
     const p = (profile || {}) as Profile;
     const flags = [
       !!p.name,
       !!p.email,
-      typeof p.age === 'number' && !Number.isNaN(p.age),
+      typeof p.age === "number" && !Number.isNaN(p.age),
       !!p.gender,
       !!p.grade,
       !!p.location,
@@ -170,10 +172,20 @@ export default function Index() {
         <Card>
           <CardContent className="py-4 flex flex-wrap items-center justify-between gap-4">
             <div>
-              <p className="text-base font-semibold">Hi {profile.name?.split(" ")[0]} 👋</p>
-              <p className="text-sm text-muted-foreground">Your career roadmap awaits</p>
+              <p className="text-base font-semibold">
+                Hi {profile.name?.split(" ")[0]} 👋
+              </p>
+              <p className="text-sm text-muted-foreground">
+                Your career roadmap awaits
+              </p>
               {quiz?.stream ? (
-                <p className="mt-1 text-sm"><span className="font-medium">Suggested Stream:</span> {quiz.stream} · <span className="text-muted-foreground">{quiz.score}% match</span></p>
+                <p className="mt-1 text-sm">
+                  <span className="font-medium">Suggested Stream:</span>{" "}
+                  {quiz.stream} ·{" "}
+                  <span className="text-muted-foreground">
+                    {quiz.score}% match
+                  </span>
+                </p>
               ) : null}
             </div>
             <div className="min-w-[240px]">
@@ -197,17 +209,33 @@ export default function Index() {
       {/* Quick actions */}
       <div className="grid gap-4 md:grid-cols-5">
         {[
-          { title: "Take Aptitude Test", icon: <GraduationCap />, to: "/career-quiz" },
-          { title: "Courses & Careers", icon: <Briefcase />, to: "/career-pathway" },
+          {
+            title: "Take Aptitude Test",
+            icon: <GraduationCap />,
+            to: "/career-quiz",
+          },
+          {
+            title: "Courses & Careers",
+            icon: <Briefcase />,
+            to: "/career-pathway",
+          },
           { title: "Nearby Colleges", icon: <School />, to: "/colleges" },
           { title: "Track Deadlines", icon: <CalendarDays />, to: "/timeline" },
-          { title: "Recommendations", icon: <Sparkles />, to: "/recommendations" },
+          {
+            title: "Recommendations",
+            icon: <Sparkles />,
+            to: "/recommendations",
+          },
         ].map((c) => (
           <Card key={c.title} className="hover:shadow-sm">
             <CardContent className="p-4">
               <div className="flex items-center gap-2 text-sm font-medium">
-                <div className="rounded-md bg-accent p-2 text-muted-foreground">{c.icon}</div>
-                <a href={c.to} className="hover:underline">{c.title}</a>
+                <div className="rounded-md bg-accent p-2 text-muted-foreground">
+                  {c.icon}
+                </div>
+                <a href={c.to} className="hover:underline">
+                  {c.title}
+                </a>
               </div>
             </CardContent>
           </Card>
@@ -459,17 +487,25 @@ export default function Index() {
         <div className="flex items-end justify-between">
           <div>
             <h2 className="text-xl font-semibold">Suggested Next Steps</h2>
-            <p className="text-sm text-muted-foreground">Personalized actions to continue</p>
+            <p className="text-sm text-muted-foreground">
+              Personalized actions to continue
+            </p>
           </div>
         </div>
         <div className="grid gap-4 sm:grid-cols-3">
           {[
-            quiz?.stream ? { title: "Explore career roadmap", to: "/career-pathway" } : { title: "Take the Aptitude Quiz", to: "/career-quiz" },
+            quiz?.stream
+              ? { title: "Explore career roadmap", to: "/career-pathway" }
+              : { title: "Take the Aptitude Quiz", to: "/career-quiz" },
             { title: "Browse nearby colleges", to: "/colleges" },
             { title: "Open your timeline", to: "/timeline" },
           ].map((s) => (
             <Card key={s.title} className="hover:shadow-md">
-              <CardContent className="p-4"><a href={s.to} className="text-sm font-medium hover:underline">{s.title}</a></CardContent>
+              <CardContent className="p-4">
+                <a href={s.to} className="text-sm font-medium hover:underline">
+                  {s.title}
+                </a>
+              </CardContent>
             </Card>
           ))}
         </div>

@@ -1,15 +1,29 @@
 import { useEffect, useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 import { Calendar } from "@/components/ui/calendar";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 
-interface EventItem { title: string; date: string; type: "admission" | "exam" | "scholarship"; }
+interface EventItem {
+  title: string;
+  date: string;
+  type: "admission" | "exam" | "scholarship";
+}
 
 const DEFAULT_EVENTS: EventItem[] = [
   { title: "MIT Regular Decision", date: "2025-01-01", type: "admission" },
   { title: "Stanford EA Deadline", date: "2024-11-01", type: "admission" },
-  { title: "STEM Excellence Scholarship", date: "2025-03-12", type: "scholarship" },
+  {
+    title: "STEM Excellence Scholarship",
+    date: "2025-03-12",
+    type: "scholarship",
+  },
 ];
 
 export default function Timeline() {
@@ -40,7 +54,9 @@ export default function Timeline() {
           <div className="flex items-start justify-between gap-3">
             <div>
               <CardTitle>Timeline Tracker</CardTitle>
-              <CardDescription>View admissions, exam dates, and scholarship windows</CardDescription>
+              <CardDescription>
+                View admissions, exam dates, and scholarship windows
+              </CardDescription>
             </div>
             <div className="flex items-center gap-2 text-sm">
               <span>Notifications</span>
@@ -51,16 +67,26 @@ export default function Timeline() {
         <CardContent>
           <div className="grid gap-6 md:grid-cols-2">
             <div>
-              <Calendar mode="single" selected={date} onSelect={setDate} className="rounded-md border" />
+              <Calendar
+                mode="single"
+                selected={date}
+                onSelect={setDate}
+                className="rounded-md border"
+              />
             </div>
             <div>
               <h3 className="font-medium mb-2">Events on selected date</h3>
               {dayEvents.length === 0 ? (
-                <p className="text-sm text-muted-foreground">No events on this day.</p>
+                <p className="text-sm text-muted-foreground">
+                  No events on this day.
+                </p>
               ) : (
                 <ul className="space-y-3">
                   {dayEvents.map((e) => (
-                    <li key={e.title} className="flex items-center gap-2 text-sm">
+                    <li
+                      key={e.title}
+                      className="flex items-center gap-2 text-sm"
+                    >
                       <Badge variant="outline">{e.type}</Badge>
                       <span className="font-medium">{e.title}</span>
                     </li>

@@ -17,7 +17,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -138,10 +142,32 @@ export default function Signup() {
             <div className="px-6 pt-4">
               <div className="mb-2 flex items-center justify-between text-xs text-muted-foreground">
                 <span>Profile completion</span>
-                <span>{Math.round(((Number(!!name)+Number(!!email)+Number(!!password)+Number(!!confirm)+Number(!!age)+Number(!!gender)+Number(!!grade)+Number(!!location)+Number(!!language)+Number(interests.length>0)+Number(!!role))/11)*100)}%</span>
+                <span>
+                  {Math.round(
+                    ((Number(!!name) +
+                      Number(!!email) +
+                      Number(!!password) +
+                      Number(!!confirm) +
+                      Number(!!age) +
+                      Number(!!gender) +
+                      Number(!!grade) +
+                      Number(!!location) +
+                      Number(!!language) +
+                      Number(interests.length > 0) +
+                      Number(!!role)) /
+                      11) *
+                      100,
+                  )}
+                  %
+                </span>
               </div>
               <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
-                <div className="h-full bg-primary" style={{ width: `${Math.round(((Number(!!name)+Number(!!email)+Number(!!password)+Number(!!confirm)+Number(!!age)+Number(!!gender)+Number(!!grade)+Number(!!location)+Number(!!language)+Number(interests.length>0)+Number(!!role))/11)*100)}%` }} />
+                <div
+                  className="h-full bg-primary"
+                  style={{
+                    width: `${Math.round(((Number(!!name) + Number(!!email) + Number(!!password) + Number(!!confirm) + Number(!!age) + Number(!!gender) + Number(!!grade) + Number(!!location) + Number(!!language) + Number(interests.length > 0) + Number(!!role)) / 11) * 100)}%`,
+                  }}
+                />
               </div>
             </div>
             <CardHeader className="pb-2">
@@ -281,7 +307,9 @@ export default function Signup() {
 
                 <div className="grid gap-3 sm:grid-cols-2">
                   <div>
-                    <label className="mb-1 block text-sm font-medium">Location</label>
+                    <label className="mb-1 block text-sm font-medium">
+                      Location
+                    </label>
                     <Input
                       value={location}
                       onChange={(e) => setLocation(e.target.value)}
@@ -289,7 +317,9 @@ export default function Signup() {
                     />
                   </div>
                   <div>
-                    <label className="mb-1 block text-sm font-medium">Preferred Language</label>
+                    <label className="mb-1 block text-sm font-medium">
+                      Preferred Language
+                    </label>
                     <Select value={language} onValueChange={setLanguage}>
                       <SelectTrigger>
                         <SelectValue placeholder="Select language" />
@@ -314,9 +344,18 @@ export default function Signup() {
 
                 <div>
                   <label className="mb-2 block text-sm font-medium">Role</label>
-                  <ToggleGroup type="single" value={role} onValueChange={(v) => v && setRole(v)} className="flex flex-wrap gap-2">
-                    {["student","parent","counselor"].map((r) => (
-                      <ToggleGroupItem key={r} value={r} className="rounded-full px-3 py-1 data-[state=on]:bg-primary/10 data-[state=on]:text-primary border capitalize">
+                  <ToggleGroup
+                    type="single"
+                    value={role}
+                    onValueChange={(v) => v && setRole(v)}
+                    className="flex flex-wrap gap-2"
+                  >
+                    {["student", "parent", "counselor"].map((r) => (
+                      <ToggleGroupItem
+                        key={r}
+                        value={r}
+                        className="rounded-full px-3 py-1 data-[state=on]:bg-primary/10 data-[state=on]:text-primary border capitalize"
+                      >
                         {r}
                       </ToggleGroupItem>
                     ))}

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import * as React from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -10,7 +10,12 @@ import { buttonVariants } from "@/components/ui/button";
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>;
 
-function Calendar({ className, classNames, showOutsideDays = true, ...props }: CalendarProps) {
+function Calendar({
+  className,
+  classNames,
+  showOutsideDays = true,
+  ...props
+}: CalendarProps) {
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
@@ -23,18 +28,19 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
         nav: "space-x-1 flex items-center",
         nav_button: cn(
           buttonVariants({ variant: "outline" }),
-          "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100"
+          "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100",
         ),
         nav_button_previous: "absolute left-1",
         nav_button_next: "absolute right-1",
         table: "w-full border-collapse table-fixed",
         head_row: "table-row",
-        head_cell: "table-cell w-10 h-10 text-center text-xs font-medium text-muted-foreground",
+        head_cell:
+          "table-cell w-10 h-10 text-center text-xs font-medium text-muted-foreground",
         row: "table-row",
         cell: "table-cell w-10 h-10 text-center align-middle p-0 relative",
         day: cn(
           buttonVariants({ variant: "ghost" }),
-          "h-9 w-9 p-0 font-normal rounded-full hover:bg-accent hover:text-accent-foreground aria-selected:bg-primary aria-selected:text-primary-foreground"
+          "h-9 w-9 p-0 font-normal rounded-full hover:bg-accent hover:text-accent-foreground aria-selected:bg-primary aria-selected:text-primary-foreground",
         ),
         day_today: "border border-primary rounded-full font-bold",
         day_selected:

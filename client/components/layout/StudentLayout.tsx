@@ -40,7 +40,12 @@ import {
 } from "lucide-react";
 import Chatbot from "@/components/Chatbot";
 
-type Profile = { name?: string; grade?: string; interests?: string[]; role?: string };
+type Profile = {
+  name?: string;
+  grade?: string;
+  interests?: string[];
+  role?: string;
+};
 const defaultInterests = ["AI", "Robotics", "Math", "Entrepreneurship"];
 
 const nav = [
@@ -67,7 +72,11 @@ export function StudentLayout({ children }: { children: ReactNode }) {
       if (raw) setProfile(JSON.parse(raw));
     } catch {}
   }, []);
-  const interests = (profile?.interests && profile.interests.length ? profile.interests : defaultInterests).slice(0,4);
+  const interests = (
+    profile?.interests && profile.interests.length
+      ? profile.interests
+      : defaultInterests
+  ).slice(0, 4);
   const title = useMemo(() => {
     if (!inRouter) return "Dashboard";
     const found = nav.find((n) => n.to === location.pathname);
@@ -104,12 +113,18 @@ export function StudentLayout({ children }: { children: ReactNode }) {
               </Avatar>
               <div className="min-w-0">
                 <div className="flex items-center gap-2">
-                  <span className="font-semibold truncate">{profile?.name || "Guest"}</span>
+                  <span className="font-semibold truncate">
+                    {profile?.name || "Guest"}
+                  </span>
                   {profile?.grade ? (
-                    <Badge variant="secondary" className="shrink-0">{profile.grade}</Badge>
+                    <Badge variant="secondary" className="shrink-0">
+                      {profile.grade}
+                    </Badge>
                   ) : null}
                   {profile?.role ? (
-                    <Badge variant="outline" className="shrink-0 capitalize">{profile.role}</Badge>
+                    <Badge variant="outline" className="shrink-0 capitalize">
+                      {profile.role}
+                    </Badge>
                   ) : null}
                 </div>
                 <div className="mt-2 flex flex-wrap gap-1.5">

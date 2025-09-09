@@ -374,7 +374,10 @@ export default function CareerQuiz() {
                       try {
                         localStorage.setItem(
                           "novapath_quiz_result",
-                          JSON.stringify({ stream: result?.stream, score: result?.score })
+                          JSON.stringify({
+                            stream: result?.stream,
+                            score: result?.score,
+                          }),
                         );
                       } catch {}
                       toast.success("Saved to dashboard");
