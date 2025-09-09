@@ -8,6 +8,7 @@ export type Profile = {
   location?: string;
   language?: string;
   role?: string; // student|parent|counselor
+  childEmail?: string; // for parent accounts linking to the student
 };
 
 export type QuizResult = { stream?: string; score?: number } | null;
