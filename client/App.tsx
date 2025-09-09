@@ -18,6 +18,7 @@ import Parents from "./pages/Parents";
 import Landing from "./pages/Landing";
 import CareerQuiz from "./pages/CareerQuiz";
 import Signup from "./pages/Signup";
+import Signin from "./pages/Signin";
 
 const queryClient = new QueryClient();
 
@@ -39,6 +40,7 @@ const App = () => (
             <Route path="/landing" element={<Landing />} />
             <Route path="/career-quiz" element={<CareerQuiz />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/signin" element={<Signin />} />
             <Route path="/" element={<Navigate to="/landing" replace />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
