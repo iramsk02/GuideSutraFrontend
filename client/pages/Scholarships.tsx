@@ -18,6 +18,8 @@ import {
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
+import { useEffect } from "react";
+import { getProfile, getQuizResult, normalizeStream, profileGenderToFilter } from "@/lib/user";
 import {
   Banknote,
   GraduationCap,
