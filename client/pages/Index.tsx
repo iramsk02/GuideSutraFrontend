@@ -141,8 +141,8 @@ export default function Index() {
         <Card>
           <CardContent className="py-4 flex flex-wrap items-center justify-between gap-2">
             <div>
+              <p className="text-base font-semibold">Hi {profile.name?.split(" ")[0]} 👋</p>
               <p className="text-sm text-muted-foreground">Welcome back</p>
-              <p className="text-base font-semibold">{profile.name}</p>
             </div>
             <div className="flex flex-wrap gap-2">
               {(profile.interests || []).slice(0, 4).map((t) => (
@@ -154,6 +154,26 @@ export default function Index() {
           </CardContent>
         </Card>
       )}
+
+      {/* Quick actions */}
+      <div className="grid gap-4 md:grid-cols-5">
+        {[
+          { title: "Take Aptitude Test", icon: <GraduationCap />, to: "/career-quiz" },
+          { title: "Courses & Careers", icon: <Briefcase />, to: "/career-pathway" },
+          { title: "Nearby Colleges", icon: <School />, to: "/colleges" },
+          { title: "Track Deadlines", icon: <CalendarDays />, to: "/timeline" },
+          { title: "Recommendations", icon: <Sparkles />, to: "/recommendations" },
+        ].map((c) => (
+          <Card key={c.title} className="hover:shadow-sm">
+            <CardContent className="p-4">
+              <div className="flex items-center gap-2 text-sm font-medium">
+                <div className="rounded-md bg-accent p-2 text-muted-foreground">{c.icon}</div>
+                <a href={c.to} className="hover:underline">{c.title}</a>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
 
       {/* Quick suggestions */}
       <div className="grid gap-4 md:grid-cols-3">

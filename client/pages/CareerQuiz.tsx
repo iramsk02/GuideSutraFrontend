@@ -370,7 +370,15 @@ export default function CareerQuiz() {
                   </Link>
                   <Button
                     variant="outline"
-                    onClick={() => toast.success("Saved to dashboard")}
+                    onClick={() => {
+                      try {
+                        localStorage.setItem(
+                          "novapath_quiz_result",
+                          JSON.stringify({ stream: result?.stream, score: result?.score })
+                        );
+                      } catch {}
+                      toast.success("Saved to dashboard");
+                    }}
                   >
                     Save to Dashboard
                   </Button>

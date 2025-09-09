@@ -19,6 +19,9 @@ import Landing from "./pages/Landing";
 import CareerQuiz from "./pages/CareerQuiz";
 import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
+import Timeline from "./pages/Timeline";
+import Recommendations from "./pages/Recommendations";
+import Outcomes from "./pages/Outcomes";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +44,9 @@ const App = () => (
             <Route path="/career-quiz" element={<CareerQuiz />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/signin" element={<Signin />} />
+            <Route path="/timeline" element={<Timeline />} />
+            <Route path="/recommendations" element={<Recommendations />} />
+            <Route path="/outcomes" element={<Outcomes />} />
             <Route path="/" element={<Navigate to="/landing" replace />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

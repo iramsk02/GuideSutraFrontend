@@ -36,6 +36,7 @@ import {
   UsersRound,
   HeartHandshake,
   Brain,
+  CalendarDays,
 } from "lucide-react";
 import Chatbot from "@/components/Chatbot";
 
@@ -45,6 +46,8 @@ const nav = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { to: "/career-pathway", label: "Career Pathway", icon: GraduationCap },
   { to: "/colleges", label: "Colleges", icon: School },
+  { to: "/timeline", label: "Timeline", icon: CalendarDays },
+  { to: "/recommendations", label: "Recommendations", icon: Sparkles },
   { to: "/scholarships", label: "Scholarships", icon: BookOpen },
   { to: "/mentorship", label: "Mentorship", icon: UsersRound },
   { to: "/parents", label: "Parents", icon: HeartHandshake },
