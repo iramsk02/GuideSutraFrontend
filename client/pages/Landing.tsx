@@ -33,10 +33,11 @@ import {
 
 export default function Landing() {
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-blue-50/60 to-white">
+    <div className="min-h-screen  flex flex-col bg-gradient-to-b from-blue-50/60 to-white">
       {/* Header */}
-      <header className="sticky top-0 z-20 w-full border-b bg-white/80 backdrop-blur">
+      <header className="sticky top-0 z-20 w-full border-b mt-0 bg-white/80 backdrop-blur">
         <div className="mx-auto max-w-6xl px-4 h-14 flex items-center justify-between">
+        
           <Link to="/" className="font-semibold text-primary">
             NovaPath
           </Link>
