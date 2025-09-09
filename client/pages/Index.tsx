@@ -121,7 +121,7 @@ export default function Index() {
     return out;
   }, [profile]);
   return (
-    <div className="space-y-6 ">
+    <div className="space-y-6 mt-20">
       {/* Personalized header */}
       {profile && (
         <Card>
