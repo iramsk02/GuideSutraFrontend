@@ -1,4 +1,6 @@
 import { Badge } from "@/components/ui/badge";
+import { useEffect, useMemo, useState } from "react";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -18,6 +20,8 @@ import {
   School,
   Sparkles,
 } from "lucide-react";
+
+type Profile = { name?: string; email?: string; age?: number; gender?: string; grade?: string; interests?: string[] };
 
 const colleges = [
   {
@@ -73,8 +77,91 @@ const scholarships = [
 ];
 
 export default function Index() {
+  const [profile, setProfile] = useState<Profile | null>(null);
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem("novapath_profile");
+      if (raw) setProfile(JSON.parse(raw));
+    } catch {}
+  }, []);
+
+  const courses = useMemo(() => {
+    const i = new Set((profile?.interests || []).map((s) => s.toLowerCase()));
+    const out: string[] = [];
+    if (i.has("science")) out.push("B.Sc Physics", "B.Sc Biology");
+    if (i.has("engineering") || i.has("computer science")) out.push("B.Tech CSE", "B.Tech ECE");
+    if (i.has("commerce") || i.has("business")) out.push("B.Com (Hons)", "BBA");
+    if (i.has("arts")) out.push("B.A Psychology", "B.A Economics");
+    if (i.has("medicine")) out.push("MBBS", "B.Pharm");
+    if (i.has("law")) out.push("B.A LL.B");
+    if (i.has("design")) out.push("B.Des Communication");
+    return out.length ? out.slice(0, 6) : ["B.Sc Computer Science", "B.Com (Hons)", "B.A Economics"];
+  }, [profile]);
+
+  const careers = useMemo(() => {
+    const i = new Set((profile?.interests || []).map((s) => s.toLowerCase()));
+    const out: string[] = [];
+    if (i.has("science")) out.push("Research Scientist", "Data Analyst");
+    if (i.has("engineering") || i.has("computer science")) out.push("Software Engineer", "AI Engineer");
+    if (i.has("commerce")) out.push("Chartered Accountant", "Business Analyst");
+    if (i.has("arts")) out.push("UX Designer", "Journalist");
+    if (i.has("law")) out.push("Lawyer");
+    if (i.has("design")) out.push("Product Designer");
+    return out.length ? out : ["AI Engineer", "Business Analyst", "UX Designer"];
+  }, [profile]);
+
+  const materials = useMemo(() => {
+    const i = new Set((profile?.interests || []).map((s) => s.toLowerCase()));
+    const out: { title: string }[] = [];
+    if (i.has("science")) out.push({ title: "Physics Crash Course" });
+    if (i.has("engineering") || i.has("computer science")) out.push({ title: "Intro to Programming with Python" });
+    if (i.has("commerce")) out.push({ title: "Accounting Basics" });
+    if (i.has("arts")) out.push({ title: "Design Thinking 101" });
+    if (!out.length) out.push({ title: "Study Tips: Time Management" });
+    return out;
+  }, [profile]);
   return (
     <div className="space-y-6 ">
+      {/* Personalized header */}
+      {profile && (
+        <Card>
+          <CardContent className="py-4 flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <p className="text-sm text-muted-foreground">Welcome back</p>
+              <p className="text-base font-semibold">{profile.name}</p>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {(profile.interests || []).slice(0, 4).map((t) => (
+                <Badge key={t} variant="outline">{t}</Badge>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Quick suggestions */}
+      <div className="grid gap-4 md:grid-cols-3">
+        <Card className="hover:shadow-sm">
+          <CardHeader className="pb-2"><CardTitle className="text-base">Courses to apply</CardTitle><CardDescription>Based on your interests</CardDescription></CardHeader>
+          <CardContent className="flex flex-wrap gap-2">
+            {courses.map((c) => (<Badge key={c} variant="secondary" className="rounded-full">{c}</Badge>))}
+          </CardContent>
+        </Card>
+        <Card className="hover:shadow-sm">
+          <CardHeader className="pb-2"><CardTitle className="text-base">Career paths</CardTitle><CardDescription>Aligned with your aptitude</CardDescription></CardHeader>
+          <CardContent className="flex flex-col gap-2">
+            {careers.map((c) => (<div key={c} className="flex items-center gap-2 text-sm"><Briefcase className="h-4 w-4" /> {c}</div>))}
+          </CardContent>
+        </Card>
+        <Card className="hover:shadow-sm">
+          <CardHeader className="pb-2"><CardTitle className="text-base">Study materials</CardTitle><CardDescription>Tailored to your choices</CardDescription></CardHeader>
+          <CardContent className="flex flex-col gap-2">
+            {materials.map((m) => (<div key={m.title} className="flex items-center gap-2 text-sm"><BookOpenCheck className="h-4 w-4" /> {m.title}</div>))}
+          </CardContent>
+        </Card>
+      </div>
+
       {/* Career Pathway */}
       <section>
         <div className="mb-3 mt-20 flex items-end justify-between">
