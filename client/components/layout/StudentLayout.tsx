@@ -50,6 +50,7 @@ const nav = [
   { to: "/timeline", label: "Timeline", icon: CalendarDays },
   { to: "/recommendations", label: "Recommendations", icon: Sparkles },
   { to: "/scholarships", label: "Scholarships", icon: BookOpen },
+  { to: "/resources", label: "Resources", icon: BookOpen },
   { to: "/mentorship", label: "Mentorship", icon: UsersRound },
   { to: "/parents", label: "Parents", icon: HeartHandshake },
   { to: "/career-quiz", label: "Assessment", icon: Brain },
