@@ -37,7 +37,6 @@ export default function Landing() {
       {/* Header */}
       <header className="sticky top-0 z-20 w-full border-b mt-0 bg-white/80 backdrop-blur">
         <div className="mx-auto max-w-6xl px-4 h-14 flex items-center justify-between">
-        
           <Link to="/" className="font-semibold text-primary">
             NovaPath
           </Link>
@@ -450,7 +449,7 @@ export default function Landing() {
         <h2 className="text-xl font-semibold mb-4">FAQs</h2>
         <Accordion type="single" collapsible className="p-2 rounded-2xl border">
           <AccordionItem value="q1">
-            <AccordionTrigger >Is the test free?</AccordionTrigger>
+            <AccordionTrigger>Is the test free?</AccordionTrigger>
             <AccordionContent>
               Yes, the career test is free and takes about 10 minutes.
             </AccordionContent>

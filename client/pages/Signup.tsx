@@ -1,14 +1,36 @@
 import { Link, useNavigate } from "react-router-dom";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useState } from "react";
 import { toast } from "sonner";
 
-const INTERESTS = ["Science", "Commerce", "Arts", "Engineering", "Medicine", "Law", "Design", "Business", "Computer Science"];
+const INTERESTS = [
+  "Science",
+  "Commerce",
+  "Arts",
+  "Engineering",
+  "Medicine",
+  "Law",
+  "Design",
+  "Business",
+  "Computer Science",
+];
 
 export default function Signup() {
   const [name, setName] = useState("");
@@ -25,9 +47,17 @@ export default function Signup() {
   function submit(e: React.FormEvent) {
     e.preventDefault();
     if (!agree) return toast.error("Please agree to Terms & Privacy Policy");
-    if (!name || !email || !password || !confirm) return toast.error("Please fill all required fields");
+    if (!name || !email || !password || !confirm)
+      return toast.error("Please fill all required fields");
     if (password !== confirm) return toast.error("Passwords do not match");
-    const profile = { name, email, age: age ? Number(age) : undefined, gender, grade, interests };
+    const profile = {
+      name,
+      email,
+      age: age ? Number(age) : undefined,
+      gender,
+      grade,
+      interests,
+    };
     try {
       localStorage.setItem("novapath_profile", JSON.stringify(profile));
     } catch {}
@@ -40,8 +70,15 @@ export default function Signup() {
       {/* Header */}
       <header className="w-full border-b bg-white/80 backdrop-blur">
         <div className="mx-auto max-w-5xl h-14 px-4 flex items-center justify-between">
-          <Link to="/" className="font-semibold text-primary">NovaPath</Link>
-          <p className="text-sm text-muted-foreground">Already have an account? <Link to="/mentorship" className="text-primary hover:underline">Sign In</Link></p>
+          <Link to="/" className="font-semibold text-primary">
+            NovaPath
+          </Link>
+          <p className="text-sm text-muted-foreground">
+            Already have an account?{" "}
+            <Link to="/mentorship" className="text-primary hover:underline">
+              Sign In
+            </Link>
+          </p>
         </div>
       </header>
 
@@ -51,13 +88,41 @@ export default function Signup() {
           <div className="order-2 md:order-1 hidden md:block">
             <div className="rounded-3xl border bg-white p-6 shadow-sm">
               <svg viewBox="0 0 500 320" className="w-full h-auto">
-                <rect x="0" y="0" width="500" height="320" rx="20" fill="#eef2ff" />
+                <rect
+                  x="0"
+                  y="0"
+                  width="500"
+                  height="320"
+                  rx="20"
+                  fill="#eef2ff"
+                />
                 <circle cx="120" cy="160" r="40" fill="#93c5fd" />
-                <rect x="180" y="130" width="120" height="16" rx="8" fill="#bbf7d0" />
-                <rect x="180" y="154" width="90" height="12" rx="6" fill="#e5e7eb" />
-                <polyline points="200,220 260,190 320,205 380,170" fill="none" stroke="#34d399" strokeWidth="5" />
+                <rect
+                  x="180"
+                  y="130"
+                  width="120"
+                  height="16"
+                  rx="8"
+                  fill="#bbf7d0"
+                />
+                <rect
+                  x="180"
+                  y="154"
+                  width="90"
+                  height="12"
+                  rx="6"
+                  fill="#e5e7eb"
+                />
+                <polyline
+                  points="200,220 260,190 320,205 380,170"
+                  fill="none"
+                  stroke="#34d399"
+                  strokeWidth="5"
+                />
               </svg>
-              <p className="mt-3 text-sm text-muted-foreground">Plan your future with friendly guidance and tools.</p>
+              <p className="mt-3 text-sm text-muted-foreground">
+                Plan your future with friendly guidance and tools.
+              </p>
             </div>
           </div>
 
@@ -71,34 +136,76 @@ export default function Signup() {
               <form onSubmit={submit} className="space-y-4">
                 <div className="grid gap-3">
                   <div>
-                    <label className="mb-1 block text-sm font-medium">Full Name</label>
-                    <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="Your name" required />
+                    <label className="mb-1 block text-sm font-medium">
+                      Full Name
+                    </label>
+                    <Input
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="Your name"
+                      required
+                    />
                   </div>
                   <div>
-                    <label className="mb-1 block text-sm font-medium">Email</label>
-                    <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" required />
+                    <label className="mb-1 block text-sm font-medium">
+                      Email
+                    </label>
+                    <Input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="you@example.com"
+                      required
+                    />
                   </div>
                   <div className="grid gap-3 sm:grid-cols-2">
                     <div>
-                      <label className="mb-1 block text-sm font-medium">Password</label>
-                      <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                      <label className="mb-1 block text-sm font-medium">
+                        Password
+                      </label>
+                      <Input
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                      />
                     </div>
                     <div>
-                      <label className="mb-1 block text-sm font-medium">Confirm Password</label>
-                      <Input type="password" value={confirm} onChange={(e) => setConfirm(e.target.value)} required />
+                      <label className="mb-1 block text-sm font-medium">
+                        Confirm Password
+                      </label>
+                      <Input
+                        type="password"
+                        value={confirm}
+                        onChange={(e) => setConfirm(e.target.value)}
+                        required
+                      />
                     </div>
                   </div>
                 </div>
 
                 <div className="grid gap-3 sm:grid-cols-3">
                   <div>
-                    <label className="mb-1 block text-sm font-medium">Age</label>
-                    <Input type="number" min={8} max={60} value={age} onChange={(e) => setAge(e.target.value)} placeholder="16" />
+                    <label className="mb-1 block text-sm font-medium">
+                      Age
+                    </label>
+                    <Input
+                      type="number"
+                      min={8}
+                      max={60}
+                      value={age}
+                      onChange={(e) => setAge(e.target.value)}
+                      placeholder="16"
+                    />
                   </div>
                   <div>
-                    <label className="mb-1 block text-sm font-medium">Gender</label>
+                    <label className="mb-1 block text-sm font-medium">
+                      Gender
+                    </label>
                     <Select value={gender} onValueChange={setGender}>
-                      <SelectTrigger><SelectValue placeholder="Select" /></SelectTrigger>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select" />
+                      </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="male">Male</SelectItem>
                         <SelectItem value="female">Female</SelectItem>
@@ -108,12 +215,26 @@ export default function Signup() {
                     </Select>
                   </div>
                   <div>
-                    <label className="mb-1 block text-sm font-medium">Class/Grade</label>
+                    <label className="mb-1 block text-sm font-medium">
+                      Class/Grade
+                    </label>
                     <Select value={grade} onValueChange={setGrade}>
-                      <SelectTrigger><SelectValue placeholder="Select" /></SelectTrigger>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select" />
+                      </SelectTrigger>
                       <SelectContent>
-                        {["Class 8", "Class 9", "Class 10", "Class 11", "Class 12", "UG", "PG"].map((g) => (
-                          <SelectItem key={g} value={g}>{g}</SelectItem>
+                        {[
+                          "Class 8",
+                          "Class 9",
+                          "Class 10",
+                          "Class 11",
+                          "Class 12",
+                          "UG",
+                          "PG",
+                        ].map((g) => (
+                          <SelectItem key={g} value={g}>
+                            {g}
+                          </SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
@@ -121,10 +242,21 @@ export default function Signup() {
                 </div>
 
                 <div>
-                  <label className="mb-2 block text-sm font-medium">Academic Interests</label>
-                  <ToggleGroup type="multiple" value={interests} onValueChange={setInterests} className="flex flex-wrap gap-2">
+                  <label className="mb-2 block text-sm font-medium">
+                    Academic Interests
+                  </label>
+                  <ToggleGroup
+                    type="multiple"
+                    value={interests}
+                    onValueChange={setInterests}
+                    className="flex flex-wrap gap-2"
+                  >
                     {INTERESTS.map((i) => (
-                      <ToggleGroupItem key={i} value={i} className="rounded-full px-3 py-1 data-[state=on]:bg-primary/10 data-[state=on]:text-primary border">
+                      <ToggleGroupItem
+                        key={i}
+                        value={i}
+                        className="rounded-full px-3 py-1 data-[state=on]:bg-primary/10 data-[state=on]:text-primary border"
+                      >
                         {i}
                       </ToggleGroupItem>
                     ))}
@@ -132,11 +264,29 @@ export default function Signup() {
                 </div>
 
                 <div className="flex items-start gap-2">
-                  <Checkbox id="agree" checked={agree} onCheckedChange={(v) => setAgree(Boolean(v))} />
-                  <label htmlFor="agree" className="text-sm text-muted-foreground">I agree to <a href="#" className="underline">Terms</a> & <a href="#" className="underline">Privacy Policy</a></label>
+                  <Checkbox
+                    id="agree"
+                    checked={agree}
+                    onCheckedChange={(v) => setAgree(Boolean(v))}
+                  />
+                  <label
+                    htmlFor="agree"
+                    className="text-sm text-muted-foreground"
+                  >
+                    I agree to{" "}
+                    <a href="#" className="underline">
+                      Terms
+                    </a>{" "}
+                    &{" "}
+                    <a href="#" className="underline">
+                      Privacy Policy
+                    </a>
+                  </label>
                 </div>
 
-                <Button type="submit" className="w-full">Sign Up & Continue</Button>
+                <Button type="submit" className="w-full">
+                  Sign Up & Continue
+                </Button>
               </form>
             </CardContent>
           </Card>
@@ -145,12 +295,22 @@ export default function Signup() {
 
       <footer className="border-t bg-white">
         <div className="mx-auto max-w-5xl px-4 py-6 flex flex-wrap items-center justify-between gap-3 text-sm">
-          <div className="text-muted-foreground">© {new Date().getFullYear()} NovaPath</div>
+          <div className="text-muted-foreground">
+            © {new Date().getFullYear()} NovaPath
+          </div>
           <nav className="flex items-center gap-4">
-            <a href="#" className="hover:underline">About</a>
-            <a href="#" className="hover:underline">Contact</a>
-            <a href="#" className="hover:underline">Privacy</a>
-            <a href="#" className="hover:underline">FAQs</a>
+            <a href="#" className="hover:underline">
+              About
+            </a>
+            <a href="#" className="hover:underline">
+              Contact
+            </a>
+            <a href="#" className="hover:underline">
+              Privacy
+            </a>
+            <a href="#" className="hover:underline">
+              FAQs
+            </a>
           </nav>
         </div>
       </footer>
