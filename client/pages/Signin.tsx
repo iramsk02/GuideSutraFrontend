@@ -80,12 +80,27 @@ export default function Signin() {
           <div className="hidden md:block">
             <div className="rounded-3xl border bg-white p-6 shadow-sm">
               <svg viewBox="0 0 500 320" className="w-full h-auto">
-                <rect x="0" y="0" width="500" height="320" rx="20" fill="#f0f9ff" />
+                <rect
+                  x="0"
+                  y="0"
+                  width="500"
+                  height="320"
+                  rx="20"
+                  fill="#f0f9ff"
+                />
                 <g>
-                  <path d="M80 120 L150 90 L220 120 L150 150 Z" fill="#93c5fd" />
+                  <path
+                    d="M80 120 L150 90 L220 120 L150 150 Z"
+                    fill="#93c5fd"
+                  />
                   <rect x="140" y="150" width="20" height="40" fill="#93c5fd" />
                   <circle cx="300" cy="200" r="50" fill="#bbf7d0" />
-                  <polyline points="260,220 300,180 340,200" fill="none" stroke="#34d399" strokeWidth="6" />
+                  <polyline
+                    points="260,220 300,180 340,200"
+                    fill="none"
+                    stroke="#34d399"
+                    strokeWidth="6"
+                  />
                 </g>
               </svg>
               <p className="mt-3 text-sm text-muted-foreground">
@@ -98,12 +113,16 @@ export default function Signin() {
           <Card className="shadow-sm">
             <CardHeader className="pb-2">
               <CardTitle>Welcome back</CardTitle>
-              <CardDescription>Sign in to continue your journey.</CardDescription>
+              <CardDescription>
+                Sign in to continue your journey.
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={submit} className="space-y-4">
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Email</label>
+                  <label className="mb-1 block text-sm font-medium">
+                    Email
+                  </label>
                   <Input
                     type="email"
                     value={email}
@@ -113,7 +132,9 @@ export default function Signin() {
                   />
                 </div>
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Password</label>
+                  <label className="mb-1 block text-sm font-medium">
+                    Password
+                  </label>
                   <Input
                     type="password"
                     value={password}
@@ -128,7 +149,10 @@ export default function Signin() {
                       checked={remember}
                       onCheckedChange={(v) => setRemember(Boolean(v))}
                     />
-                    <label htmlFor="remember" className="text-sm text-muted-foreground">
+                    <label
+                      htmlFor="remember"
+                      className="text-sm text-muted-foreground"
+                    >
                       Remember me
                     </label>
                   </div>
@@ -136,7 +160,9 @@ export default function Signin() {
                     Forgot Password?
                   </Link>
                 </div>
-                <Button type="submit" className="w-full">Sign In</Button>
+                <Button type="submit" className="w-full">
+                  Sign In
+                </Button>
               </form>
             </CardContent>
           </Card>
@@ -145,11 +171,19 @@ export default function Signin() {
 
       <footer className="border-t bg-white">
         <div className="mx-auto max-w-5xl px-4 py-6 flex flex-wrap items-center justify-between gap-3 text-sm">
-          <div className="text-muted-foreground">© {new Date().getFullYear()} NovaPath</div>
+          <div className="text-muted-foreground">
+            © {new Date().getFullYear()} NovaPath
+          </div>
           <nav className="flex items-center gap-4">
-            <a href="#privacy" className="hover:underline">Privacy</a>
-            <a href="#support" className="hover:underline">Support</a>
-            <a href="#faqs" className="hover:underline">FAQs</a>
+            <a href="#privacy" className="hover:underline">
+              Privacy
+            </a>
+            <a href="#support" className="hover:underline">
+              Support
+            </a>
+            <a href="#faqs" className="hover:underline">
+              FAQs
+            </a>
           </nav>
         </div>
       </footer>

@@ -65,7 +65,10 @@ export function StudentLayout({ children }: { children: ReactNode }) {
   }
 
   const path = (location as any)?.pathname || "";
-  const bypass = path.startsWith("/landing") || path.startsWith("/signup") || path.startsWith("/signin");
+  const bypass =
+    path.startsWith("/landing") ||
+    path.startsWith("/signup") ||
+    path.startsWith("/signin");
   if (bypass) {
     return <>{children}</>;
   }
