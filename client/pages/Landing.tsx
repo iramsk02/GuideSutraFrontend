@@ -90,7 +90,7 @@ export default function Landing() {
               career for you.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
-              <Link to="/career-pathway">
+              <Link to="/career-quiz">
                 <Button size="lg" className="rounded-full px-6">
                   Take Career Test
                 </Button>
