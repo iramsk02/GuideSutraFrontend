@@ -1,8 +1,17 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+} from "@/components/ui/drawer";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { MessageCircle, Send, X, Bot } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -21,7 +30,11 @@ function replyFor(input: string): string {
   if (text.includes("college")) {
     return "Explore colleges with filters by stream and location here: /colleges";
   }
-  if (text.includes("quiz") || text.includes("assessment") || text.includes("test")) {
+  if (
+    text.includes("quiz") ||
+    text.includes("assessment") ||
+    text.includes("test")
+  ) {
     return "Take the career assessment to get your personalized roadmap: /career-quiz";
   }
   if (text.includes("mentor") || text.includes("guidance")) {
@@ -40,7 +53,8 @@ export default function Chatbot() {
     {
       id: "m1",
       role: "assistant",
-      content: "Hi! I\'m Nova, your guide. Ask me about scholarships, colleges, or take the quiz!",
+      content:
+        "Hi! I\'m Nova, your guide. Ask me about scholarships, colleges, or take the quiz!",
     },
   ]);
   const endRef = useRef<HTMLDivElement | null>(null);
@@ -52,9 +66,17 @@ export default function Chatbot() {
   function send() {
     const text = input.trim();
     if (!text) return;
-    const user: ChatMsg = { id: crypto.randomUUID(), role: "user", content: text };
+    const user: ChatMsg = {
+      id: crypto.randomUUID(),
+      role: "user",
+      content: text,
+    };
     const botText = replyFor(text);
-    const bot: ChatMsg = { id: crypto.randomUUID(), role: "assistant", content: botText };
+    const bot: ChatMsg = {
+      id: crypto.randomUUID(),
+      role: "assistant",
+      content: botText,
+    };
     setMessages((m) => [...m, user, bot]);
     setInput("");
   }
@@ -66,7 +88,7 @@ export default function Chatbot() {
       { label: "Career Quiz", to: "/career-quiz" },
       { label: "Mentorship", to: "/mentorship" },
     ],
-    []
+    [],
   );
 
   return (
@@ -95,10 +117,17 @@ export default function Chatbot() {
               </div>
               <div>
                 <DrawerTitle>Nova Assistant</DrawerTitle>
-                <p className="text-xs text-muted-foreground">Ask anything about careers, colleges and scholarships</p>
+                <p className="text-xs text-muted-foreground">
+                  Ask anything about careers, colleges and scholarships
+                </p>
               </div>
             </div>
-            <Button variant="ghost" size="icon" onClick={() => setOpen(false)} aria-label="Close">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setOpen(false)}
+              aria-label="Close"
+            >
               <X className="h-5 w-5" />
             </Button>
           </DrawerHeader>
@@ -106,7 +135,10 @@ export default function Chatbot() {
             <div className="mb-3 flex flex-wrap gap-2">
               {quick.map((q) => (
                 <Link key={q.to} to={q.to} onClick={() => setOpen(false)}>
-                  <Button variant="outline" className="rounded-full h-8 px-3 text-xs">
+                  <Button
+                    variant="outline"
+                    className="rounded-full h-8 px-3 text-xs"
+                  >
                     {q.label}
                   </Button>
                 </Link>
@@ -115,22 +147,32 @@ export default function Chatbot() {
             <div className="border rounded-lg">
               <ScrollArea className="h-56 p-3">
                 {messages.map((m) => (
-                  <div key={m.id} className={`mb-2 flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
+                  <div
+                    key={m.id}
+                    className={`mb-2 flex ${m.role === "user" ? "justify-end" : "justify-start"}`}
+                  >
                     <div
                       className={`max-w-[80%] rounded-2xl px-3 py-2 text-sm ${
-                        m.role === "user" ? "bg-primary text-primary-foreground" : "bg-muted"
+                        m.role === "user"
+                          ? "bg-primary text-primary-foreground"
+                          : "bg-muted"
                       }`}
                     >
                       {m.content.includes("/") ? (
                         <span>
                           {m.content.split(/(\/[a-z-]+)/gi).map((part, i) =>
                             /^\/[a-z-]+$/.test(part) ? (
-                              <Link key={i} to={part} className="underline" onClick={() => setOpen(false)}>
+                              <Link
+                                key={i}
+                                to={part}
+                                className="underline"
+                                onClick={() => setOpen(false)}
+                              >
                                 {part}
                               </Link>
                             ) : (
                               <span key={i}>{part}</span>
-                            )
+                            ),
                           )}
                         </span>
                       ) : (

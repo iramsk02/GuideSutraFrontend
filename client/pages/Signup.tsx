@@ -314,7 +314,6 @@ export default function Signup() {
           </nav>
         </div>
       </footer>
-     
     </div>
   );
 }
