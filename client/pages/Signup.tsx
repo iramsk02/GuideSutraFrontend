@@ -39,6 +39,8 @@ export default function Signup() {
   const [confirm, setConfirm] = useState("");
   const [age, setAge] = useState<string>("");
   const [gender, setGender] = useState<string>("");
+  const [location, setLocation] = useState<string>("");
+  const [language, setLanguage] = useState<string>("");
   const [grade, setGrade] = useState<string>("");
   const [interests, setInterests] = useState<string[]>([]);
   const [agree, setAgree] = useState(false);
@@ -57,6 +59,8 @@ export default function Signup() {
       gender,
       grade,
       interests,
+      location,
+      language,
     };
     try {
       localStorage.setItem("novapath_profile", JSON.stringify(profile));
@@ -133,6 +137,28 @@ export default function Signup() {
               <CardDescription>It takes less than 2 minutes.</CardDescription>
             </CardHeader>
             <CardContent>
+              <div className="grid gap-2 mb-4 sm:grid-cols-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => {
+                    toast.success("Signed up with Google (demo)");
+                    navigate("/dashboard", { replace: true });
+                  }}
+                >
+                  Continue with Google
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => {
+                    toast.success("OTP sent to your mobile (demo)");
+                    navigate("/dashboard", { replace: true });
+                  }}
+                >
+                  Continue with Mobile OTP
+                </Button>
+              </div>
               <form onSubmit={submit} className="space-y-4">
                 <div className="grid gap-3">
                   <div>
@@ -234,6 +260,39 @@ export default function Signup() {
                         ].map((g) => (
                           <SelectItem key={g} value={g}>
                             {g}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <div>
+                    <label className="mb-1 block text-sm font-medium">Location</label>
+                    <Input
+                      value={location}
+                      onChange={(e) => setLocation(e.target.value)}
+                      placeholder="City, State"
+                    />
+                  </div>
+                  <div>
+                    <label className="mb-1 block text-sm font-medium">Preferred Language</label>
+                    <Select value={language} onValueChange={setLanguage}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select language" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {[
+                          "English",
+                          "हिंदी (Hindi)",
+                          "বাংলা (Bengali)",
+                          "தமிழ் (Tamil)",
+                          "తెలుగు (Telugu)",
+                          "मराठी (Marathi)",
+                        ].map((l) => (
+                          <SelectItem key={l} value={l}>
+                            {l}
                           </SelectItem>
                         ))}
                       </SelectContent>
