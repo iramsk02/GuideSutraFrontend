@@ -42,7 +42,6 @@ const App = () => (
             <Route path="/notifications" element={<Notifications />} />
             <Route path="/mentorship" element={<Mentorship />} />
             <Route path="/parents" element={<Parents />} />
-            <Route path="/landing" element={<Landing />} />
             <Route path="/career-quiz" element={<CareerQuiz />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/signin" element={<Signin />} />
@@ -51,6 +50,7 @@ const App = () => (
             <Route path="/outcomes" element={<Outcomes />} />
             <Route path="/resources" element={<Resources />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/landing" element={<Landing />} />
             <Route path="/" element={<Navigate to="/landing" replace />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

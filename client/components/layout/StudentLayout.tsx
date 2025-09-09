@@ -88,15 +88,20 @@ export function StudentLayout({ children }: { children: ReactNode }) {
   }
 
   const path = (location as any)?.pathname || "";
-  const bypass =
-    path.startsWith("/landing") ||
-    path.startsWith("/signup") ||
-    path.startsWith("/signin");
-  if (bypass) {
+  const [bypass, setbypass] = useState();
+  useEffect(()=>{
+    setbypass(path)
+  },[path])
+  // const bypass =
+  //   path.startsWith("/") ||
+  //   path.startsWith("/signup") ||
+  //   path.startsWith("/signin");
+    console.log(path,bypass)
+  if (bypass=="/signup"|| bypass=="/signin"|| bypass=="/") {
     return (
       <>
         {children}
-        <Chatbot />
+        {/* <Chatbot /> */}
       </>
     );
   }
