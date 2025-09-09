@@ -92,7 +92,7 @@ export default function Parents() {
   return (
     <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
       {/* Main */}
-      <div className="space-y-6">
+      <div className="space-y-6 mt-20">
         {/* Hero */}
         <Card className="bg-gradient-to-r from-blue-50 to-emerald-50 border-blue-100">
           <CardContent className="py-8">

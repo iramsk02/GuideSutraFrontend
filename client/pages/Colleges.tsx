@@ -237,7 +237,7 @@ export default function Colleges() {
   );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 mt-20">
       {/* Filters Bar */}
       <Card>
         <CardHeader className="pb-2">
