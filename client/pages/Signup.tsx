@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -20,13 +20,19 @@ export default function Signup() {
   const [grade, setGrade] = useState<string>("");
   const [interests, setInterests] = useState<string[]>([]);
   const [agree, setAgree] = useState(false);
+  const navigate = useNavigate();
 
   function submit(e: React.FormEvent) {
     e.preventDefault();
     if (!agree) return toast.error("Please agree to Terms & Privacy Policy");
     if (!name || !email || !password || !confirm) return toast.error("Please fill all required fields");
     if (password !== confirm) return toast.error("Passwords do not match");
+    const profile = { name, email, age: age ? Number(age) : undefined, gender, grade, interests };
+    try {
+      localStorage.setItem("novapath_profile", JSON.stringify(profile));
+    } catch {}
     toast.success("Account created! Redirecting...");
+    navigate("/dashboard", { replace: true });
   }
 
   return (
