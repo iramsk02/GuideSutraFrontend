@@ -197,7 +197,7 @@ export default function CareerQuiz() {
   }
 
   return (
-    <div className="min-h-[calc(100vh-3.5rem)]">
+    <div className="min-h-[calc(100vh-3.5rem)] mt-20">
       {/* layout padding handled by StudentLayout */}
       {/* Header with progress */}
       <div className="sticky top-0 z-10 mb-4 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 border rounded-md">
