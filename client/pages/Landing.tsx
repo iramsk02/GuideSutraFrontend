@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import Chatbot from "@/components/Chatbot";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -62,7 +63,7 @@ export default function Landing() {
           </nav>
           <div className="flex items-center gap-2">
             <Link
-              to="/mentorship"
+              to="/signin"
               className="hidden text-sm text-muted-foreground md:block"
             >
               Login
@@ -557,6 +558,7 @@ export default function Landing() {
           </div>
         </div>
       </footer>
+      <Chatbot />
     </div>
   );
 }

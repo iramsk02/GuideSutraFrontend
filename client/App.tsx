@@ -18,6 +18,7 @@ import Parents from "./pages/Parents";
 import Landing from "./pages/Landing";
 import CareerQuiz from "./pages/CareerQuiz";
 import Signup from "./pages/Signup";
+import Signin from "./pages/Signin";
 
 const queryClient = new QueryClient();
 

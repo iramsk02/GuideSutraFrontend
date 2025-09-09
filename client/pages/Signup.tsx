@@ -75,7 +75,7 @@ export default function Signup() {
           </Link>
           <p className="text-sm text-muted-foreground">
             Already have an account?{" "}
-            <Link to="/mentorship" className="text-primary hover:underline">
+            <Link to="/signin" className="text-primary hover:underline">
               Sign In
             </Link>
           </p>
