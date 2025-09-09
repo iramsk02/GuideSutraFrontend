@@ -63,12 +63,12 @@ export default function Landing() {
           </nav>
           <div className="flex items-center gap-2">
             <Link
-              to="/dashboard"
+              to="/mentorship"
               className="hidden text-sm text-muted-foreground md:block"
             >
               Login
             </Link>
-            <Link to="/dashboard">
+            <Link to="/signup">
               <Button className="rounded-full px-5">Signup</Button>
             </Link>
           </div>
