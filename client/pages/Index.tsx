@@ -179,9 +179,9 @@ export default function Index() {
             <div className="min-w-[240px]">
               <div className="mb-1 flex items-center justify-between text-xs text-muted-foreground">
                 <span>Profile Progress</span>
-                <span>{(() => { const p = profile || {}; const checks = [p.name, p.email, p.age, p.gender, p.grade, p.location, p.language, (p.interests||[]).length>0, p.role, quiz?.stream]; const filled = checks.reduce((acc, v) => acc + Number(Boolean(v)), 0); return Math.round((filled / checks.length) * 100); })()}%</span>
+                <span>{completion}%</span>
               </div>
-              <Progress value={(() => { const p = profile || {}; const checks = [p.name, p.email, p.age, p.gender, p.grade, p.location, p.language, (p.interests||[]).length>0, p.role, quiz?.stream]; const filled = checks.reduce((acc, v) => acc + Number(Boolean(v)), 0); return Math.round((filled / checks.length) * 100); })()} />
+              <Progress value={completion} />
             </div>
             <div className="flex flex-wrap gap-2">
               {(profile.interests || []).slice(0, 4).map((t) => (
