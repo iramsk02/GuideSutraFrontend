@@ -59,6 +59,14 @@ const nav = [
 export function StudentLayout({ children }: { children: ReactNode }) {
   const inRouter = useInRouterContext();
   const location = inRouter ? useLocation() : ({} as any);
+  const [profile, setProfile] = useState<Profile | null>(null);
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem("novapath_profile");
+      if (raw) setProfile(JSON.parse(raw));
+    } catch {}
+  }, []);
+  const interests = (profile?.interests && profile.interests.length ? profile.interests : defaultInterests).slice(0,4);
   const title = useMemo(() => {
     if (!inRouter) return "Dashboard";
     const found = nav.find((n) => n.to === location.pathname);
