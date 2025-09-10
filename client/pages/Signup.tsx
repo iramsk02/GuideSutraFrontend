@@ -38,6 +38,8 @@ const INTERESTS = [
 ];
 
 export default function Signup() {
+  const search = new URLSearchParams(window.location.search);
+  const initialRole = (search.get("role") || "student").toLowerCase();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -47,7 +49,7 @@ export default function Signup() {
   const [location, setLocation] = useState<string>("");
   const [language, setLanguage] = useState<string>("");
   const [grade, setGrade] = useState<string>("");
-  const [role, setRole] = useState<string>("student");
+  const [role, setRole] = useState<string>(["student", "parent", "counselor"].includes(initialRole) ? initialRole : "student");
   const [interests, setInterests] = useState<string[]>([]);
   const [agree, setAgree] = useState(false);
   const [childEmail, setChildEmail] = useState("");
@@ -390,7 +392,7 @@ export default function Signup() {
                           <SelectContent>
                             {[
                               "English",
-                              "हिंदी (Hindi)",
+                              "��िंदी (Hindi)",
                               "বাংলা (Bengali)",
                               "தமிழ் (Tamil)",
                               "తెలుగు (Telugu)",
