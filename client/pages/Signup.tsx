@@ -49,7 +49,11 @@ export default function Signup() {
   const [location, setLocation] = useState<string>("");
   const [language, setLanguage] = useState<string>("");
   const [grade, setGrade] = useState<string>("");
-  const [role, setRole] = useState<string>(["student", "parent", "counselor"].includes(initialRole) ? initialRole : "student");
+  const [role, setRole] = useState<string>(
+    ["student", "parent", "counselor"].includes(initialRole)
+      ? initialRole
+      : "student",
+  );
   const [interests, setInterests] = useState<string[]>([]);
   const [agree, setAgree] = useState(false);
   const [childEmail, setChildEmail] = useState("");

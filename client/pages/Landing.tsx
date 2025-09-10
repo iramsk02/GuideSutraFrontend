@@ -80,10 +80,12 @@ export default function Landing() {
         <div className="grid items-center gap-8 md:grid-cols-2">
           <div>
             <h1 className="text-3xl md:text-5xl font-extrabold leading-tight">
-              Discover the right course, the right college, and the right career for you.
+              Discover the right course, the right college, and the right career
+              for you.
             </h1>
             <p className="mt-4 text-muted-foreground text-lg">
-              Assessments, career pathways, college finder, and smart reminders—all in one place.
+              Assessments, career pathways, college finder, and smart
+              reminders—all in one place.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <Link to="/career-quiz">
@@ -92,20 +94,43 @@ export default function Landing() {
                 </Button>
               </Link>
               <Link to="/colleges">
-                <Button size="lg" variant="outline" className="rounded-full px-6">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="rounded-full px-6"
+                >
                   Explore Colleges
                 </Button>
               </Link>
             </div>
             <div className="mt-6">
-              <div className="text-sm text-muted-foreground mb-2">Get started as</div>
+              <div className="text-sm text-muted-foreground mb-2">
+                Get started as
+              </div>
               <div className="flex flex-wrap gap-2">
-                <Link to="/signup?role=student"><Button variant="secondary" className="rounded-full">Student</Button></Link>
-                <Link to="/signup?role=parent"><Button variant="secondary" className="rounded-full">Parent</Button></Link>
-                <Link to="/signup?role=counselor"><Button variant="secondary" className="rounded-full">Counselor</Button></Link>
+                <Link to="/signup?role=student">
+                  <Button variant="secondary" className="rounded-full">
+                    Student
+                  </Button>
+                </Link>
+                <Link to="/signup?role=parent">
+                  <Button variant="secondary" className="rounded-full">
+                    Parent
+                  </Button>
+                </Link>
+                <Link to="/signup?role=counselor">
+                  <Button variant="secondary" className="rounded-full">
+                    Counselor
+                  </Button>
+                </Link>
                 <span className="inline-flex items-center text-sm text-muted-foreground ml-2">
                   or
-                  <Link to="/signin" className="ml-1 text-primary hover:underline">Log in</Link>
+                  <Link
+                    to="/signin"
+                    className="ml-1 text-primary hover:underline"
+                  >
+                    Log in
+                  </Link>
                 </span>
               </div>
             </div>
