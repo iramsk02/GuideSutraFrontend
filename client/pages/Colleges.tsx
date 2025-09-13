@@ -146,7 +146,9 @@ const filtered = useMemo(() => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All</SelectItem>
-                  {allDegrees.map((d) => <SelectItem key={d} value={d}>{d}</SelectItem>)}
+                  {Array.from(new Set(allDegrees)).map((d) => (
+                    <SelectItem key={d} value={d}>{d}</SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
