@@ -177,7 +177,9 @@ const filtered = useMemo(() => {
                       <MapPin className="h-4 w-4" /> {c.location}
                     </div>
                     <div className="mt-3 flex flex-wrap gap-2">
-                      {c.courses.map((course) => <Badge key={course} variant="outline">{course}</Badge>)}
+                      {Array.from(new Set(c.courses)).map((course, i) => (
+                        <Badge key={`${course}-${i}`} variant="outline">{course}</Badge>
+                      ))}
                     </div>
                     <p className="mt-3 text-sm text-foreground/80"><span className="font-medium">Eligibility:</span> {c.eligibility}</p>
                     <div className="mt-4 grid gap-3 sm:grid-cols-2 sm:items-center">
