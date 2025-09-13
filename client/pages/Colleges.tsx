@@ -130,7 +130,9 @@ const filtered = useMemo(() => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All</SelectItem>
-                  {allStreams.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}
+                  {Array.from(new Set(allStreams)).map((s) => (
+                    <SelectItem key={s} value={s}>{s}</SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
