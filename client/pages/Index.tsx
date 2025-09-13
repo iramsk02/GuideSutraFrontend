@@ -1,4 +1,3 @@
-
 // // import { Badge } from "@/components/ui/badge";
 // // import { useEffect, useMemo, useState } from "react";
 // // import { Button } from "@/components/ui/button";
@@ -506,19 +505,24 @@ export default function Dashboard() {
         const parsedProfile = JSON.parse(storedProfile);
         setProfile(parsedProfile);
 
-        const userId = parsedProfile.id;
+        // Load quiz result from local storage (avoid external fetch in client)
+        try {
+          const rawQuiz = localStorage.getItem("novapath_quiz_result");
+          if (rawQuiz) setQuiz(JSON.parse(rawQuiz));
+        } catch {}
 
-        // Fetch quiz result
-        fetch(`http://localhost:4000/quiz/result?userId=${userId}`)
-          .then(res => res.json())
-          .then(data => setQuiz(data))
-          .catch(err => console.error(err));
-
-        // Fetch recommendations
-        fetch(`http://localhost:4000/recommendations/${userId}`)
-          .then(res => res.json())
-          .then(data => setRecommendations(data.recommendations || []))
-          .catch(err => console.error(err));
+        // Derive simple recommendations locally
+        const recs: Recommendation[] = [];
+        if (parsedProfile?.interests?.length) {
+          const ints = parsedProfile.interests.map((s: string) => s.toLowerCase());
+          if (ints.includes("biology") || ints.includes("healthcare")) {
+            recs.push({ title: "Medical Path", description: "Explore MBBS, B.Pharm, and allied health sciences.", score: 88 });
+          }
+          if (ints.includes("computer science") || ints.includes("mathematics") || ints.includes("robotics")) {
+            recs.push({ title: "Software & Engineering", description: "Consider B.Tech (CSE), AI/ML tracks, and internships.", score: 92 });
+          }
+        }
+        setRecommendations(recs);
       }
     } catch (err) {
       console.error("Dashboard load error:", err);
