@@ -29,77 +29,120 @@ interface Question {
   options: string[];
 }
 
+const LIKERT = [
+  "Strongly agree",
+  "Agree",
+  "Neutral",
+  "Disagree",
+] as const;
+
 const QUESTIONS: Question[] = [
   {
-    id: "q1",
+    id: "lab_work",
     type: "mcq",
-    prompt: "Which activity sounds most exciting?",
-    options: [
-      "Building robots",
-      "Designing posters",
-      "Analyzing data",
-      "Helping a community project",
-    ],
+    prompt: "You enjoy hands-on experiments and lab-based activities.",
+    options: [...LIKERT],
   },
   {
-    id: "q2",
+    id: "scientific_knowledge",
     type: "mcq",
-    prompt: "Pick a favorite subject:",
-    options: ["Physics", "Economics", "Biology", "History"],
+    prompt: "You like learning scientific concepts and reading science articles.",
+    options: [...LIKERT],
   },
   {
-    id: "q3",
-    type: "order",
-    prompt: "Rank what matters most to you (drag to reorder)",
-    options: ["Innovation", "Stability", "Creativity", "Impact"],
+    id: "analytical_thinking",
+    type: "mcq",
+    prompt: "You enjoy analyzing graphs/data to find patterns and insights.",
+    options: [...LIKERT],
   },
   {
-    id: "q4",
+    id: "problem_solving",
     type: "mcq",
-    prompt: "You prefer working:",
-    options: ["With machines", "With numbers", "With people", "With ideas"],
+    prompt: "You like solving complex, multi-step problems.",
+    options: [...LIKERT],
   },
   {
-    id: "q5",
+    id: "programming",
     type: "mcq",
-    prompt: "Choose a project:",
-    options: [
-      "App to track habits",
-      "School magazine",
-      "Science fair experiment",
-      "Fundraising campaign",
-    ],
+    prompt: "You are interested in programming or have written code before.",
+    options: [...LIKERT],
+  },
+  {
+    id: "logical_thinking",
+    type: "mcq",
+    prompt: "You enjoy logic puzzles and structured thinking.",
+    options: [...LIKERT],
   },
 ];
+
+function likertScore(choice: string): number {
+  // Strongly agree=3, Agree=2, Neutral=1, Disagree=0
+  const idx = LIKERT.indexOf(choice as any);
+  return idx === -1 ? 0 : Math.max(0, 3 - idx);
+}
 
 function mapToStream(answers: Record<string, string | string[]>): {
   stream: string;
   score: number;
 } {
-  // naive scoring across streams
-  const scores: Record<string, number> = {
-    Science: 0,
-    Commerce: 0,
-    Arts: 0,
-    "Science with Biology": 0,
-  };
-  const add = (k: string, n = 1) => (scores[k] = (scores[k] || 0) + n);
+  const skillScores = {
+    lab_work: 0,
+    scientific_knowledge: 0,
+    analytical_thinking: 0,
+    problem_solving: 0,
+    programming: 0,
+    logical_thinking: 0,
+  } as Record<string, number>;
 
   Object.entries(answers).forEach(([qid, ans]) => {
-    const a = Array.isArray(ans) ? ans.join(" ") : ans;
-    if (/robot|physics|experiment|machines|biology/i.test(a)) add("Science", 2);
-    if (/biology/i.test(a)) add("Science with Biology", 2);
-    if (/economics|numbers|data|commerce|business|stability/i.test(a))
-      add("Commerce", 2);
-    if (/design|poster|magazine|creativity|history|people/i.test(a))
-      add("Arts", 2);
-    if (/impact|community|fundraising/i.test(a)) add("Arts", 1);
+    if (typeof ans === "string" && qid in skillScores) {
+      skillScores[qid] = likertScore(ans);
+    }
   });
-  const entries = Object.entries(scores).sort((a, b) => b[1] - a[1]);
-  const top = entries[0];
-  const maxScore = Math.max(1, entries[0][1] || 1);
-  const percent = Math.min(97, Math.round((top[1] / (maxScore + 4)) * 100));
-  return { stream: top[0], score: percent };
+
+  // Weighted mapping to streams (0..1 weights multiplied by 3-scale max)
+  const weights: Record<string, Record<string, number>> = {
+    Science: {
+      lab_work: 0.35,
+      scientific_knowledge: 0.35,
+      analytical_thinking: 0.15,
+      logical_thinking: 0.15,
+      problem_solving: 0.15,
+      programming: 0.15,
+    },
+    "Science with Biology": {
+      lab_work: 0.45,
+      scientific_knowledge: 0.45,
+      problem_solving: 0.1,
+      analytical_thinking: 0.1,
+    },
+    Commerce: {
+      analytical_thinking: 0.4,
+      problem_solving: 0.35,
+      logical_thinking: 0.25,
+    },
+    Arts: {
+      logical_thinking: 0.2,
+    },
+  };
+
+  const scores: Record<string, number> = {};
+  const maxPerStream: Record<string, number> = {};
+  Object.entries(weights).forEach(([stream, w]) => {
+    let s = 0;
+    let max = 0;
+    Object.entries(w).forEach(([k, weight]) => {
+      s += (skillScores[k] || 0) * weight;
+      max += 3 * weight;
+    });
+    scores[stream] = s;
+    maxPerStream[stream] = max;
+  });
+
+  const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+  const [topStream, topScore] = sorted[0];
+  const percent = Math.round(Math.min(97, (topScore / Math.max(0.001, maxPerStream[topStream])) * 100));
+  return { stream: topStream, score: percent };
 }
 
 function useConfetti(active: boolean) {
