@@ -1,92 +1,498 @@
+
+// // import { Badge } from "@/components/ui/badge";
+// // import { useEffect, useMemo, useState } from "react";
+// // import { Button } from "@/components/ui/button";
+// // import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+// // import { Progress } from "@/components/ui/progress";
+// // import { Briefcase, BookOpenCheck, CalendarDays, GraduationCap, School, Sparkles } from "lucide-react";
+
+// // type Profile = {
+// //   id?: number;
+// //   name?: string;
+// //   email?: string;
+// //   dob?: string;
+// //   gender?: string;
+// //   location?: string;
+// //   educationLevel?: string;
+// //   interests?: string[];
+// //   skills?: string[];
+// // };
+
+// // type QuizResult = {
+// //   stream?: string;
+// //   score?: number;
+// //   strengths?: string[];
+// //   weaknesses?: string[];
+// // };
+
+// // type College = {
+// //   id: number;
+// //   name: string;
+// //   location?: string;
+// //   courses?: string[];
+// // };
+
+// // type Deadline = {
+// //   title: string;
+// //   date: string;
+// //   urgency: "high" | "medium" | "low";
+// // };
+
+// // type Scholarship = {
+// //   name: string;
+// //   deadline: string;
+// // };
+
+// // export default function Dashboard() {
+// //   const [profile, setProfile] = useState<Profile | null>(null);
+// //   const [quiz, setQuiz] = useState<QuizResult | null>(null);
+// //   const [colleges, setColleges] = useState<College[]>([]);
+// //   const [deadlines, setDeadlines] = useState<Deadline[]>([]);
+// //   const [scholarships, setScholarships] = useState<Scholarship[]>([]);
+
+// //   // Compute profile completion
+// //   const completion = useMemo(() => {
+// //     const p = profile || {};
+// //     const flags = [
+// //       !!p.name,
+// //       !!p.email,
+// //       !!p.gender,
+// //       !!p.educationLevel,
+// //       !!p.location,
+// //       (p.interests || []).length > 0,
+// //       !!quiz?.stream,
+// //     ];
+// //     const filled = flags.reduce((acc, v) => acc + (v ? 1 : 0), 0);
+// //     return Math.round((filled / flags.length) * 100);
+// //   }, [profile, quiz]);
+
+// //   // Load profile and quiz data
+// //   useEffect(() => {
+// //     try {
+// //       const storedProfile = localStorage.getItem("novapath_profile");
+// //       if (storedProfile) setProfile(JSON.parse(storedProfile));
+
+// //       // Fetch latest quiz result from backend if profile exists
+// //       const fetchQuiz = async (userId?: number) => {
+// //         if (!userId) return;
+// //         try {
+// //           const res = await fetch(`http://localhost:4000/quiz/result?userId=${userId}`);
+// //           // console.log("res",res)
+// //           if (!res.ok) throw new Error("Failed to fetch quiz result");
+// //           const data = await res.json();
+// //           console.log(data)
+// //           setQuiz(data);
+// //         } catch (err) {
+// //           console.error("Failed to load quiz result:", err);
+// //           // fallback to localStorage
+// //           const storedQuiz = localStorage.getItem("novapath_quiz_result");
+// //           if (storedQuiz) setQuiz(JSON.parse(storedQuiz));
+// //         }
+// //       };
+// //       fetchQuiz(profile?.id);
+
+// //       // Fetch colleges, deadlines, scholarships
+// //       const fetchData = async () => {
+// //         const [collegesRes, deadlinesRes, scholarshipsRes] = await Promise.all([
+// //           fetch("http://localhost:4000/colleges"),
+// //           fetch("http://localhost:4000/deadlines"),
+// //           fetch("http://localhost:4000/scholarships"),
+// //         ]);
+// //         setColleges(await collegesRes.json());
+// //         setDeadlines(await deadlinesRes.json());
+// //         setScholarships(await scholarshipsRes.json());
+// //       };
+// //       fetchData();
+// //     } catch (err) {
+// //       console.error("Failed to load dashboard data:", err);
+// //     }
+// //   }, [profile?.id]);
+
+// //   const courses = useMemo(() => {
+// //     const i = new Set((profile?.interests || []).map((s) => s.toLowerCase()));
+// //     const out: string[] = [];
+// //     if (i.has("science")) out.push("B.Sc Physics", "B.Sc Biology");
+// //     if (i.has("medicine")) out.push("MBBS", "B.Pharm");
+// //     return out.length ? out : ["B.Sc Computer Science", "B.Com (Hons)"];
+// //   }, [profile]);
+
+// //   const careers = useMemo(() => {
+// //     const i = new Set((profile?.interests || []).map((s) => s.toLowerCase()));
+// //     const out: string[] = [];
+// //     if (i.has("science")) out.push("Research Scientist", "Data Analyst");
+// //     if (i.has("medicine")) out.push("Doctor", "Pharmacist");
+// //     return out.length ? out : ["AI Engineer", "Business Analyst"];
+// //   }, [profile]);
+
+// //   const materials = useMemo(() => {
+// //     const i = new Set((profile?.interests || []).map((s) => s.toLowerCase()));
+// //     const out: { title: string }[] = [];
+// //     if (i.has("science")) out.push({ title: "Physics Crash Course" });
+// //     if (i.has("medicine")) out.push({ title: "Anatomy Basics" });
+// //     if (!out.length) out.push({ title: "Study Tips: Time Management" });
+// //     return out;
+// //   }, [profile]);
+
+// //   return (
+// //     <div className="mt-20 space-y-8">
+// //       {profile && (
+// //         <Card>
+// //           <CardContent className="py-5 flex flex-wrap items-center justify-between gap-6">
+// //             <div>
+// //               <p className="text-base font-semibold">Hi {profile.name?.split(" ")[0]} 👋</p>
+// //               <p className="text-sm text-muted-foreground">Your career roadmap awaits</p>
+
+// //               {/* Quiz Result */}
+// //               {quiz?.stream && (
+// //                 <div className="mt-2 space-y-1">
+// //                   <p className="text-sm">
+// //                     <span className="font-medium">Suggested Stream:</span> {quiz.stream} ·{" "}
+// //                     <span className="text-muted-foreground">{quiz.score}% match</span>
+// //                   </p>
+// //                   {quiz.strengths && quiz.strengths.length > 0 && (
+// //                     <p className="text-sm text-success">
+// //                       <span className="font-medium">Strengths:</span> {quiz.strengths.join(", ")}
+// //                     </p>
+// //                   )}
+// //                   {quiz.weaknesses && quiz.weaknesses.length > 0 && (
+// //                     <p className="text-sm text-destructive">
+// //                       <span className="font-medium">Weaknesses:</span> {quiz.weaknesses.join(", ")}
+// //                     </p>
+// //                   )}
+// //                 </div>
+// //               )}
+// //             </div>
+
+// //             <div className="min-w-[260px]">
+// //               <div className="mb-1 flex items-center justify-between text-xs text-muted-foreground">
+// //                 <span>Profile Progress</span>
+// //                 <span>{completion}%</span>
+// //               </div>
+// //               <Progress value={completion} />
+// //             </div>
+
+// //             {profile.interests?.length > 0 && (
+// //               <div className="flex flex-wrap gap-2">
+// //                 {profile.interests.slice(0, 5).map((t) => (
+// //                   <Badge key={t} variant="outline">{t}</Badge>
+// //                 ))}
+// //               </div>
+// //             )}
+// //           </CardContent>
+// //         </Card>
+// //       )}
+
+// //       {/* Quick Actions / Highlights can go here */}
+
+// //     </div>
+// //   );
+// // }
+// import { Badge } from "@/components/ui/badge";
+// import { useEffect, useMemo, useState } from "react";
+// import { Button } from "@/components/ui/button";
+// import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+// import { Progress } from "@/components/ui/progress";
+// import { Briefcase, BookOpenCheck, CalendarDays, GraduationCap, School, Sparkles } from "lucide-react";
+
+// type Profile = {
+//   id?: number;
+//   name?: string;
+//   email?: string;
+//   dob?: string;
+//   gender?: string;
+//   location?: string;
+//   educationLevel?: string;
+//   interests?: string[];
+//   skills?: string[];
+// };
+
+// type QuizResult = {
+//   stream?: string;
+//   score?: number;
+//   strengths?: string[];
+//   weaknesses?: string[];
+// };
+
+// type College = {
+//   id: number;
+//   name: string;
+//   location?: string;
+//   courses?: string[];
+// };
+
+// type Recommendation = {
+//   careerId: number;
+//   careerName: string;
+//   score: number;
+//   matchedSkills: string[];
+// };
+
+// type Deadline = {
+//   title: string;
+//   date: string;
+//   urgency: "high" | "medium" | "low";
+// };
+
+// type Scholarship = {
+//   name: string;
+//   deadline: string;
+// };
+
+// export default function Dashboard() {
+//   const [profile, setProfile] = useState<Profile | null>(null);
+//   const [quiz, setQuiz] = useState<QuizResult | null>(null);
+//   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
+//   const [colleges, setColleges] = useState<College[]>([]);
+//   const [deadlines, setDeadlines] = useState<Deadline[]>([]);
+//   const [scholarships, setScholarships] = useState<Scholarship[]>([]);
+
+//   // Compute profile completion
+//   const completion = useMemo(() => {
+//     const p = profile || {};
+//     const flags = [
+//       !!p.name,
+//       !!p.email,
+//       !!p.gender,
+//       !!p.educationLevel,
+//       !!p.location,
+//       (p.interests || []).length > 0,
+//       !!quiz?.stream,
+//     ];
+//     const filled = flags.reduce((acc, v) => acc + (v ? 1 : 0), 0);
+//     return Math.round((filled / flags.length) * 100);
+//   }, [profile, quiz]);
+
+//   useEffect(() => {
+//     try {
+//       const storedProfile = localStorage.getItem("novapath_profile");
+//       if (storedProfile) setProfile(JSON.parse(storedProfile));
+
+//       const fetchData = async (userId?: number) => {
+//         if (!userId) return;
+
+//         // Fetch quiz result
+//         try {
+//           const res = await fetch(`http://localhost:4000/quiz/result?userId=${userId}`);
+//           if (res.ok) {
+//             const data = await res.json();
+//             setQuiz(data);
+//           }
+//         } catch (err) {
+//           console.error("Failed to fetch quiz result:", err);
+//         }
+
+//         // Fetch recommendations
+//         try {
+//           const recRes = await fetch(`http://localhost:4000/recommendations/${userId}`);
+//         console.log(recRes)
+//           if (recRes.ok) {
+//             const data = await recRes.json();
+//             console.log(data)
+//             setRecommendations(data.recommendations);
+//           }
+//         } catch (err) {
+//           console.error("Failed to fetch recommendations:", err);
+//         }
+
+//         // Fetch other dashboard data
+//         try {
+//           const [collegesRes, deadlinesRes, scholarshipsRes] = await Promise.all([
+//             fetch("http://localhost:4000/colleges"),
+//             fetch("http://localhost:4000/deadlines"),
+//             fetch("http://localhost:4000/scholarships"),
+//           ]);
+//           setColleges(await collegesRes.json());
+//           setDeadlines(await deadlinesRes.json());
+//           setScholarships(await scholarshipsRes.json());
+//         } catch (err) {
+//           console.error("Failed to fetch dashboard data:", err);
+//         }
+//       };
+
+//       fetchData(JSON.parse(storedProfile || "{}")?.id);
+//     } catch (err) {
+//       console.error("Dashboard load error:", err);
+//     }
+//   }, []);
+
+//   return (
+//     <div className="mt-20 space-y-8">
+//       {/* Profile Card */}
+//       {profile && (
+//         <Card>
+//           <CardContent className="py-5 flex flex-wrap items-center justify-between gap-6">
+//             <div>
+//               <p className="text-base font-semibold">Hi {profile.name?.split(" ")[0]} 👋</p>
+//               <p className="text-sm text-muted-foreground">Your career roadmap awaits</p>
+
+//               {/* Quiz Result */}
+//               {quiz?.stream && (
+//                 <div className="mt-2 space-y-1">
+//                   <p className="text-sm">
+//                     <span className="font-medium">Suggested Stream:</span> {quiz.stream} ·{" "}
+//                     <span className="text-muted-foreground">{quiz.score}% match</span>
+//                   </p>
+//                   {quiz.strengths?.length > 0 && (
+//                     <p className="text-sm text-success">
+//                       <span className="font-medium">Strengths:</span> {quiz.strengths.join(", ")}
+//                     </p>
+//                   )}
+//                   {quiz.weaknesses?.length > 0 && (
+//                     <p className="text-sm text-destructive">
+//                       <span className="font-medium">Weaknesses:</span> {quiz.weaknesses.join(", ")}
+//                     </p>
+//                   )}
+//                 </div>
+//               )}
+//             </div>
+
+//             <div className="min-w-[260px]">
+//               <div className="mb-1 flex items-center justify-between text-xs text-muted-foreground">
+//                 <span>Profile Progress</span>
+//                 <span>{completion}%</span>
+//               </div>
+//               <Progress value={completion} />
+//             </div>
+
+//             {profile.interests?.length > 0 && (
+//               <div className="flex flex-wrap gap-2">
+//                 {profile.interests.slice(0, 5).map((t) => (
+//                   <Badge key={t} variant="outline">{t}</Badge>
+//                 ))}
+//               </div>
+//             )}
+//           </CardContent>
+//         </Card>
+//       )}
+
+//       {/* Recommendations */}
+//       <Card>
+//         <CardHeader>
+//           <CardTitle>Career Recommendations</CardTitle>
+//           <CardDescription>Based on your profile, interests, and skills</CardDescription>
+//         </CardHeader>
+//         <CardContent className="space-y-4">
+//           {recommendations.length === 0 && (
+//             <CardContent className="text-center text-muted-foreground">
+//               No recommendations available.
+//             </CardContent>
+//           )}
+//           {recommendations.map((rec) => (
+//             <div key={rec.careerId} className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 border-b pb-2 last:border-b-0">
+//               <div>
+//                 <p className="font-medium">{rec.careerName}</p>
+//                 {rec.matchedSkills.length > 0 && (
+//                   <p className="text-sm text-muted-foreground">
+//                     Matched Skills: {rec.matchedSkills.join(", ")}
+//                   </p>
+//                 )}
+//               </div>
+//               <div className="flex items-center gap-2">
+//                 <Progress value={rec.score} className="w-36" />
+//                 <span className="text-sm font-medium">{rec.score}%</span>
+//               </div>
+//             </div>
+//           ))}
+//         </CardContent>
+//       </Card>
+
+//       {/* Colleges */}
+//       <Card>
+//         <CardHeader>
+//           <CardTitle>Colleges</CardTitle>
+//           <CardDescription>Explore available colleges</CardDescription>
+//         </CardHeader>
+//         <CardContent className="space-y-4">
+//           {colleges.length === 0 && (
+//             <CardContent className="text-center text-muted-foreground">
+//               No colleges found.
+//             </CardContent>
+//           )}
+//           {colleges.map((c) => (
+//             <div key={c.id} className="flex justify-between items-center gap-2 border-b pb-2 last:border-b-0">
+//               <p className="font-medium">{c.name}</p>
+//               <Badge>{c.location}</Badge>
+//             </div>
+//           ))}
+//         </CardContent>
+//       </Card>
+
+//       {/* Deadlines */}
+//       <Card>
+//         <CardHeader>
+//           <CardTitle>Deadlines</CardTitle>
+//           <CardDescription>Upcoming important dates</CardDescription>
+//         </CardHeader>
+//         <CardContent className="space-y-4">
+//           {deadlines.length === 0 && (
+//             <CardContent className="text-center text-muted-foreground">
+//               No deadlines available.
+//             </CardContent>
+//           )}
+//           {deadlines.map((d, i) => (
+//             <div key={i} className="flex justify-between items-center gap-2 border-b pb-2 last:border-b-0">
+//               <p>{d.title}</p>
+//               <span>{new Date(d.date).toLocaleDateString()}</span>
+//             </div>
+//           ))}
+//         </CardContent>
+//       </Card>
+
+//       {/* Scholarships */}
+//       <Card>
+//         <CardHeader>
+//           <CardTitle>Scholarships</CardTitle>
+//           <CardDescription>Available scholarships</CardDescription>
+//         </CardHeader>
+//         <CardContent className="space-y-4">
+//           {scholarships.length === 0 && (
+//             <CardContent className="text-center text-muted-foreground">
+//               No scholarships available.
+//             </CardContent>
+//           )}
+//           {scholarships.map((s, i) => (
+//             <div key={i} className="flex justify-between items-center gap-2 border-b pb-2 last:border-b-0">
+//               <p>{s.name}</p>
+//               <span>{new Date(s.deadline).toLocaleDateString()}</span>
+//             </div>
+//           ))}
+//         </CardContent>
+//       </Card>
+//     </div>
+//   );
+// }
 import { Badge } from "@/components/ui/badge";
-import { useEffect, useMemo, useState, type ReactNode } from "react";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { useEffect, useMemo, useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import {
-  ArrowRight,
-  Banknote,
-  BookOpenCheck,
-  Briefcase,
-  CalendarDays,
-  GraduationCap,
-  MapPin,
-  School,
-  Sparkles,
-} from "lucide-react";
 
 type Profile = {
+  id?: number;
   name?: string;
-  email?: string;
-  age?: number;
-  gender?: string;
-  grade?: string;
   interests?: string[];
-  location?: string;
-  language?: string;
-  role?: string;
 };
 
-const colleges = [
-  { name: "Stanford University", course: "B.S. in Computer Science", logo: "/placeholder.svg", location: "Stanford, CA" },
-  { name: "MIT", course: "B.S. in AI & Decision Making", logo: "/placeholder.svg", location: "Cambridge, MA" },
-  { name: "UC Berkeley", course: "B.A. in Data Science", logo: "/placeholder.svg", location: "Berkeley, CA" },
-  { name: "Carnegie Mellon", course: "B.S. in Robotics", logo: "/placeholder.svg", location: "Pittsburgh, PA" },
-];
+type QuizResult = {
+  stream?: string;
+  score?: number;
+};
 
-const deadlines = [
-  { title: "Stanford Early Action Deadline", date: "Nov 1", urgency: "high" as const },
-  { title: "CMU Scholarship Essay Due", date: "Nov 15", urgency: "medium" as const },
-  { title: "MIT Regular Decision", date: "Jan 1", urgency: "low" as const },
-  { title: "Berkeley FAFSA Submission", date: "Mar 2", urgency: "medium" as const },
-];
+type Recommendation = {
+  title: string;
+  description: string;
+  score: number;
+};
 
-const scholarships = [
-  { name: "Tech Innovators Scholarship", deadline: "Dec 10" },
-  { name: "Women in AI Grant", deadline: "Jan 20" },
-  { name: "First-Gen Leaders Fund", deadline: "Feb 5" },
-  { name: "STEM Excellence Award", deadline: "Mar 12" },
-];
-
-function Section({ title, description, right, children }: { title: string; description?: string; right?: ReactNode; children: ReactNode }) {
-  return (
-    <section className="space-y-3">
-      <div className="flex items-end justify-between">
-        <div>
-          <h2 className="text-xl font-semibold">{title}</h2>
-          {description ? (
-            <p className="text-sm text-muted-foreground">{description}</p>
-          ) : null}
-        </div>
-        {right}
-      </div>
-      {children}
-    </section>
-  );
-}
-
-export default function Index() {
+export default function Dashboard() {
   const [profile, setProfile] = useState<Profile | null>(null);
-  const [quiz, setQuiz] = useState<{ stream?: string; score?: number } | null>(null);
+  const [quiz, setQuiz] = useState<QuizResult | null>(null);
+  const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
 
   const completion = useMemo(() => {
-    const p = (profile || {}) as Profile;
+    const p = profile || {};
     const flags = [
       !!p.name,
-      !!p.email,
-      typeof p.age === "number" && !Number.isNaN(p.age),
-      !!p.gender,
-      !!p.grade,
-      !!p.location,
-      !!p.language,
       (p.interests || []).length > 0,
-      !!p.role,
       !!quiz?.stream,
     ];
     const filled = flags.reduce((acc, v) => acc + (v ? 1 : 0), 0);
@@ -95,67 +501,39 @@ export default function Index() {
 
   useEffect(() => {
     try {
-      const raw = localStorage.getItem("novapath_profile");
-      if (raw) setProfile(JSON.parse(raw));
-    } catch {}
+      const storedProfile = localStorage.getItem("novapath_profile");
+      if (storedProfile) {
+        const parsedProfile = JSON.parse(storedProfile);
+        setProfile(parsedProfile);
+
+        const userId = parsedProfile.id;
+
+        // Fetch quiz result
+        fetch(`http://localhost:4000/quiz/result?userId=${userId}`)
+          .then(res => res.json())
+          .then(data => setQuiz(data))
+          .catch(err => console.error(err));
+
+        // Fetch recommendations
+        fetch(`http://localhost:4000/recommendations/${userId}`)
+          .then(res => res.json())
+          .then(data => setRecommendations(data.recommendations || []))
+          .catch(err => console.error(err));
+      }
+    } catch (err) {
+      console.error("Dashboard load error:", err);
+    }
   }, []);
-
-  useEffect(() => {
-    try {
-      const rr = localStorage.getItem("novapath_quiz_result");
-      if (rr) setQuiz(JSON.parse(rr));
-    } catch {}
-  }, []);
-
-  const courses = useMemo(() => {
-    const i = new Set((profile?.interests || []).map((s) => s.toLowerCase()));
-    const out: string[] = [];
-    if (i.has("science")) out.push("B.Sc Physics", "B.Sc Biology");
-    if (i.has("engineering") || i.has("computer science")) out.push("B.Tech CSE", "B.Tech ECE");
-    if (i.has("commerce") || i.has("business")) out.push("B.Com (Hons)", "BBA");
-    if (i.has("arts")) out.push("B.A Psychology", "B.A Economics");
-    if (i.has("medicine")) out.push("MBBS", "B.Pharm");
-    if (i.has("law")) out.push("B.A LL.B");
-    if (i.has("design")) out.push("B.Des Communication");
-    return out.length ? out.slice(0, 6) : ["B.Sc Computer Science", "B.Com (Hons)", "B.A Economics"];
-  }, [profile]);
-
-  const careers = useMemo(() => {
-    const i = new Set((profile?.interests || []).map((s) => s.toLowerCase()));
-    const out: string[] = [];
-    if (i.has("science")) out.push("Research Scientist", "Data Analyst");
-    if (i.has("engineering") || i.has("computer science")) out.push("Software Engineer", "AI Engineer");
-    if (i.has("commerce")) out.push("Chartered Accountant", "Business Analyst");
-    if (i.has("arts")) out.push("UX Designer", "Journalist");
-    if (i.has("law")) out.push("Lawyer");
-    if (i.has("design")) out.push("Product Designer");
-    return out.length ? out : ["AI Engineer", "Business Analyst", "UX Designer"];
-  }, [profile]);
-
-  const materials = useMemo(() => {
-    const i = new Set((profile?.interests || []).map((s) => s.toLowerCase()));
-    const out: { title: string }[] = [];
-    if (i.has("science")) out.push({ title: "Physics Crash Course" });
-    if (i.has("engineering") || i.has("computer science")) out.push({ title: "Intro to Programming with Python" });
-    if (i.has("commerce")) out.push({ title: "Accounting Basics" });
-    if (i.has("arts")) out.push({ title: "Design Thinking 101" });
-    if (!out.length) out.push({ title: "Study Tips: Time Management" });
-    return out;
-  }, [profile]);
 
   return (
     <div className="mt-20 space-y-8">
+      {/* Profile Card */}
       {profile && (
         <Card>
           <CardContent className="py-5 flex flex-wrap items-center justify-between gap-6">
             <div>
               <p className="text-base font-semibold">Hi {profile.name?.split(" ")[0]} 👋</p>
               <p className="text-sm text-muted-foreground">Your career roadmap awaits</p>
-              {quiz?.stream ? (
-                <p className="mt-1 text-sm">
-                  <span className="font-medium">Suggested Stream:</span> {quiz.stream} · <span className="text-muted-foreground">{quiz.score}% match</span>
-                </p>
-              ) : null}
             </div>
             <div className="min-w-[260px]">
               <div className="mb-1 flex items-center justify-between text-xs text-muted-foreground">
@@ -164,232 +542,42 @@ export default function Index() {
               </div>
               <Progress value={completion} />
             </div>
-            {profile.interests?.length ? (
+            {profile.interests?.length > 0 && (
               <div className="flex flex-wrap gap-2">
-                {profile.interests.slice(0, 5).map((t) => (
+                {profile.interests.map(t => (
                   <Badge key={t} variant="outline">{t}</Badge>
                 ))}
               </div>
-            ) : null}
+            )}
           </CardContent>
         </Card>
       )}
 
-      <Section title="Quick Actions" description="Common tasks to get you moving">
-        <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-5">
-          {[
-            { title: "Aptitude Test", icon: <GraduationCap />, to: "/career-quiz" },
-            { title: "Courses & Careers", icon: <Briefcase />, to: "/career-pathway" },
-            { title: "Nearby Colleges", icon: <School />, to: "/colleges" },
-            { title: "Deadlines", icon: <CalendarDays />, to: "/timeline" },
-            { title: "Recommendations", icon: <Sparkles />, to: "/recommendations" },
-          ].map((a) => (
-            <Button key={a.title} variant="outline" asChild className="justify-start gap-2">
-              <a href={a.to}>
-                <span className="rounded-md bg-accent p-2 text-muted-foreground">{a.icon}</span>
-                {a.title}
-              </a>
-            </Button>
-          ))}
-        </div>
-      </Section>
-
-      <Section title="Highlights" description="Curated for you">
-        <div className="grid gap-4 md:grid-cols-3">
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-base">Courses to apply</CardTitle>
-              <CardDescription>Based on your interests</CardDescription>
-            </CardHeader>
-            <CardContent className="flex flex-wrap gap-2">
-              {courses.map((c) => (
-                <Badge key={c} variant="secondary" className="rounded-full">{c}</Badge>
-              ))}
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-base">Career paths</CardTitle>
-              <CardDescription>Aligned with your aptitude</CardDescription>
-            </CardHeader>
-            <CardContent className="flex flex-col gap-2">
-              {careers.map((c) => (
-                <div key={c} className="flex items-center gap-2 text-sm">
-                  <Briefcase className="h-4 w-4" /> {c}
+      {/* Recommendations Card */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Career Recommendations</CardTitle>
+          <CardDescription>Based on your profile and assessment</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {recommendations.length === 0 ? (
+            <p className="text-muted-foreground text-center">No recommendations available yet.</p>
+          ) : (
+            recommendations.map((rec, index) => (
+              <div key={index} className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 border-b pb-2 last:border-b-0">
+                <div>
+                  <p className="font-medium">{rec.title}</p>
+                  <p className="text-sm text-muted-foreground">{rec.description}</p>
                 </div>
-              ))}
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-base">Study materials</CardTitle>
-              <CardDescription>Tailored to your choices</CardDescription>
-            </CardHeader>
-            <CardContent className="flex flex-col gap-2">
-              {materials.map((m) => (
-                <div key={m.title} className="flex items-center gap-2 text-sm">
-                  <BookOpenCheck className="h-4 w-4" /> {m.title}
-                </div>
-              ))}
-            </CardContent>
-          </Card>
-        </div>
-      </Section>
-
-      <Section title="Career Pathway" description="Your roadmap from degree to outcomes">
-        <Card>
-          <CardContent className="pt-6">
-            <div className="grid gap-4 md:grid-cols-3 items-stretch">
-              <div className="relative rounded-lg border bg-card p-4 shadow-sm">
-                <div className="flex items-center gap-3">
-                  <div className="rounded-lg bg-primary/10 p-2 text-primary"><GraduationCap /></div>
-                  <div>
-                    <p className="text-xs uppercase text-muted-foreground tracking-wide">Degree</p>
-                    <p className="font-medium">B.S. Computer Science</p>
-                  </div>
-                </div>
-                <ul className="mt-3 list-disc pl-6 text-sm text-muted-foreground space-y-1">
-                  <li>Focus: AI & Machine Learning</li>
-                  <li>Minor: Entrepreneurship</li>
-                </ul>
-                <ArrowRight className="hidden md:block absolute -right-3 top-1/2 -translate-y-1/2 rounded-full bg-primary text-primary-foreground p-1 h-6 w-6 shadow" />
-              </div>
-              <div className="relative rounded-lg border bg-card p-4 shadow-sm">
-                <div className="flex items-center gap-3">
-                  <div className="rounded-lg bg-primary/10 p-2 text-primary"><Briefcase /></div>
-                  <div>
-                    <p className="text-xs uppercase text-muted-foreground tracking-wide">Jobs</p>
-                    <p className="font-medium">AI Engineer, Robotics Engineer</p>
-                  </div>
-                </div>
-                <ul className="mt-3 list-disc pl-6 text-sm text-muted-foreground space-y-1">
-                  <li>Internships: 2–3 during undergrad</li>
-                  <li>Clubs: Robotics, AI Lab</li>
-                </ul>
-                <ArrowRight className="hidden md:block absolute -right-3 top-1/2 -translate-y-1/2 rounded-full bg-primary text-primary-foreground p-1 h-6 w-6 shadow" />
-              </div>
-              <div className="rounded-lg border bg-card p-4 shadow-sm">
-                <div className="flex items-center gap-3">
-                  <div className="rounded-lg bg-primary/10 p-2 text-primary"><Banknote /></div>
-                  <div>
-                    <p className="text-xs uppercase text-muted-foreground tracking-wide">Salary Range</p>
-                    <p className="font-medium">$95k – $180k</p>
-                  </div>
-                </div>
-                <div className="mt-3 flex items-center gap-2 text-sm text-muted-foreground">
-                  <Badge variant="outline" className="border-transparent bg-emerald-100 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300">Entry</Badge>
-                  <Badge variant="outline" className="border-transparent bg-blue-100 text-blue-700 dark:bg-blue-950/40 dark:text-blue-300">Mid</Badge>
-                  <Badge variant="outline" className="border-transparent bg-violet-100 text-violet-700 dark:bg-violet-950/40 dark:text-violet-300">Senior</Badge>
+                <div className="flex items-center gap-2">
+                  <Progress value={rec.score} className="w-36" />
+                  <span className="text-sm font-medium">{rec.score}%</span>
                 </div>
               </div>
-            </div>
-          </CardContent>
-        </Card>
-      </Section>
-
-      <div className="grid gap-8 lg:grid-cols-12">
-        <div className="lg:col-span-8">
-          <Section title="Shortlisted Colleges" description="Your curated list">
-            <div className="grid gap-4 sm:grid-cols-2">
-              {colleges.map((c) => (
-                <Card key={c.name} className="hover:shadow-md transition-shadow">
-                  <CardHeader className="pb-2">
-                    <div className="flex items-start justify-between">
-                      <div className="flex items-center gap-3">
-                        <img src={c.logo} alt="logo" className="h-10 w-10 rounded-md" />
-                        <div>
-                          <CardTitle className="text-base leading-tight">{c.name}</CardTitle>
-                          <CardDescription className="flex items-center gap-1"><MapPin className="h-3.5 w-3.5" /> {c.location}</CardDescription>
-                        </div>
-                      </div>
-                      <Badge variant="secondary">Top Fit</Badge>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="pt-0">
-                    <p className="text-sm text-foreground/80">{c.course}</p>
-                    <div className="mt-4 flex items-center justify-between">
-                      <div className="flex gap-2">
-                        <Badge variant="outline">CS</Badge>
-                        <Badge variant="outline">AI/ML</Badge>
-                      </div>
-                      <Button size="sm" className="gap-1">View Details <ArrowRight className="h-4 w-4" /></Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </Section>
-        </div>
-        <div className="lg:col-span-4 space-y-8">
-          <Section title="Deadlines & Notifications" description="Upcoming events">
-            <Card>
-              <CardContent className="pt-4">
-                <ul className="space-y-3">
-                  {deadlines.map((d) => (
-                    <li key={d.title} className="flex items-start justify-between gap-3">
-                      <div className="flex items-start gap-3">
-                        <div className="rounded-md bg-accent p-2 text-muted-foreground"><CalendarDays /></div>
-                        <div>
-                          <p className="text-sm font-medium leading-tight">{d.title}</p>
-                          <p className="text-xs text-muted-foreground">Add to calendar</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Badge variant="outline" className="bg-background">{d.date}</Badge>
-                        {d.urgency === "high" && (<Badge className="bg-red-500 text-white hover:bg-red-500">High</Badge>)}
-                        {d.urgency === "medium" && (<Badge className="bg-amber-500 text-white hover:bg-amber-500">Medium</Badge>)}
-                        {d.urgency === "low" && (<Badge className="bg-emerald-500 text-white hover:bg-emerald-500">Low</Badge>)}
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
-          </Section>
-          <Section title="Next Steps" description="Keep the momentum">
-            <div className="grid gap-3 sm:grid-cols-1">
-              {[
-                quiz?.stream ? { title: "Explore career roadmap", to: "/career-pathway" } : { title: "Take the Aptitude Quiz", to: "/career-quiz" },
-                { title: "Browse nearby colleges", to: "/colleges" },
-                { title: "Open your timeline", to: "/timeline" },
-              ].map((s) => (
-                <Button key={s.title} variant="secondary" asChild className="justify-between">
-                  <a href={s.to}>{s.title} <ArrowRight className="h-4 w-4" /></a>
-                </Button>
-              ))}
-            </div>
-          </Section>
-        </div>
-      </div>
-
-      <Section title="Recommended Scholarships" description="Based on your profile and interests">
-        <div className="-mx-2 overflow-x-auto pb-2">
-          <div className="flex gap-4 px-2 min-w-max">
-            {scholarships.map((s) => (
-              <Card key={s.name} className="w-[320px] shrink-0 hover:shadow-md transition-shadow">
-                <CardHeader className="pb-2">
-                  <div className="flex items-center gap-2">
-                    <div className="rounded-md bg-primary/10 p-2 text-primary"><BookOpenCheck /></div>
-                    <div>
-                      <CardTitle className="text-base leading-tight">{s.name}</CardTitle>
-                      <CardDescription>Deadline: {s.deadline}</CardDescription>
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent className="pt-0">
-                  <div className="flex items-center justify-between">
-                    <div className="flex gap-2">
-                      <Badge variant="outline">Merit</Badge>
-                      <Badge variant="outline">STEM</Badge>
-                    </div>
-                    <Button size="sm" className="gap-1"><Sparkles className="h-4 w-4" /> Apply</Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </Section>
+            ))
+          )}
+        </CardContent>
+      </Card>
     </div>
   );
 }
