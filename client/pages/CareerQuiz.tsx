@@ -29,12 +29,7 @@ interface Question {
   options: string[];
 }
 
-const LIKERT = [
-  "Strongly agree",
-  "Agree",
-  "Neutral",
-  "Disagree",
-] as const;
+const LIKERT = ["Strongly agree", "Agree", "Neutral", "Disagree"] as const;
 
 const QUESTIONS: Question[] = [
   {
@@ -46,7 +41,8 @@ const QUESTIONS: Question[] = [
   {
     id: "scientific_knowledge",
     type: "mcq",
-    prompt: "You like learning scientific concepts and reading science articles.",
+    prompt:
+      "You like learning scientific concepts and reading science articles.",
     options: [...LIKERT],
   },
   {
@@ -141,7 +137,9 @@ function mapToStream(answers: Record<string, string | string[]>): {
 
   const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
   const [topStream, topScore] = sorted[0];
-  const percent = Math.round(Math.min(97, (topScore / Math.max(0.001, maxPerStream[topStream])) * 100));
+  const percent = Math.round(
+    Math.min(97, (topScore / Math.max(0.001, maxPerStream[topStream])) * 100),
+  );
   return { stream: topStream, score: percent };
 }
 

@@ -73,12 +73,18 @@ const store = {
   recommendations: [] as Recommendation[],
 };
 
-const counters: Record<string, number> = new Proxy({}, {
-  get: (t, k: string) => (t[k] ??= 1),
-  set: (t, k: string, v: number) => ((t[k] = v), true),
-});
+const counters: Record<string, number> = new Proxy(
+  {},
+  {
+    get: (t, k: string) => (t[k] ??= 1),
+    set: (t, k: string, v: number) => ((t[k] = v), true),
+  },
+);
 
-function upsertMany<T extends { id?: number }>(key: keyof typeof store, input: any[]): T[] {
+function upsertMany<T extends { id?: number }>(
+  key: keyof typeof store,
+  input: any[],
+): T[] {
   const arr = store[key] as any[];
   const out: T[] = [];
   for (const obj of input) {
@@ -90,10 +96,13 @@ function upsertMany<T extends { id?: number }>(key: keyof typeof store, input: a
   return out;
 }
 
-function buildPost<T extends { id?: number }>(key: keyof typeof store): RequestHandler {
+function buildPost<T extends { id?: number }>(
+  key: keyof typeof store,
+): RequestHandler {
   return (req, res) => {
     const payload = Array.isArray(req.body) ? req.body : [req.body];
-    if (!payload || payload.length === 0) return res.status(400).json({ error: "Empty payload" });
+    if (!payload || payload.length === 0)
+      return res.status(400).json({ error: "Empty payload" });
     const saved = upsertMany<T>(key, payload);
     res.status(201).json({ count: saved.length, data: saved });
   };
