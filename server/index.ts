@@ -21,7 +21,9 @@ export function createServer() {
   app.get("/api/demo", handleDemo);
 
   // Data API
-  app.use("/api", createDataRouter());
+  const dataRouter = createDataRouter();
+  app.use("/api", dataRouter);
+  app.use("/", dataRouter);
 
   return app;
 }
