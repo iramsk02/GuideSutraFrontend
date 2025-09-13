@@ -114,8 +114,8 @@ const filtered = useMemo(() => {
                   <SelectValue placeholder="All locations" />
                 </SelectTrigger>
                 <SelectContent>
-                  {LOCATION_OPTIONS.map((l) => (
-                    <SelectItem key={l} value={l}>{l}</SelectItem>
+                  {LOCATION_OPTIONS.map((l, idx) => (
+                    <SelectItem key={`${l}-${idx}`} value={l}>{l}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
