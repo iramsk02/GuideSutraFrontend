@@ -209,6 +209,8 @@ export default function Signin() {
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(false);
   const navigate = useNavigate();
+        const apiUrl = import.meta.env.VITE_API_URL;
+
 
   useEffect(() => {
     try {
@@ -228,7 +230,7 @@ export default function Signin() {
     if (!email || !password) return toast.error("Enter email and password");
 
     try {
-      const response = await fetch("http://localhost:4000/signin", {
+      const response = await fetch(`${apiUrl}/signin`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email}),

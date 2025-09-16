@@ -678,10 +678,12 @@ export default function CareerPathway() {
   const [degreeTrees, setDegreeTrees] = useState<{ id: string; label: string; tree: TreeNode }[]>([]);
   const [degreeId, setDegreeId] = useState<string | null>(null);
   const [selected, setSelected] = useState<PositionedNode | null>(null);
+        const apiUrl = import.meta.env.VITE_API_URL;
+
 
   // Fetch recommendation mapping from backend
   useEffect(() => {
-    fetch("http://localhost:4000/recommendation-mapping")
+    fetch(`${apiUrl}/recommendation-mapping`)
       .then((res) => res.json())
       .then((data) => {
         // Transform backend mapping to tree format for each degree

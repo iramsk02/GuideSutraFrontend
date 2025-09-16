@@ -38,6 +38,8 @@ function likertScore(choice: string): number {
 }
 
 function mapToStream(answers: Record<string, string | string[]>): { stream: string; score: number } {
+        const apiUrl = import.meta.env.VITE_API_URL;
+
   const skillScores = {
     lab_work: 0,
     scientific_knowledge: 0,
@@ -102,6 +104,8 @@ function useConfetti(active: boolean) {
 }
 
 export default function CareerQuiz() {
+        const apiUrl = import.meta.env.VITE_API_URL;
+
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string | string[]>>({});
   const [order, setOrder] = useState<string[]>(QUESTIONS.find((q) => q.type === "order")?.options || []);
@@ -138,7 +142,7 @@ export default function CareerQuiz() {
     const weaknesses = Object.entries(answers).filter(([_, val]) => likertScore(val as string) <= 1).map(([k]) => k);
 
     try {
-      const res = await fetch("http://localhost:4000/assessments", {
+      const res = await fetch(`${apiUrl}/assessments`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

@@ -553,6 +553,7 @@ const INTERESTS = [
 export default function Signup() {
   const search = new URLSearchParams(window.location.search);
   const initialRole = (search.get("role") || "student").toLowerCase();
+      const apiUrl = import.meta.env.VITE_API_URL;
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -646,7 +647,7 @@ export default function Signup() {
     };
 
     try {
-      const res = await fetch("http://localhost:4000/signup", {
+      const res = await fetch(`${apiUrl}/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userData),

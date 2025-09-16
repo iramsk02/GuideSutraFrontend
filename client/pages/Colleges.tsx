@@ -33,10 +33,12 @@ export default function Colleges() {
   const [saved, setSaved] = useState<Record<string, boolean>>({});
   const [page, setPage] = useState(1);
   const perPage = 6;
+  const apiUrl = import.meta.env.VITE_API_URL;
+
 
   // Fetch colleges from backend
   useEffect(() => {
-    fetch("http://localhost:4000/colleges")
+    fetch(`${apiUrl}/colleges`)
       .then((res) => res.json())
       .then((data: any[]) => {
         const mapped = data.map((c) => ({

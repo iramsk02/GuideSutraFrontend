@@ -487,6 +487,7 @@ export default function Dashboard() {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [quiz, setQuiz] = useState<QuizResult | null>(null);
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
+      const apiUrl = import.meta.env.VITE_API_URL;
 
   const completion = useMemo(() => {
     const p = profile || {};
@@ -509,13 +510,13 @@ export default function Dashboard() {
         const userId = parsedProfile.id;
 
         // Fetch quiz result
-        fetch(`http://localhost:4000/quiz/result?userId=${userId}`)
+        fetch(`${apiUrl}/quiz/result?userId=${userId}`)
           .then(res => res.json())
           .then(data => setQuiz(data))
           .catch(err => console.error(err));
 
         // Fetch recommendations
-        fetch(`http://localhost:4000/recommendations/${userId}`)
+        fetch(`${apiUrl}/recommendations/${userId}`)
           .then(res => res.json())
           .then(data => setRecommendations(data.recommendations || []))
           .catch(err => console.error(err));
