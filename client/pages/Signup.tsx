@@ -573,6 +573,7 @@ export default function Signup() {
   const [interests, setInterests] = useState<string[]>([]);
   const [agree, setAgree] = useState(false);
   const [childEmail, setChildEmail] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const { percent } = useMemo(() => {
