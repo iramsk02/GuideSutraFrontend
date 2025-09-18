@@ -209,6 +209,8 @@ export default function Signin() {
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(false);
   const navigate = useNavigate();
+        const apiUrl = import.meta.env.VITE_API_URL;
+
 
   useEffect(() => {
     try {
