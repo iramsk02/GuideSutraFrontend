@@ -305,7 +305,9 @@ export default function CareerQuiz() {
       }
     }
 
-    try { toast.success("Assessment saved!"); } catch {}
+    try {
+      toast.success("Assessment saved!");
+    } catch {}
     setSaving(false);
   }
 
