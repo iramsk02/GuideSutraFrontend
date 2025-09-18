@@ -11,6 +11,7 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import { ArrowLeft, ArrowRight, Brain } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 // Types
 type QType = "mcq" | "order";
@@ -179,6 +180,8 @@ export default function CareerQuiz() {
   const [recommendations, setRecommendations] = useState<
     { title: string; description: string; score: number }[]
   >([]);
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
   const total = QUESTIONS.length;
   const current = QUESTIONS[index];
   const percent = Math.round((index / total) * 100);
@@ -258,8 +261,16 @@ export default function CareerQuiz() {
     setIndex((i) => Math.max(0, i - 1));
   }
 
+  // Auto-save on completion
+  useEffect(() => {
+    if (done && !saved) {
+      void saveAssessment();
+    }
+  }, [done, saved]);
+
   async function saveAssessment() {
     if (!result) return;
+    setSaving(true);
 
     const strengths = Object.entries(answers)
       .filter(([_, val]) => likertScore(val as string) >= 2)
@@ -276,7 +287,7 @@ export default function CareerQuiz() {
       );
     } catch {}
 
-    if (profileData?.id) {
+    if (profileData?.id && apiUrl) {
       try {
         const res = await fetch(`${apiUrl}/assessments`, {
           method: "POST",
@@ -289,12 +300,14 @@ export default function CareerQuiz() {
           }),
         });
         if (!res.ok) throw new Error("Failed to save assessment");
+        setSaved(true);
       } catch (err) {
         console.error(err);
       }
     }
 
-    toast.success("Saved! Recommendations are shown below.");
+    try { toast.success("Assessment saved!"); } catch {}
+    setSaving(false);
   }
 
   return (
@@ -362,7 +375,9 @@ export default function CareerQuiz() {
             </span>
             <Badge variant="outline">{result.stream}</Badge>
           </div>
-          <Button onClick={saveAssessment}>Save Assessment</Button>
+          <Button onClick={saveAssessment} disabled={saving || saved}>
+            {saving ? "Saving..." : saved ? "Saved" : "Save Assessment"}
+          </Button>
           <div className="mt-8 max-w-2xl mx-auto">
             <Card>
               <CardHeader>
