@@ -554,7 +554,7 @@ const INTERESTS = [
 export default function Signup() {
   const search = new URLSearchParams(window.location.search);
   const initialRole = (search.get("role") || "student").toLowerCase();
-      const apiUrl = import.meta.env.VITE_API_URL;
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -568,7 +568,7 @@ export default function Signup() {
   const [role, setRole] = useState<string>(
     ["student", "parent", "counselor"].includes(initialRole)
       ? initialRole
-      : "student"
+      : "student",
   );
   const [interests, setInterests] = useState<string[]>([]);
   const [agree, setAgree] = useState(false);
@@ -662,7 +662,7 @@ export default function Signup() {
       }
 
       const data = await res.json();
-      console.log(data)
+      console.log(data);
       toast.success("Account created! Redirecting...");
       navigate("/dashboard", { replace: true });
     } catch (err: any) {
@@ -717,7 +717,11 @@ export default function Signup() {
             </CardHeader>
             <CardContent>
               <form onSubmit={submit}>
-                <fieldset disabled={loading} aria-busy={loading} className="space-y-4">
+                <fieldset
+                  disabled={loading}
+                  aria-busy={loading}
+                  className="space-y-4"
+                >
                   <div className="grid gap-3">
                     <Input
                       value={name}
@@ -767,7 +771,9 @@ export default function Signup() {
                             <SelectItem value="male">Male</SelectItem>
                             <SelectItem value="female">Female</SelectItem>
                             <SelectItem value="other">Other</SelectItem>
-                            <SelectItem value="na">Prefer not to say</SelectItem>
+                            <SelectItem value="na">
+                              Prefer not to say
+                            </SelectItem>
                           </SelectContent>
                         </Select>
                         <Select value={grade} onValueChange={setGrade}>
@@ -775,13 +781,19 @@ export default function Signup() {
                             <SelectValue placeholder="Grade/Class" />
                           </SelectTrigger>
                           <SelectContent>
-                            {["Class 8", "Class 9", "Class 10", "Class 11", "Class 12", "UG", "PG"].map(
-                              (g) => (
-                                <SelectItem key={g} value={g}>
-                                  {g}
-                                </SelectItem>
-                              )
-                            )}
+                            {[
+                              "Class 8",
+                              "Class 9",
+                              "Class 10",
+                              "Class 11",
+                              "Class 12",
+                              "UG",
+                              "PG",
+                            ].map((g) => (
+                              <SelectItem key={g} value={g}>
+                                {g}
+                              </SelectItem>
+                            ))}
                           </SelectContent>
                         </Select>
                       </div>
@@ -822,7 +834,10 @@ export default function Signup() {
                       checked={agree}
                       onCheckedChange={(v) => setAgree(Boolean(v))}
                     />
-                    <label htmlFor="agree" className="text-sm text-muted-foreground">
+                    <label
+                      htmlFor="agree"
+                      className="text-sm text-muted-foreground"
+                    >
                       I agree to Terms & Privacy Policy
                     </label>
                   </div>
@@ -830,7 +845,8 @@ export default function Signup() {
                   <Button type="submit" className="w-full" disabled={loading}>
                     {loading ? (
                       <span className="inline-flex items-center gap-2">
-                        <Loader2 className="h-4 w-4 animate-spin" /> Creating account...
+                        <Loader2 className="h-4 w-4 animate-spin" /> Creating
+                        account...
                       </span>
                     ) : (
                       "Sign Up & Continue"

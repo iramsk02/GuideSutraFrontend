@@ -88,15 +88,15 @@ export function StudentLayout({ children }: { children: ReactNode }) {
 
   const path = (location as any)?.pathname || "";
   const [bypass, setbypass] = useState();
-  useEffect(()=>{
-    setbypass(path)
-  },[path])
+  useEffect(() => {
+    setbypass(path);
+  }, [path]);
   // const bypass =
   //   path.startsWith("/") ||
   //   path.startsWith("/signup") ||
   //   path.startsWith("/signin");
-    console.log(path,bypass)
-  if (bypass=="/signup"|| bypass=="/signin"|| bypass=="/") {
+  console.log(path, bypass);
+  if (bypass == "/signup" || bypass == "/signin" || bypass == "/") {
     return (
       <>
         {children}
@@ -166,7 +166,13 @@ export function StudentLayout({ children }: { children: ReactNode }) {
                                   : undefined
                               }
                             >
-                              <Icon className={isAssessment ? "text-amber-600" : "text-muted-foreground"} />
+                              <Icon
+                                className={
+                                  isAssessment
+                                    ? "text-amber-600"
+                                    : "text-muted-foreground"
+                                }
+                              />
                               <span>{label}</span>
                               {isAssessment && (
                                 <span className="ml-auto inline-flex items-center rounded-full bg-amber-200 px-2 py-0.5 text-[10px] font-medium text-amber-900 animate-pulse">
