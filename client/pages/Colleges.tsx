@@ -116,8 +116,8 @@ const filtered = useMemo(() => {
                   <SelectValue placeholder="All locations" />
                 </SelectTrigger>
                 <SelectContent>
-                  {LOCATION_OPTIONS.map((l) => (
-                    <SelectItem key={l} value={l}>{l}</SelectItem>
+                  {LOCATION_OPTIONS.map((l, idx) => (
+                    <SelectItem key={`${l}-${idx}`} value={l}>{l}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -132,7 +132,9 @@ const filtered = useMemo(() => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All</SelectItem>
-                  {allStreams.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}
+                  {Array.from(new Set(allStreams)).map((s, idx) => (
+                    <SelectItem key={`${s}-${idx}`} value={s}>{s}</SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
@@ -146,7 +148,9 @@ const filtered = useMemo(() => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All</SelectItem>
-                  {allDegrees.map((d) => <SelectItem key={d} value={d}>{d}</SelectItem>)}
+                  {Array.from(new Set(allDegrees)).map((d, idx) => (
+                    <SelectItem key={`${d}-${idx}`} value={d}>{d}</SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
@@ -179,7 +183,9 @@ const filtered = useMemo(() => {
                       <MapPin className="h-4 w-4" /> {c.location}
                     </div>
                     <div className="mt-3 flex flex-wrap gap-2">
-                      {c.courses.map((course) => <Badge key={course} variant="outline">{course}</Badge>)}
+                      {Array.from(new Set(c.courses)).map((course, i) => (
+                        <Badge key={`${course}-${i}`} variant="outline">{course}</Badge>
+                      ))}
                     </div>
                     <p className="mt-3 text-sm text-foreground/80"><span className="font-medium">Eligibility:</span> {c.eligibility}</p>
                     <div className="mt-4 grid gap-3 sm:grid-cols-2 sm:items-center">

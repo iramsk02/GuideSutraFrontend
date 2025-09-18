@@ -53,7 +53,6 @@ const nav = [
   { to: "/career-pathway", label: "Career Pathway", icon: GraduationCap },
   { to: "/colleges", label: "Colleges", icon: School },
   { to: "/timeline", label: "Timeline", icon: CalendarDays },
-  { to: "/recommendations", label: "Recommendations", icon: Sparkles },
   { to: "/scholarships", label: "Scholarships", icon: BookOpen },
   { to: "/resources", label: "Resources", icon: BookOpen },
   { to: "/mentorship", label: "Mentorship", icon: UsersRound },
@@ -89,15 +88,15 @@ export function StudentLayout({ children }: { children: ReactNode }) {
 
   const path = (location as any)?.pathname || "";
   const [bypass, setbypass] = useState();
-  useEffect(()=>{
-    setbypass(path)
-  },[path])
+  useEffect(() => {
+    setbypass(path);
+  }, [path]);
   // const bypass =
   //   path.startsWith("/") ||
   //   path.startsWith("/signup") ||
   //   path.startsWith("/signin");
-    console.log(path,bypass)
-  if (bypass=="/signup"|| bypass=="/signin"|| bypass=="/") {
+  console.log(path, bypass);
+  if (bypass == "/signup" || bypass == "/signin" || bypass == "/") {
     return (
       <>
         {children}
@@ -153,18 +152,39 @@ export function StudentLayout({ children }: { children: ReactNode }) {
               </SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>
-                  {nav.map(({ to, label, icon: Icon }) => (
-                    <SidebarMenuItem key={to}>
-                      <NavLink to={to} className="block">
-                        {({ isActive }) => (
-                          <SidebarMenuButton isActive={isActive}>
-                            <Icon className="text-muted-foreground" />
-                            <span>{label}</span>
-                          </SidebarMenuButton>
-                        )}
-                      </NavLink>
-                    </SidebarMenuItem>
-                  ))}
+                  {nav.map(({ to, label, icon: Icon }) => {
+                    const isAssessment = to === "/career-quiz";
+                    return (
+                      <SidebarMenuItem key={to}>
+                        <NavLink to={to} className="block">
+                          {({ isActive }) => (
+                            <SidebarMenuButton
+                              isActive={isActive}
+                              className={
+                                isAssessment
+                                  ? "relative bg-amber-50/80 text-amber-900 border border-amber-200 ring-2 ring-amber-200 shadow-sm hover:bg-amber-100"
+                                  : undefined
+                              }
+                            >
+                              <Icon
+                                className={
+                                  isAssessment
+                                    ? "text-amber-600"
+                                    : "text-muted-foreground"
+                                }
+                              />
+                              <span>{label}</span>
+                              {isAssessment && (
+                                <span className="ml-auto inline-flex items-center rounded-full bg-amber-200 px-2 py-0.5 text-[10px] font-medium text-amber-900 animate-pulse">
+                                  Start here
+                                </span>
+                              )}
+                            </SidebarMenuButton>
+                          )}
+                        </NavLink>
+                      </SidebarMenuItem>
+                    );
+                  })}
                 </SidebarMenu>
               </SidebarGroupContent>
             </SidebarGroup>

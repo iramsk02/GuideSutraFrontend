@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/tooltip";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
 
 const INTERESTS = [
   "Science",
@@ -41,7 +42,7 @@ const INTERESTS = [
 export default function Signup() {
   const search = new URLSearchParams(window.location.search);
   const initialRole = (search.get("role") || "student").toLowerCase();
-      const apiUrl = import.meta.env.VITE_API_URL;
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -55,11 +56,12 @@ export default function Signup() {
   const [role, setRole] = useState<string>(
     ["student", "parent", "counselor"].includes(initialRole)
       ? initialRole
-      : "student"
+      : "student",
   );
   const [interests, setInterests] = useState<string[]>([]);
   const [agree, setAgree] = useState(false);
   const [childEmail, setChildEmail] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const { percent } = useMemo(() => {
@@ -109,6 +111,7 @@ export default function Signup() {
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
 
     if (!agree) return toast.error("Please agree to Terms & Privacy Policy");
     if (!name || !email || !password || !confirm)
@@ -147,11 +150,13 @@ export default function Signup() {
       }
 
       const data = await res.json();
-      console.log(data)
+      console.log(data);
       toast.success("Account created! Redirecting...");
       navigate("/dashboard", { replace: true });
     } catch (err: any) {
       toast.error(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -199,119 +204,143 @@ export default function Signup() {
               <CardDescription>It takes less than 2 minutes.</CardDescription>
             </CardHeader>
             <CardContent>
-              <form onSubmit={submit} className="space-y-4">
-                <div className="grid gap-3">
-                  <Input
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Full Name"
-                    required
-                  />
-                  <Input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Email"
-                    required
-                  />
-                  <Input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Password"
-                    required
-                  />
-                  <Input
-                    type="password"
-                    value={confirm}
-                    onChange={(e) => setConfirm(e.target.value)}
-                    placeholder="Confirm Password"
-                    required
-                  />
-                </div>
+              <form onSubmit={submit}>
+                <fieldset
+                  disabled={loading}
+                  aria-busy={loading}
+                  className="space-y-4"
+                >
+                  <div className="grid gap-3">
+                    <Input
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="Full Name"
+                      required
+                    />
+                    <Input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="Email"
+                      required
+                    />
+                    <Input
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Password"
+                      required
+                    />
+                    <Input
+                      type="password"
+                      value={confirm}
+                      onChange={(e) => setConfirm(e.target.value)}
+                      placeholder="Confirm Password"
+                      required
+                    />
+                  </div>
 
-                {role === "student" && (
-                  <>
-                    <div className="grid gap-3 sm:grid-cols-3">
-                      <Input
-                        type="number"
-                        min={8}
-                        max={60}
-                        value={age}
-                        onChange={(e) => setAge(e.target.value)}
-                        placeholder="Age"
-                      />
-                      <Select value={gender} onValueChange={setGender}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Gender" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="male">Male</SelectItem>
-                          <SelectItem value="female">Female</SelectItem>
-                          <SelectItem value="other">Other</SelectItem>
-                          <SelectItem value="na">Prefer not to say</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <Select value={grade} onValueChange={setGrade}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Grade/Class" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {["Class 8", "Class 9", "Class 10", "Class 11", "Class 12", "UG", "PG"].map(
-                            (g) => (
+                  {role === "student" && (
+                    <>
+                      <div className="grid gap-3 sm:grid-cols-3">
+                        <Input
+                          type="number"
+                          min={8}
+                          max={60}
+                          value={age}
+                          onChange={(e) => setAge(e.target.value)}
+                          placeholder="Age"
+                        />
+                        <Select value={gender} onValueChange={setGender}>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Gender" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="male">Male</SelectItem>
+                            <SelectItem value="female">Female</SelectItem>
+                            <SelectItem value="other">Other</SelectItem>
+                            <SelectItem value="na">
+                              Prefer not to say
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <Select value={grade} onValueChange={setGrade}>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Grade/Class" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {[
+                              "Class 8",
+                              "Class 9",
+                              "Class 10",
+                              "Class 11",
+                              "Class 12",
+                              "UG",
+                              "PG",
+                            ].map((g) => (
                               <SelectItem key={g} value={g}>
                                 {g}
                               </SelectItem>
-                            )
-                          )}
-                        </SelectContent>
-                      </Select>
-                    </div>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
 
-                    <Input
-                      value={location}
-                      onChange={(e) => setLocation(e.target.value)}
-                      placeholder="Location"
+                      <Input
+                        value={location}
+                        onChange={(e) => setLocation(e.target.value)}
+                        placeholder="Location"
+                      />
+
+                      <div>
+                        <label className="mb-2 block text-sm font-medium">
+                          Academic Interests
+                        </label>
+                        <ToggleGroup
+                          type="multiple"
+                          value={interests}
+                          onValueChange={setInterests}
+                          className="flex flex-wrap gap-2"
+                        >
+                          {INTERESTS.map((i) => (
+                            <ToggleGroupItem
+                              key={i}
+                              value={i}
+                              className="rounded-full px-3 py-1 data-[state=on]:bg-primary/10 data-[state=on]:text-primary border"
+                            >
+                              {i}
+                            </ToggleGroupItem>
+                          ))}
+                        </ToggleGroup>
+                      </div>
+                    </>
+                  )}
+
+                  <div className="flex items-start gap-2">
+                    <Checkbox
+                      id="agree"
+                      checked={agree}
+                      onCheckedChange={(v) => setAgree(Boolean(v))}
                     />
+                    <label
+                      htmlFor="agree"
+                      className="text-sm text-muted-foreground"
+                    >
+                      I agree to Terms & Privacy Policy
+                    </label>
+                  </div>
 
-                    <div>
-                      <label className="mb-2 block text-sm font-medium">
-                        Academic Interests
-                      </label>
-                      <ToggleGroup
-                        type="multiple"
-                        value={interests}
-                        onValueChange={setInterests}
-                        className="flex flex-wrap gap-2"
-                      >
-                        {INTERESTS.map((i) => (
-                          <ToggleGroupItem
-                            key={i}
-                            value={i}
-                            className="rounded-full px-3 py-1 data-[state=on]:bg-primary/10 data-[state=on]:text-primary border"
-                          >
-                            {i}
-                          </ToggleGroupItem>
-                        ))}
-                      </ToggleGroup>
-                    </div>
-                  </>
-                )}
-
-                <div className="flex items-start gap-2">
-                  <Checkbox
-                    id="agree"
-                    checked={agree}
-                    onCheckedChange={(v) => setAgree(Boolean(v))}
-                  />
-                  <label htmlFor="agree" className="text-sm text-muted-foreground">
-                    I agree to Terms & Privacy Policy
-                  </label>
-                </div>
-
-                <Button type="submit" className="w-full">
-                  Sign Up & Continue
-                </Button>
+                  <Button type="submit" className="w-full" disabled={loading}>
+                    {loading ? (
+                      <span className="inline-flex items-center gap-2">
+                        <Loader2 className="h-4 w-4 animate-spin" /> Creating
+                        account...
+                      </span>
+                    ) : (
+                      "Sign Up & Continue"
+                    )}
+                  </Button>
+                </fieldset>
               </form>
             </CardContent>
           </Card>
