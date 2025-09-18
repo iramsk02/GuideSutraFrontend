@@ -11,7 +11,6 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import { ArrowLeft, ArrowRight, Brain } from "lucide-react";
-import { useEffect, useMemo, useRef, useState } from "react";
 
 // Types
 type QType = "mcq" | "order";
