@@ -226,31 +226,36 @@ export default function Signin() {
     } catch {}
   }, []);
 
-  function submit(e: React.FormEvent) {
+  async function submit(e: React.FormEvent) {
     e.preventDefault();
-    if (!email || !password) return toast.error("Enter email and password");
-
-    let profile: any = null;
+    setLoading(true);
     try {
-      const raw = localStorage.getItem("novapath_profile");
-      profile = raw ? JSON.parse(raw) : null;
-    } catch {}
-    if (!profile) return toast.error("No account found. Please sign up.");
-    if (profile.email !== email)
-      return toast.error("Email not found. Check or create an account.");
+      if (!email || !password) return toast.error("Enter email and password");
 
-    if (remember) {
+      let profile: any = null;
       try {
-        localStorage.setItem("novapath_remember", JSON.stringify({ email }));
+        const raw = localStorage.getItem("novapath_profile");
+        profile = raw ? JSON.parse(raw) : null;
       } catch {}
-    } else {
-      try {
-        localStorage.removeItem("novapath_remember");
-      } catch {}
+      if (!profile) return toast.error("No account found. Please sign up.");
+      if (profile.email !== email)
+        return toast.error("Email not found. Check or create an account.");
+
+      if (remember) {
+        try {
+          localStorage.setItem("novapath_remember", JSON.stringify({ email }));
+        } catch {}
+      } else {
+        try {
+          localStorage.removeItem("novapath_remember");
+        } catch {}
+      }
+
+      toast.success("Welcome back! Redirecting...");
+      navigate("/dashboard", { replace: true });
+    } finally {
+      setLoading(false);
     }
-
-    toast.success("Welcome back! Redirecting...");
-    navigate("/dashboard", { replace: true });
   }
 
   return (
