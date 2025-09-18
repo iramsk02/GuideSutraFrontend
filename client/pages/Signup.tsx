@@ -667,6 +667,8 @@ export default function Signup() {
       navigate("/dashboard", { replace: true });
     } catch (err: any) {
       toast.error(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
