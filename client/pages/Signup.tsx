@@ -623,6 +623,7 @@ export default function Signup() {
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
 
     if (!agree) return toast.error("Please agree to Terms & Privacy Policy");
     if (!name || !email || !password || !confirm)
