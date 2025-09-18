@@ -223,46 +223,31 @@ export default function Signin() {
     } catch {}
   }, []);
 
-  async function submit(e: React.FormEvent) {
+  function submit(e: React.FormEvent) {
     e.preventDefault();
     if (!email || !password) return toast.error("Enter email and password");
 
+    let profile: any = null;
     try {
-      const response = await fetch("http://localhost:4000/signin", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email}),
-      });
+      const raw = localStorage.getItem("novapath_profile");
+      profile = raw ? JSON.parse(raw) : null;
+    } catch {}
+    if (!profile) return toast.error("No account found. Please sign up.");
+    if (profile.email !== email)
+      return toast.error("Email not found. Check or create an account.");
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        return toast.error(data.error || "Signin failed");
-      }
-
-      // Save "remember me" info
-      if (remember) {
-        try {
-          localStorage.setItem("novapath_remember", JSON.stringify({ email }));
-        } catch {}
-      } else {
-        try {
-          localStorage.removeItem("novapath_remember");
-        } catch {}
-      }
-
-      // Save user profile locally
+    if (remember) {
       try {
-        localStorage.setItem("novapath_profile", JSON.stringify(data.user));
+        localStorage.setItem("novapath_remember", JSON.stringify({ email }));
       } catch {}
-
-      toast.success("Welcome back! Redirecting...");
-      navigate("/dashboard", { replace: true });
-
-    } catch (err: any) {
-      console.error(err);
-      toast.error("Server error. Try again later.");
+    } else {
+      try {
+        localStorage.removeItem("novapath_remember");
+      } catch {}
     }
+
+    toast.success("Welcome back! Redirecting...");
+    navigate("/dashboard", { replace: true });
   }
 
   return (
