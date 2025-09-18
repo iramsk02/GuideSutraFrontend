@@ -11,6 +11,7 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import { ArrowLeft, ArrowRight, Brain } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 // Types
 type QType = "mcq" | "order";
@@ -109,6 +110,7 @@ export default function CareerQuiz() {
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string | string[]>>({});
   const [order, setOrder] = useState<string[]>(QUESTIONS.find((q) => q.type === "order")?.options || []);
+  const [recommendations, setRecommendations] = useState<{ title: string; description: string; score: number }[]>([]);
   const total = QUESTIONS.length;
   const current = QUESTIONS[index];
   const percent = Math.round((index / total) * 100);
@@ -124,6 +126,22 @@ export default function CareerQuiz() {
   const result = useMemo(() => (done ? mapToStream(answers) : null), [done, answers]);
   const confettiRef = useConfetti(!!done);
 
+  useEffect(() => {
+    if (!done) return;
+    const recs: { title: string; description: string; score: number }[] = [];
+    const ints = (profileData?.interests || []).map((s: string) => s.toLowerCase());
+    if (ints.includes("biology") || ints.includes("healthcare")) {
+      recs.push({ title: "Medical Path", description: "Explore MBBS, B.Pharm, and allied health sciences.", score: 88 });
+    }
+    if (ints.includes("computer science") || ints.includes("mathematics") || ints.includes("robotics")) {
+      recs.push({ title: "Software & Engineering", description: "Consider B.Tech (CSE), AI/ML tracks, and internships.", score: 92 });
+    }
+    if (result?.stream === "Commerce") {
+      recs.push({ title: "Business & Finance", description: "Look into B.Com, CA/CS tracks, and analytics.", score: 85 });
+    }
+    setRecommendations(recs);
+  }, [done, profileData, result]);
+
   function select(option: string) {
     if (current.type === "mcq") setAnswers((a) => ({ ...a, [current.id]: option }));
   }
@@ -136,28 +154,35 @@ export default function CareerQuiz() {
   function back() { setIndex((i) => Math.max(0, i - 1)); }
 
   async function saveAssessment() {
-    if (!profileData?.id || !result) return;
+    if (!result) return;
 
     const strengths = Object.entries(answers).filter(([_, val]) => likertScore(val as string) >= 2).map(([k]) => k);
     const weaknesses = Object.entries(answers).filter(([_, val]) => likertScore(val as string) <= 1).map(([k]) => k);
 
     try {
-      const res = await fetch(`${apiUrl}/assessments`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          userId: profileData.id,
-          score: result.score,
-          strengths,
-          weaknesses,
-        }),
-      });
-      if (!res.ok) throw new Error("Failed to save assessment");
-      toast.success("Assessment and recommendation saved successfully!");
-    } catch (err: any) {
-      console.error(err);
-      toast.error(err.message || "Failed to save assessment");
+      localStorage.setItem("novapath_quiz_result", JSON.stringify(result));
+      localStorage.setItem("novapath_recommendations", JSON.stringify(recommendations));
+    } catch {}
+
+    if (profileData?.id) {
+      try {
+        const res = await fetch(`${apiUrl}/assessments`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userId: profileData.id,
+            score: result.score,
+            strengths,
+            weaknesses,
+          }),
+        });
+        if (!res.ok) throw new Error("Failed to save assessment");
+      } catch (err) {
+        console.error(err);
+      }
     }
+
+    toast.success("Saved! Recommendations are shown below.");
   }
 
   return (
@@ -212,7 +237,33 @@ export default function CareerQuiz() {
             <span>You scored {result.score}% and your recommended stream is</span>
             <Badge variant="outline">{result.stream}</Badge>
           </div>
-          <Button onClick={saveAssessment}>Save Assessment & Recommendation</Button>
+          <Button onClick={saveAssessment}>Save Assessment</Button>
+          <div className="mt-8 max-w-2xl mx-auto">
+            <Card>
+              <CardHeader>
+                <CardTitle>Career Recommendations</CardTitle>
+                <CardDescription>Based on your answers and interests</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {recommendations.length === 0 ? (
+                  <p className="text-muted-foreground">No recommendations available.</p>
+                ) : (
+                  recommendations.map((rec, idx) => (
+                    <div key={idx} className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 border-b pb-2 last:border-b-0">
+                      <div>
+                        <p className="font-medium">{rec.title}</p>
+                        <p className="text-sm text-muted-foreground">{rec.description}</p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Progress value={rec.score} className="w-36" />
+                        <span className="text-sm font-medium">{rec.score}%</span>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </CardContent>
+            </Card>
+          </div>
           <div ref={confettiRef} className="absolute inset-0 pointer-events-none"></div>
         </div>
       )}
