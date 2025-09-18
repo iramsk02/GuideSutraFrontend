@@ -50,6 +50,8 @@ const defaultInterests = ["AI", "Robotics", "Math", "Entrepreneurship"];
 
 const nav = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+    { to: "/career-quiz", label: "Assessment", icon: Brain },
+
   { to: "/career-pathway", label: "Career Pathway", icon: GraduationCap },
   { to: "/colleges", label: "Colleges", icon: School },
   { to: "/timeline", label: "Timeline", icon: CalendarDays },
@@ -57,7 +59,6 @@ const nav = [
   { to: "/resources", label: "Resources", icon: BookOpen },
   { to: "/mentorship", label: "Mentorship", icon: UsersRound },
   { to: "/parents", label: "Parents", icon: HeartHandshake },
-  { to: "/career-quiz", label: "Assessment", icon: Brain },
   { to: "/notifications", label: "Notifications", icon: Bell },
 ];
 
