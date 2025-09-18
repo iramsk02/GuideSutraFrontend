@@ -1,6 +1,8 @@
 
 import { Badge } from "@/components/ui/badge";
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -31,6 +33,9 @@ export default function Dashboard() {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [quiz, setQuiz] = useState<QuizResult | null>(null);
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
+  const [recsLoading, setRecsLoading] = useState(false);
+  const [needsAssessment, setNeedsAssessment] = useState(false);
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const completion = useMemo(() => {
     const p = profile || {};
@@ -46,20 +51,20 @@ export default function Dashboard() {
         const parsedProfile = JSON.parse(storedProfile);
         setProfile(parsedProfile);
 
-        // Load quiz result from local storage (avoid external fetch in client)
+        // Load quiz result from local storage
         try {
           const rawQuiz = localStorage.getItem("novapath_quiz_result");
           if (rawQuiz) setQuiz(JSON.parse(rawQuiz));
         } catch {}
 
-        // Derive simple recommendations locally
-        const recs: Recommendation[] = [];
+        // Local fallback recommendations (used only if API fails)
+        const localRecs: Recommendation[] = [];
         if (parsedProfile?.interests?.length) {
           const ints = parsedProfile.interests.map((s: string) =>
             s.toLowerCase(),
           );
           if (ints.includes("biology") || ints.includes("healthcare")) {
-            recs.push({
+            localRecs.push({
               title: "Medical Path",
               description: "Explore MBBS, B.Pharm, and allied health sciences.",
               score: 88,
@@ -70,7 +75,7 @@ export default function Dashboard() {
             ints.includes("mathematics") ||
             ints.includes("robotics")
           ) {
-            recs.push({
+            localRecs.push({
               title: "Software & Engineering",
               description:
                 "Consider B.Tech (CSE), AI/ML tracks, and internships.",
@@ -78,7 +83,40 @@ export default function Dashboard() {
             });
           }
         }
-        setRecommendations(recs);
+
+        // Fetch recommendations from backend
+        if (parsedProfile?.id && apiUrl) {
+          setRecsLoading(true);
+          fetch(`${apiUrl}/recommendations/${parsedProfile.id}`)
+            .then((res) =>
+              res.ok
+                ? res.json()
+                : Promise.reject(new Error("Failed to load recommendations")),
+            )
+            .then((data) => {
+              const recs = Array.isArray(data?.recommendations)
+                ? data.recommendations
+                : [];
+              if (recs.length === 0 || recs[0]?.title === "No Assessment Yet") {
+                setRecommendations([]);
+                setNeedsAssessment(true);
+              } else {
+                const mapped: Recommendation[] = recs.map((r: any) => ({
+                  title: r.title ?? "Recommendation",
+                  description: r.description ?? "",
+                  score: typeof r.score === "number" ? r.score : 0,
+                }));
+                setRecommendations(mapped);
+                setNeedsAssessment(false);
+              }
+            })
+            .catch(() => {
+              setRecommendations(localRecs);
+            })
+            .finally(() => setRecsLoading(false));
+        } else {
+          setRecommendations(localRecs);
+        }
       }
     } catch (err) {
       console.error("Dashboard load error:", err);
@@ -128,10 +166,21 @@ export default function Dashboard() {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          {recommendations.length === 0 ? (
+          {recsLoading ? (
             <p className="text-muted-foreground text-center">
-              No recommendations available yet.
+              Loading recommendations...
             </p>
+          ) : recommendations.length === 0 ? (
+            <div className="text-center space-y-3">
+              <p className="text-muted-foreground">
+                {needsAssessment
+                  ? "Complete the assessment to get personalized recommendations."
+                  : "No recommendations available yet."}
+              </p>
+              <Button asChild>
+                <Link to="/career-quiz">Take Assessment</Link>
+              </Button>
+            </div>
           ) : (
             recommendations.map((rec, index) => (
               <div
