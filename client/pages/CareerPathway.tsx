@@ -591,10 +591,17 @@ const DEMO_TREE: TreeNode = {
   branch: "degree",
   meta: { salary: "₹6–12 LPA", skills: ["DSA", "Web", "DBMS"], opportunities: ["Internships", "Hackathons"] },
   children: [
-    { id: "demo-college", label: "IIT Jammu", branch: "higher", meta: { opportunities: ["Clubs", "Labs"] } },
-    { id: "demo-govt", label: "Govt IT Officer", branch: "govt", meta: { salary: "₹7–10 LPA" } },
-    { id: "demo-higher", label: "M.Tech AI", branch: "higher", meta: { opportunities: ["Research", "TAship"] } },
-    { id: "demo-private", label: "Software Engineer", branch: "private", meta: { salary: "₹10–30 LPA" } },
+    {
+      id: "demo-college",
+      label: "IIT Jammu",
+      branch: "higher",
+      meta: { opportunities: ["Clubs", "Labs"] },
+      children: [
+        { id: "demo-govt", label: "Govt IT Officer", branch: "govt", meta: { salary: "₹7–10 LPA" } },
+        { id: "demo-private", label: "Software Engineer", branch: "private", meta: { salary: "₹10–30 LPA" } },
+        { id: "demo-higher", label: "M.Tech AI", branch: "higher", meta: { opportunities: ["Research", "TAship"] } },
+      ],
+    },
   ],
 };
 
