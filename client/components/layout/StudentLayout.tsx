@@ -50,6 +50,8 @@ const defaultInterests = ["AI", "Robotics", "Math", "Entrepreneurship"];
 
 const nav = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { to: "/career-quiz", label: "Assessment", icon: Brain },
+
   { to: "/career-pathway", label: "Career Pathway", icon: GraduationCap },
   { to: "/colleges", label: "Colleges", icon: School },
   { to: "/timeline", label: "Timeline", icon: CalendarDays },
@@ -57,7 +59,6 @@ const nav = [
   { to: "/resources", label: "Resources", icon: BookOpen },
   { to: "/mentorship", label: "Mentorship", icon: UsersRound },
   { to: "/parents", label: "Parents", icon: HeartHandshake },
-  { to: "/career-quiz", label: "Assessment", icon: Brain },
   { to: "/notifications", label: "Notifications", icon: Bell },
 ];
 
@@ -69,7 +70,7 @@ export function StudentLayout({ children }: { children: ReactNode }) {
     try {
       const raw = localStorage.getItem("novapath_profile");
       if (raw) setProfile(JSON.parse(raw));
-    } catch {}
+    } catch { }
   }, []);
   const interests = (
     profile?.interests && profile.interests.length
@@ -108,116 +109,124 @@ export function StudentLayout({ children }: { children: ReactNode }) {
   return (
     <>
       <SidebarProvider>
-        <Sidebar className="border-r border-sidebar-border " collapsible="icon">
+        <Sidebar className="border-r border-sidebar-border overflow-visible z-20">
           <SidebarHeader>
-            <div className="flex items-center gap-3 p-2">
-              <Avatar className="h-12 w-12 ring-2 ring-primary/20">
-                <AvatarImage src="/placeholder.svg" alt="Student" />
+            <div className="flex items-center gap-3 p-2 overflow-visible">
+              {/* Avatar: positioned + very high z so it sits above the fixed header (z-10) */}
+              <Avatar className="h-12 w-12 ring-2 ring-primary/20 relative z-[9999]">
+                <AvatarImage src="/Profile.png" alt="Student" />
                 <AvatarFallback>IS</AvatarFallback>
               </Avatar>
-              <div className="min-w-0">
-                <div className="flex items-center gap-2">
-                  <span className="font-semibold truncate">
-                    {profile?.name || "Guest"}
-                  </span>
-                  {profile?.grade ? (
-                    <Badge variant="secondary" className="shrink-0">
-                      {profile.grade}
-                    </Badge>
-                  ) : null}
-                  {profile?.role ? (
-                    <Badge variant="outline" className="shrink-0 capitalize">
-                      {profile.role}
-                    </Badge>
-                  ) : null}
-                </div>
-                <div className="mt-2 flex flex-wrap gap-1.5">
-                  {interests.map((tag) => (
-                    <Badge
-                      key={tag}
-                      variant="outline"
-                      className="bg-accent/40 border-transparent text-foreground/80"
-                    >
-                      {tag}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </SidebarHeader>
-          <SidebarContent>
-            <SidebarGroup>
-              <SidebarGroupLabel className="text-xs uppercase tracking-wide text-muted-foreground/80">
-                Navigation
-              </SidebarGroupLabel>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  {nav.map(({ to, label, icon: Icon }) => {
-                    const isAssessment = to === "/career-quiz";
-                    return (
-                      <SidebarMenuItem key={to}>
-                        <NavLink to={to} className="block">
-                          {({ isActive }) => (
-                            <SidebarMenuButton
-                              isActive={isActive}
-                              className={
-                                isAssessment
-                                  ? "relative bg-amber-50/80 text-amber-900 border border-amber-200 ring-2 ring-amber-200 shadow-sm hover:bg-amber-100"
-                                  : undefined
-                              }
-                            >
-                              <Icon
-                                className={
-                                  isAssessment
-                                    ? "text-amber-600"
-                                    : "text-muted-foreground"
-                                }
-                              />
-                              <span>{label}</span>
-                              {isAssessment && (
-                                <span className="ml-auto inline-flex items-center rounded-full bg-amber-200 px-2 py-0.5 text-[10px] font-medium text-amber-900 animate-pulse">
-                                  Start here
-                                </span>
-                              )}
-                            </SidebarMenuButton>
-                          )}
-                        </NavLink>
-                      </SidebarMenuItem>
-                    );
-                  })}
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </SidebarGroup>
-          </SidebarContent>
-          <SidebarSeparator />
-          <SidebarFooter>
-            <div className="p-2">
-              <Link to="/scholarships">
-                <Button className="w-full" variant="default">
-                  <Sparkles className="mr-2" /> Explore Scholarships
-                </Button>
-              </Link>
-            </div>
-          </SidebarFooter>
-          <SidebarRail />
-        </Sidebar>
-        <SidebarInset>
-          <div className="fixed  top-0 z-10 w-screen bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
-            <div className="flex h-14 items-center gap-3 px-4">
-              <SidebarTrigger />
-              <Separator orientation="vertical" className="mr-2 h-6" />
+
+              {/* profile details (still hide when collapsed) */}
+
+            {/* </SidebarHeader> */}
+
+            {/* Hide details when sidebar is collapsed */}
+            <div className="min-w-0 hidden group-data-[collapsible=icon]:hidden lg:group-data-[collapsible=expanded]:block">
               <div className="flex items-center gap-2">
-                <span className="text-sm font-semibold text-primary">
-                  NovaPath
+                <span className="font-semibold truncate">
+                  {profile?.name || "Guest"}
                 </span>
-                <span className="text-muted-foreground">/</span>
-                <span className="text-sm text-foreground/80">{title}</span>
+                {profile?.grade ? (
+                  <Badge variant="secondary" className="shrink-0">
+                    {profile.grade}
+                  </Badge>
+                ) : null}
+                {profile?.role ? (
+                  <Badge variant="outline" className="shrink-0 capitalize">
+                    {profile.role}
+                  </Badge>
+                ) : null}
+              </div>
+
+              <div className="mt-2 flex flex-wrap gap-1.5">
+                {interests.map((tag) => (
+                  <Badge
+                    key={tag}
+                    variant="outline"
+                    className="bg-accent/40 border-transparent text-foreground/80"
+                  >
+                    {tag}
+                  </Badge>
+                ))}
               </div>
             </div>
           </div>
-          <div className="px-6 py-6 lg:px-8">{children}</div>
-        </SidebarInset>
-      </SidebarProvider>
+        </SidebarHeader>
+        <SidebarContent>
+          <SidebarGroup>
+            <SidebarGroupLabel className="text-xs uppercase tracking-wide text-muted-foreground/80">
+              Navigation
+            </SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {nav.map(({ to, label, icon: Icon }) => {
+                  const isAssessment = to === "/career-quiz";
+                  return (
+                    <SidebarMenuItem key={to}>
+                      <NavLink to={to} className="block">
+                        {({ isActive }) => (
+                          <SidebarMenuButton
+                            isActive={isActive}
+                            className={
+                              isAssessment
+                                ? "relative bg-amber-50/80 text-amber-900 border border-amber-200 ring-2 ring-amber-200 shadow-sm hover:bg-amber-100"
+                                : undefined
+                            }
+                          >
+                            <Icon
+                              className={
+                                isAssessment
+                                  ? "text-amber-600"
+                                  : "text-muted-foreground"
+                              }
+                            />
+                            <span>{label}</span>
+                            {isAssessment && (
+                              <span className="ml-auto inline-flex items-center rounded-full bg-amber-200 px-2 py-0.5 text-[10px] font-medium text-amber-900 animate-pulse">
+                                Start here
+                              </span>
+                            )}
+                          </SidebarMenuButton>
+                        )}
+                      </NavLink>
+                    </SidebarMenuItem>
+                  );
+                })}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </SidebarContent>
+        <SidebarSeparator />
+        <SidebarFooter>
+          <div className="p-2">
+            <Link to="/scholarships">
+              <Button className="w-full" variant="default">
+                <Sparkles className="mr-2" /> Explore Scholarships
+              </Button>
+            </Link>
+          </div>
+        </SidebarFooter>
+        <SidebarRail />
+      </Sidebar>
+      <SidebarInset>
+        <div className="fixed  top-0 z-10 w-screen bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
+          <div className="flex h-14 items-center gap-3 px-4">
+            <SidebarTrigger />
+            <Separator orientation="vertical" className="mr-2 h-6" />
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-semibold text-primary">
+                NovaPath
+              </span>
+              <span className="text-muted-foreground">/</span>
+              <span className="text-sm text-foreground/80">{title}</span>
+            </div>
+          </div>
+        </div>
+        <div className="px-6 py-6 lg:px-8">{children}</div>
+      </SidebarInset>
+    </SidebarProvider >
       <Chatbot />
     </>
   );

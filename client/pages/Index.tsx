@@ -1,465 +1,4 @@
-// // import { Badge } from "@/components/ui/badge";
-// // import { useEffect, useMemo, useState } from "react";
-// // import { Button } from "@/components/ui/button";
-// // import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-// // import { Progress } from "@/components/ui/progress";
-// // import { Briefcase, BookOpenCheck, CalendarDays, GraduationCap, School, Sparkles } from "lucide-react";
 
-// // type Profile = {
-// //   id?: number;
-// //   name?: string;
-// //   email?: string;
-// //   dob?: string;
-// //   gender?: string;
-// //   location?: string;
-// //   educationLevel?: string;
-// //   interests?: string[];
-// //   skills?: string[];
-// // };
-
-// // type QuizResult = {
-// //   stream?: string;
-// //   score?: number;
-// //   strengths?: string[];
-// //   weaknesses?: string[];
-// // };
-
-// // type College = {
-// //   id: number;
-// //   name: string;
-// //   location?: string;
-// //   courses?: string[];
-// // };
-
-// // type Deadline = {
-// //   title: string;
-// //   date: string;
-// //   urgency: "high" | "medium" | "low";
-// // };
-
-// // type Scholarship = {
-// //   name: string;
-// //   deadline: string;
-// // };
-
-// // export default function Dashboard() {
-// //   const [profile, setProfile] = useState<Profile | null>(null);
-// //   const [quiz, setQuiz] = useState<QuizResult | null>(null);
-// //   const [colleges, setColleges] = useState<College[]>([]);
-// //   const [deadlines, setDeadlines] = useState<Deadline[]>([]);
-// //   const [scholarships, setScholarships] = useState<Scholarship[]>([]);
-
-// //   // Compute profile completion
-// //   const completion = useMemo(() => {
-// //     const p = profile || {};
-// //     const flags = [
-// //       !!p.name,
-// //       !!p.email,
-// //       !!p.gender,
-// //       !!p.educationLevel,
-// //       !!p.location,
-// //       (p.interests || []).length > 0,
-// //       !!quiz?.stream,
-// //     ];
-// //     const filled = flags.reduce((acc, v) => acc + (v ? 1 : 0), 0);
-// //     return Math.round((filled / flags.length) * 100);
-// //   }, [profile, quiz]);
-
-// //   // Load profile and quiz data
-// //   useEffect(() => {
-// //     try {
-// //       const storedProfile = localStorage.getItem("novapath_profile");
-// //       if (storedProfile) setProfile(JSON.parse(storedProfile));
-
-// //       // Fetch latest quiz result from backend if profile exists
-// //       const fetchQuiz = async (userId?: number) => {
-// //         if (!userId) return;
-// //         try {
-// //           const res = await fetch(`http://localhost:4000/quiz/result?userId=${userId}`);
-// //           // console.log("res",res)
-// //           if (!res.ok) throw new Error("Failed to fetch quiz result");
-// //           const data = await res.json();
-// //           console.log(data)
-// //           setQuiz(data);
-// //         } catch (err) {
-// //           console.error("Failed to load quiz result:", err);
-// //           // fallback to localStorage
-// //           const storedQuiz = localStorage.getItem("novapath_quiz_result");
-// //           if (storedQuiz) setQuiz(JSON.parse(storedQuiz));
-// //         }
-// //       };
-// //       fetchQuiz(profile?.id);
-
-// //       // Fetch colleges, deadlines, scholarships
-// //       const fetchData = async () => {
-// //         const [collegesRes, deadlinesRes, scholarshipsRes] = await Promise.all([
-// //           fetch("http://localhost:4000/colleges"),
-// //           fetch("http://localhost:4000/deadlines"),
-// //           fetch("http://localhost:4000/scholarships"),
-// //         ]);
-// //         setColleges(await collegesRes.json());
-// //         setDeadlines(await deadlinesRes.json());
-// //         setScholarships(await scholarshipsRes.json());
-// //       };
-// //       fetchData();
-// //     } catch (err) {
-// //       console.error("Failed to load dashboard data:", err);
-// //     }
-// //   }, [profile?.id]);
-
-// //   const courses = useMemo(() => {
-// //     const i = new Set((profile?.interests || []).map((s) => s.toLowerCase()));
-// //     const out: string[] = [];
-// //     if (i.has("science")) out.push("B.Sc Physics", "B.Sc Biology");
-// //     if (i.has("medicine")) out.push("MBBS", "B.Pharm");
-// //     return out.length ? out : ["B.Sc Computer Science", "B.Com (Hons)"];
-// //   }, [profile]);
-
-// //   const careers = useMemo(() => {
-// //     const i = new Set((profile?.interests || []).map((s) => s.toLowerCase()));
-// //     const out: string[] = [];
-// //     if (i.has("science")) out.push("Research Scientist", "Data Analyst");
-// //     if (i.has("medicine")) out.push("Doctor", "Pharmacist");
-// //     return out.length ? out : ["AI Engineer", "Business Analyst"];
-// //   }, [profile]);
-
-// //   const materials = useMemo(() => {
-// //     const i = new Set((profile?.interests || []).map((s) => s.toLowerCase()));
-// //     const out: { title: string }[] = [];
-// //     if (i.has("science")) out.push({ title: "Physics Crash Course" });
-// //     if (i.has("medicine")) out.push({ title: "Anatomy Basics" });
-// //     if (!out.length) out.push({ title: "Study Tips: Time Management" });
-// //     return out;
-// //   }, [profile]);
-
-// //   return (
-// //     <div className="mt-20 space-y-8">
-// //       {profile && (
-// //         <Card>
-// //           <CardContent className="py-5 flex flex-wrap items-center justify-between gap-6">
-// //             <div>
-// //               <p className="text-base font-semibold">Hi {profile.name?.split(" ")[0]} 👋</p>
-// //               <p className="text-sm text-muted-foreground">Your career roadmap awaits</p>
-
-// //               {/* Quiz Result */}
-// //               {quiz?.stream && (
-// //                 <div className="mt-2 space-y-1">
-// //                   <p className="text-sm">
-// //                     <span className="font-medium">Suggested Stream:</span> {quiz.stream} ·{" "}
-// //                     <span className="text-muted-foreground">{quiz.score}% match</span>
-// //                   </p>
-// //                   {quiz.strengths && quiz.strengths.length > 0 && (
-// //                     <p className="text-sm text-success">
-// //                       <span className="font-medium">Strengths:</span> {quiz.strengths.join(", ")}
-// //                     </p>
-// //                   )}
-// //                   {quiz.weaknesses && quiz.weaknesses.length > 0 && (
-// //                     <p className="text-sm text-destructive">
-// //                       <span className="font-medium">Weaknesses:</span> {quiz.weaknesses.join(", ")}
-// //                     </p>
-// //                   )}
-// //                 </div>
-// //               )}
-// //             </div>
-
-// //             <div className="min-w-[260px]">
-// //               <div className="mb-1 flex items-center justify-between text-xs text-muted-foreground">
-// //                 <span>Profile Progress</span>
-// //                 <span>{completion}%</span>
-// //               </div>
-// //               <Progress value={completion} />
-// //             </div>
-
-// //             {profile.interests?.length > 0 && (
-// //               <div className="flex flex-wrap gap-2">
-// //                 {profile.interests.slice(0, 5).map((t) => (
-// //                   <Badge key={t} variant="outline">{t}</Badge>
-// //                 ))}
-// //               </div>
-// //             )}
-// //           </CardContent>
-// //         </Card>
-// //       )}
-
-// //       {/* Quick Actions / Highlights can go here */}
-
-// //     </div>
-// //   );
-// // }
-// import { Badge } from "@/components/ui/badge";
-// import { useEffect, useMemo, useState } from "react";
-// import { Button } from "@/components/ui/button";
-// import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-// import { Progress } from "@/components/ui/progress";
-// import { Briefcase, BookOpenCheck, CalendarDays, GraduationCap, School, Sparkles } from "lucide-react";
-
-// type Profile = {
-//   id?: number;
-//   name?: string;
-//   email?: string;
-//   dob?: string;
-//   gender?: string;
-//   location?: string;
-//   educationLevel?: string;
-//   interests?: string[];
-//   skills?: string[];
-// };
-
-// type QuizResult = {
-//   stream?: string;
-//   score?: number;
-//   strengths?: string[];
-//   weaknesses?: string[];
-// };
-
-// type College = {
-//   id: number;
-//   name: string;
-//   location?: string;
-//   courses?: string[];
-// };
-
-// type Recommendation = {
-//   careerId: number;
-//   careerName: string;
-//   score: number;
-//   matchedSkills: string[];
-// };
-
-// type Deadline = {
-//   title: string;
-//   date: string;
-//   urgency: "high" | "medium" | "low";
-// };
-
-// type Scholarship = {
-//   name: string;
-//   deadline: string;
-// };
-
-// export default function Dashboard() {
-//   const [profile, setProfile] = useState<Profile | null>(null);
-//   const [quiz, setQuiz] = useState<QuizResult | null>(null);
-//   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
-//   const [colleges, setColleges] = useState<College[]>([]);
-//   const [deadlines, setDeadlines] = useState<Deadline[]>([]);
-//   const [scholarships, setScholarships] = useState<Scholarship[]>([]);
-
-//   // Compute profile completion
-//   const completion = useMemo(() => {
-//     const p = profile || {};
-//     const flags = [
-//       !!p.name,
-//       !!p.email,
-//       !!p.gender,
-//       !!p.educationLevel,
-//       !!p.location,
-//       (p.interests || []).length > 0,
-//       !!quiz?.stream,
-//     ];
-//     const filled = flags.reduce((acc, v) => acc + (v ? 1 : 0), 0);
-//     return Math.round((filled / flags.length) * 100);
-//   }, [profile, quiz]);
-
-//   useEffect(() => {
-//     try {
-//       const storedProfile = localStorage.getItem("novapath_profile");
-//       if (storedProfile) setProfile(JSON.parse(storedProfile));
-
-//       const fetchData = async (userId?: number) => {
-//         if (!userId) return;
-
-//         // Fetch quiz result
-//         try {
-//           const res = await fetch(`http://localhost:4000/quiz/result?userId=${userId}`);
-//           if (res.ok) {
-//             const data = await res.json();
-//             setQuiz(data);
-//           }
-//         } catch (err) {
-//           console.error("Failed to fetch quiz result:", err);
-//         }
-
-//         // Fetch recommendations
-//         try {
-//           const recRes = await fetch(`http://localhost:4000/recommendations/${userId}`);
-//         console.log(recRes)
-//           if (recRes.ok) {
-//             const data = await recRes.json();
-//             console.log(data)
-//             setRecommendations(data.recommendations);
-//           }
-//         } catch (err) {
-//           console.error("Failed to fetch recommendations:", err);
-//         }
-
-//         // Fetch other dashboard data
-//         try {
-//           const [collegesRes, deadlinesRes, scholarshipsRes] = await Promise.all([
-//             fetch("http://localhost:4000/colleges"),
-//             fetch("http://localhost:4000/deadlines"),
-//             fetch("http://localhost:4000/scholarships"),
-//           ]);
-//           setColleges(await collegesRes.json());
-//           setDeadlines(await deadlinesRes.json());
-//           setScholarships(await scholarshipsRes.json());
-//         } catch (err) {
-//           console.error("Failed to fetch dashboard data:", err);
-//         }
-//       };
-
-//       fetchData(JSON.parse(storedProfile || "{}")?.id);
-//     } catch (err) {
-//       console.error("Dashboard load error:", err);
-//     }
-//   }, []);
-
-//   return (
-//     <div className="mt-20 space-y-8">
-//       {/* Profile Card */}
-//       {profile && (
-//         <Card>
-//           <CardContent className="py-5 flex flex-wrap items-center justify-between gap-6">
-//             <div>
-//               <p className="text-base font-semibold">Hi {profile.name?.split(" ")[0]} 👋</p>
-//               <p className="text-sm text-muted-foreground">Your career roadmap awaits</p>
-
-//               {/* Quiz Result */}
-//               {quiz?.stream && (
-//                 <div className="mt-2 space-y-1">
-//                   <p className="text-sm">
-//                     <span className="font-medium">Suggested Stream:</span> {quiz.stream} ·{" "}
-//                     <span className="text-muted-foreground">{quiz.score}% match</span>
-//                   </p>
-//                   {quiz.strengths?.length > 0 && (
-//                     <p className="text-sm text-success">
-//                       <span className="font-medium">Strengths:</span> {quiz.strengths.join(", ")}
-//                     </p>
-//                   )}
-//                   {quiz.weaknesses?.length > 0 && (
-//                     <p className="text-sm text-destructive">
-//                       <span className="font-medium">Weaknesses:</span> {quiz.weaknesses.join(", ")}
-//                     </p>
-//                   )}
-//                 </div>
-//               )}
-//             </div>
-
-//             <div className="min-w-[260px]">
-//               <div className="mb-1 flex items-center justify-between text-xs text-muted-foreground">
-//                 <span>Profile Progress</span>
-//                 <span>{completion}%</span>
-//               </div>
-//               <Progress value={completion} />
-//             </div>
-
-//             {profile.interests?.length > 0 && (
-//               <div className="flex flex-wrap gap-2">
-//                 {profile.interests.slice(0, 5).map((t) => (
-//                   <Badge key={t} variant="outline">{t}</Badge>
-//                 ))}
-//               </div>
-//             )}
-//           </CardContent>
-//         </Card>
-//       )}
-
-//       {/* Recommendations */}
-//       <Card>
-//         <CardHeader>
-//           <CardTitle>Career Recommendations</CardTitle>
-//           <CardDescription>Based on your profile, interests, and skills</CardDescription>
-//         </CardHeader>
-//         <CardContent className="space-y-4">
-//           {recommendations.length === 0 && (
-//             <CardContent className="text-center text-muted-foreground">
-//               No recommendations available.
-//             </CardContent>
-//           )}
-//           {recommendations.map((rec) => (
-//             <div key={rec.careerId} className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 border-b pb-2 last:border-b-0">
-//               <div>
-//                 <p className="font-medium">{rec.careerName}</p>
-//                 {rec.matchedSkills.length > 0 && (
-//                   <p className="text-sm text-muted-foreground">
-//                     Matched Skills: {rec.matchedSkills.join(", ")}
-//                   </p>
-//                 )}
-//               </div>
-//               <div className="flex items-center gap-2">
-//                 <Progress value={rec.score} className="w-36" />
-//                 <span className="text-sm font-medium">{rec.score}%</span>
-//               </div>
-//             </div>
-//           ))}
-//         </CardContent>
-//       </Card>
-
-//       {/* Colleges */}
-//       <Card>
-//         <CardHeader>
-//           <CardTitle>Colleges</CardTitle>
-//           <CardDescription>Explore available colleges</CardDescription>
-//         </CardHeader>
-//         <CardContent className="space-y-4">
-//           {colleges.length === 0 && (
-//             <CardContent className="text-center text-muted-foreground">
-//               No colleges found.
-//             </CardContent>
-//           )}
-//           {colleges.map((c) => (
-//             <div key={c.id} className="flex justify-between items-center gap-2 border-b pb-2 last:border-b-0">
-//               <p className="font-medium">{c.name}</p>
-//               <Badge>{c.location}</Badge>
-//             </div>
-//           ))}
-//         </CardContent>
-//       </Card>
-
-//       {/* Deadlines */}
-//       <Card>
-//         <CardHeader>
-//           <CardTitle>Deadlines</CardTitle>
-//           <CardDescription>Upcoming important dates</CardDescription>
-//         </CardHeader>
-//         <CardContent className="space-y-4">
-//           {deadlines.length === 0 && (
-//             <CardContent className="text-center text-muted-foreground">
-//               No deadlines available.
-//             </CardContent>
-//           )}
-//           {deadlines.map((d, i) => (
-//             <div key={i} className="flex justify-between items-center gap-2 border-b pb-2 last:border-b-0">
-//               <p>{d.title}</p>
-//               <span>{new Date(d.date).toLocaleDateString()}</span>
-//             </div>
-//           ))}
-//         </CardContent>
-//       </Card>
-
-//       {/* Scholarships */}
-//       <Card>
-//         <CardHeader>
-//           <CardTitle>Scholarships</CardTitle>
-//           <CardDescription>Available scholarships</CardDescription>
-//         </CardHeader>
-//         <CardContent className="space-y-4">
-//           {scholarships.length === 0 && (
-//             <CardContent className="text-center text-muted-foreground">
-//               No scholarships available.
-//             </CardContent>
-//           )}
-//           {scholarships.map((s, i) => (
-//             <div key={i} className="flex justify-between items-center gap-2 border-b pb-2 last:border-b-0">
-//               <p>{s.name}</p>
-//               <span>{new Date(s.deadline).toLocaleDateString()}</span>
-//             </div>
-//           ))}
-//         </CardContent>
-//       </Card>
-//     </div>
-//   );
-// }
 import { Badge } from "@/components/ui/badge";
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
@@ -473,30 +12,45 @@ import {
 } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 
+// Custom Node Component to display icons and names
+const NodeComponent = ({ label, icon }) => (
+  <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-md flex items-center gap-3 w-56">
+    <div className="w-6 h-6 text-gray-800">
+      {icon}
+    </div>
+    <div className="text-base font-semibold text-gray-800">
+      {label}
+    </div>
+  </div>
+);
+
 type Profile = {
   id?: number;
   name?: string;
   interests?: string[];
+  educationLevel?: string;
 };
 
 type QuizResult = {
   stream?: string;
   score?: number;
+  strengths?: string[];
+  weaknesses?: string[];
 };
 
-type Recommendation = {
-  title: string;
-  description: string;
-  score: number;
+type RecommendationData = {
+  careerRecommendations: any[];
+  courseRecommendations: any[];
+  collegeRecommendations: any[];
 };
 
 export default function Dashboard() {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [quiz, setQuiz] = useState<QuizResult | null>(null);
-  const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
+  const [recsData, setRecsData] = useState<RecommendationData>({ careerRecommendations: [], courseRecommendations: [], collegeRecommendations: [] });
   const [recsLoading, setRecsLoading] = useState(false);
   const [needsAssessment, setNeedsAssessment] = useState(false);
-  const apiUrl = import.meta.env.VITE_API_URL;
+        const apiUrl = import.meta.env.VITE_API_URL;
 
   const completion = useMemo(() => {
     const p = profile || {};
@@ -518,71 +72,77 @@ export default function Dashboard() {
           if (rawQuiz) setQuiz(JSON.parse(rawQuiz));
         } catch {}
 
-        // Local fallback recommendations (used only if API fails)
-        const localRecs: Recommendation[] = [];
-        if (parsedProfile?.interests?.length) {
-          const ints = parsedProfile.interests.map((s: string) =>
-            s.toLowerCase(),
-          );
-          if (ints.includes("biology") || ints.includes("healthcare")) {
-            localRecs.push({
-              title: "Medical Path",
-              description: "Explore MBBS, B.Pharm, and allied health sciences.",
-              score: 88,
-            });
-          }
-          if (
-            ints.includes("computer science") ||
-            ints.includes("mathematics") ||
-            ints.includes("robotics")
-          ) {
-            localRecs.push({
-              title: "Software & Engineering",
-              description:
-                "Consider B.Tech (CSE), AI/ML tracks, and internships.",
-              score: 92,
-            });
-          }
-        }
-
-        // Fetch recommendations from backend
+        // Fetch recommendations dynamically
         if (parsedProfile?.id && apiUrl) {
           setRecsLoading(true);
-          fetch(`${apiUrl}/recommendations/${parsedProfile.id}`)
+          fetch(`${apiUrl}/generate-recommendations/${parsedProfile.id}`)
             .then((res) =>
               res.ok
                 ? res.json()
-                : Promise.reject(new Error("Failed to load recommendations")),
+                : Promise.reject(new Error("Failed to load recommendations"))
             )
             .then((data) => {
-              const recs = Array.isArray(data?.recommendations)
-                ? data.recommendations
-                : [];
-              if (recs.length === 0 || recs[0]?.title === "No Assessment Yet") {
-                setRecommendations([]);
-                setNeedsAssessment(true);
-              } else {
-                const mapped: Recommendation[] = recs.map((r: any) => ({
-                  title: r.title ?? "Recommendation",
-                  description: r.description ?? "",
-                  score: typeof r.score === "number" ? r.score : 0,
-                }));
-                setRecommendations(mapped);
-                setNeedsAssessment(false);
-              }
+              const recs = {
+                careerRecommendations: Array.isArray(data?.careerRecommendations) ? data.careerRecommendations : [],
+                courseRecommendations: Array.isArray(data?.courseRecommendations) ? data.courseRecommendations : [],
+                collegeRecommendations: Array.isArray(data?.collegeRecommendations) ? data.collegeRecommendations : [],
+              };
+              setRecsData(recs);
+              setNeedsAssessment(recs.careerRecommendations.length === 0);
             })
-            .catch(() => {
-              setRecommendations(localRecs);
+            .catch((err) => {
+              console.error("Fetch recommendations error:", err);
+              setRecsData({ careerRecommendations: [], courseRecommendations: [], collegeRecommendations: [] });
+              setNeedsAssessment(true);
             })
             .finally(() => setRecsLoading(false));
         } else {
-          setRecommendations(localRecs);
+          setRecsData({ careerRecommendations: [], courseRecommendations: [], collegeRecommendations: [] });
+          setNeedsAssessment(true);
         }
       }
     } catch (err) {
       console.error("Dashboard load error:", err);
     }
   }, []);
+
+  // Build a simple roadmap using CSS Grid
+  const topCareer = recsData.careerRecommendations[0];
+  const topCourse = recsData.courseRecommendations[0];
+  const topCollege = recsData.collegeRecommendations[0];
+  
+  // Updated roadmap rendering logic
+  const roadMapItems = (
+    <div className="flex justify-center items-center gap-4">
+      {/* Career Node */}
+      <NodeComponent
+        label={topCareer?.careerName || "Software Engineer"}
+        icon={<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 16v-2.336c0-1.631-.47-3.262-1.41-4.636-.939-1.375-2.298-2.482-3.868-3.218-.328-.154-.672-.279-1.026-.388.006-.021.011-.04.017-.06.273-.615.421-1.282.421-1.962 0-2.485-2.015-4.5-4.5-4.5s-4.5 2.015-4.5 4.5c0 .68.148 1.347.421 1.962-.354.109-.698.234-1.026.388-1.57.736-2.929 1.843-3.868 3.218-.939 1.374-1.41 3.005-1.41 4.636v2.336h16zM8 20v-2h8v2h-8z"/></svg>}
+      />
+
+      {/* Arrow Connector */}
+      <div className="flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-300"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
+
+      {/* Course Node */}
+      <NodeComponent
+        label={topCourse?.courseName || "Unknown Course"}
+        icon={<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 21L21 12L12 3L3 12L12 21z" /></svg>}
+      />
+
+      {/* Arrow Connector */}
+      <div className="flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-300"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
+
+      {/* College Node */}
+      <NodeComponent
+        label={topCollege?.collegeName || "Unknown College"}
+        icon={<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20s-8-4-8-12c0-4.418 3.582-8 8-8s8 3.582 8 8c0 8-8 12-8 12z" /><circle cx="12" cy="12" r="3" /></svg>}
+      />
+    </div>
+  );
 
   return (
     <div className="mt-20 space-y-8">
@@ -618,48 +178,63 @@ export default function Dashboard() {
         </Card>
       )}
 
-      {/* Recommendations Card */}
+      {/* Quiz Result Card */}
+      {quiz && quiz.stream && (
+        <Card>
+          <CardHeader>
+            <CardTitle>Assessment Result</CardTitle>
+            <CardDescription>
+              Your career interests based on the assessment
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <p>
+              Recommended Stream:{" "}
+              <Badge variant="outline">{quiz.stream}</Badge>
+            </p>
+            <p>Score: {quiz.score}%</p>
+            {quiz.strengths?.length > 0 && (
+              <p>
+                Strengths:{" "}
+                {quiz.strengths.map((s) => (
+                  <Badge key={s} variant="secondary">
+                    {s}
+                  </Badge>
+                ))}
+              </p>
+            )}
+            {quiz.weaknesses?.length > 0 && (
+              <p>
+                Areas to Improve:{" "}
+                {quiz.weaknesses.map((w) => (
+                  <Badge key={w} variant="destructive">
+                    {w}
+                  </Badge>
+                ))}
+              </p>
+            )}
+            <Button asChild className="mt-2">
+              <Link to="/career-quiz">Retake Assessment</Link>
+            </Button>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Career Roadmap */}
       <Card>
         <CardHeader>
-          <CardTitle>Career Recommendations</CardTitle>
+          <CardTitle>Career Roadmap</CardTitle>
           <CardDescription>
-            Based on your profile and assessment
+            Interactive flowchart. Click a node to see details.
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent>
           {recsLoading ? (
             <p className="text-muted-foreground text-center">
-              Loading recommendations...
+              Loading roadmap...
             </p>
-          ) : recommendations.length === 0 ? (
-            <div className="text-center space-y-3">
-              <p className="text-muted-foreground">
-                {needsAssessment
-                  ? "Complete the assessment to get personalized recommendations."
-                  : "No recommendations available yet."}
-              </p>
-              <Button asChild>
-                <Link to="/career-quiz">Take Assessment</Link>
-              </Button>
-            </div>
           ) : (
-            recommendations.map((rec, index) => (
-              <div
-                key={index}
-                className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 border-b pb-2 last:border-b-0"
-              >
-                <div>
-                  <p className="font-medium">{rec.title}</p>
-                  <p className="text-sm text-muted-foreground">
-                    {rec.description}
-                  </p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Progress value={rec.score} className="w-36" />
-                  <span className="text-sm font-medium">{rec.score}%</span>
-                </div>
-              </div>
-            ))
+            roadMapItems
           )}
         </CardContent>
       </Card>
