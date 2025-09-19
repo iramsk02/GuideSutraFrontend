@@ -10,6 +10,7 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { CalendarDays, Bell } from "lucide-react";
 
 // Custom Node Component to display icons and names
 const NodeComponent = ({ label, icon }) => (
@@ -50,6 +51,22 @@ export default function Dashboard() {
   const [recsLoading, setRecsLoading] = useState(false);
   const [needsAssessment, setNeedsAssessment] = useState(false);
   const apiUrl = import.meta.env.VITE_API_URL;
+
+  // Static dashboard snippets
+  const staticScholarships = [
+    { title: "Women in STEM Excellence Grant", tag: "Science", deadline: new Date().toISOString() },
+    { title: "Tech Innovators Merit Scholarship", tag: "Engineering", deadline: new Date(Date.now() + 1000*60*60*24*15).toISOString() },
+    { title: "AI/ML Research Fellowship", tag: "Computer Science", deadline: new Date(Date.now() + 1000*60*60*24*32).toISOString() },
+  ];
+  const staticReminders = [
+    { id: "r1", title: "Submit DU application", due: new Date(Date.now() + 1000*60*60*24*5).toISOString() },
+    { id: "r2", title: "Scholarship essay draft", due: new Date(Date.now() + 1000*60*60*24*10).toISOString() },
+    { id: "r3", title: "Parent-teacher meeting", due: new Date(Date.now() + 1000*60*60*24*18).toISOString() },
+  ];
+  const daysLeft = (iso: string) => {
+    const d = new Date(iso).getTime() - Date.now();
+    return Math.ceil(d / (1000*60*60*24));
+  };
 
   const completion = useMemo(() => {
     const p = profile || {};
@@ -282,6 +299,69 @@ export default function Dashboard() {
           ) : (
             roadMapItems
           )}
+        </CardContent>
+      </Card>
+
+      {/* Scholarships (static preview) */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Scholarships</CardTitle>
+          <CardDescription>Handpicked opportunities for you</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          {staticScholarships.map((s) => {
+            const left = daysLeft(s.deadline);
+            const urgent = left <= 7;
+            return (
+              <div key={s.title} className="flex flex-wrap items-center justify-between gap-3 border-b pb-3 last:border-b-0">
+                <div className="min-w-0">
+                  <p className="font-medium leading-tight truncate">{s.title}</p>
+                  <div className="mt-1 flex items-center gap-2 text-sm text-muted-foreground">
+                    <Badge variant="outline">{s.tag}</Badge>
+                    <span className="inline-flex items-center gap-1"><CalendarDays className="h-4 w-4" /> {new Date(s.deadline).toLocaleDateString()}</span>
+                  </div>
+                </div>
+                <div className="shrink-0">
+                  <Badge className={urgent ? "bg-red-500 text-white" : "bg-amber-500 text-white"}>
+                    {left > 0 ? `${left} days left` : "Closed"}
+                  </Badge>
+                </div>
+              </div>
+            );
+          })}
+          <Button asChild variant="outline" className="mt-2">
+            <Link to="/scholarships">View all scholarships</Link>
+          </Button>
+        </CardContent>
+      </Card>
+
+      {/* Reminders (static preview) */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Reminders</CardTitle>
+          <CardDescription>Stay on top of deadlines</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          {staticReminders.map((r) => {
+            const left = daysLeft(r.due);
+            const urgent = left <= 7;
+            return (
+              <div key={r.id} className="flex items-center justify-between gap-3 border-b pb-3 last:border-b-0">
+                <div className="flex items-center gap-2 min-w-0">
+                  <Bell className="h-4 w-4 text-muted-foreground" />
+                  <span className="truncate">{r.title}</span>
+                </div>
+                <div className="text-sm">
+                  <Badge variant="outline" className={urgent ? "border-transparent bg-red-500 text-white" : ""}>
+                    {left > 0 ? `${left} days` : "Today"}
+                  </Badge>
+                </div>
+              </div>
+            );
+          })}
+          <Button asChild variant="outline" className="mt-2">
+            <Link to="/notifications">View all reminders</Link>
+          </Button>
         </CardContent>
       </Card>
     </div>
