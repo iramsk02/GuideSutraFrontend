@@ -720,8 +720,10 @@ export default function CareerPathway() {
         setDegreeTrees(trees);
         if (trees.length) setDegreeId(trees[0].id);
       })
-      .catch((err) => {
-        console.error("recommendation-mapping fetch failed:", err);
+      .catch(() => {
+        // Silent fallback to demo roadmap
+        setDegreeTrees([]);
+        setDegreeId(null);
       });
 
     return () => controller.abort();
