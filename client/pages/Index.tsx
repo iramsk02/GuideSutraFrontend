@@ -1,4 +1,3 @@
-
 import { Badge } from "@/components/ui/badge";
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
@@ -188,30 +187,34 @@ export default function Dashboard() {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
-            <p>
-              Recommended Stream:{" "}
+            <div className="flex items-center gap-2">
+              <span>Recommended Stream:</span>
               <Badge variant="outline">{quiz.stream}</Badge>
-            </p>
+            </div>
             <p>Score: {quiz.score}%</p>
             {quiz.strengths?.length > 0 && (
-              <p>
-                Strengths:{" "}
-                {quiz.strengths.map((s) => (
-                  <Badge key={s} variant="secondary">
-                    {s}
-                  </Badge>
-                ))}
-              </p>
+              <div>
+                <span>Strengths: </span>
+                <div className="mt-1 flex flex-wrap gap-2">
+                  {quiz.strengths.map((s) => (
+                    <Badge key={s} variant="secondary">
+                      {s}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
             )}
             {quiz.weaknesses?.length > 0 && (
-              <p>
-                Areas to Improve:{" "}
-                {quiz.weaknesses.map((w) => (
-                  <Badge key={w} variant="destructive">
-                    {w}
-                  </Badge>
-                ))}
-              </p>
+              <div>
+                <span>Areas to Improve: </span>
+                <div className="mt-1 flex flex-wrap gap-2">
+                  {quiz.weaknesses.map((w) => (
+                    <Badge key={w} variant="destructive">
+                      {w}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
             )}
             <Button asChild className="mt-2">
               <Link to="/career-quiz">Retake Assessment</Link>
