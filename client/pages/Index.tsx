@@ -71,33 +71,76 @@ export default function Dashboard() {
           if (rawQuiz) setQuiz(JSON.parse(rawQuiz));
         } catch { }
 
-        // Fetch recommendations dynamically
+        // Prepare simple local suggestions as fallback
+        const ints = new Set((parsedProfile.interests || []).map((s: string) => s.toLowerCase()));
+        const localRecs = {
+          careerRecommendations: [] as any[],
+          courseRecommendations: [] as any[],
+          collegeRecommendations: [] as any[],
+        };
+        if (ints.has("computer science") || ints.has("cse") || ints.has("software") || ints.has("mathematics") || ints.has("robotics")) {
+          localRecs.careerRecommendations.push({ careerName: "Software Engineer" });
+          localRecs.courseRecommendations.push({ courseName: "B.Tech CSE" });
+          localRecs.collegeRecommendations.push({ collegeName: "IIT Jammu" });
+        } else if (ints.has("biology") || ints.has("healthcare") || ints.has("medical")) {
+          localRecs.careerRecommendations.push({ careerName: "Doctor" });
+          localRecs.courseRecommendations.push({ courseName: "MBBS" });
+          localRecs.collegeRecommendations.push({ collegeName: "GMC Srinagar" });
+        }
+
+        // Fetch recommendations dynamically with graceful fallbacks
         if (parsedProfile?.id && apiUrl) {
           setRecsLoading(true);
-          fetch(`${apiUrl}/generate-recommendations/${parsedProfile.id}`)
-            .then((res) =>
-              res.ok
-                ? res.json()
-                : Promise.reject(new Error("Failed to load recommendations"))
-            )
+          const controller = new AbortController();
+          const userId = parsedProfile.id;
+
+          const tryGenerate = () =>
+            fetch(`${apiUrl}/generate-recommendations/${userId}`, { signal: controller.signal })
+              .then((res) => (res.ok ? res.json() : Promise.reject(new Error("bad response"))));
+
+          const trySimple = () =>
+            fetch(`${apiUrl}/recommendations/${userId}`, { signal: controller.signal })
+              .then((res) => (res.ok ? res.json() : Promise.reject(new Error("bad response"))));
+
+          tryGenerate()
             .then((data) => {
               const recs = {
                 careerRecommendations: Array.isArray(data?.careerRecommendations) ? data.careerRecommendations : [],
                 courseRecommendations: Array.isArray(data?.courseRecommendations) ? data.courseRecommendations : [],
                 collegeRecommendations: Array.isArray(data?.collegeRecommendations) ? data.collegeRecommendations : [],
               };
-              setRecsData(recs);
-              setNeedsAssessment(recs.careerRecommendations.length === 0);
+              if (!recs.careerRecommendations.length && !recs.courseRecommendations.length && !recs.collegeRecommendations.length) {
+                // If shape not provided by API, fallback to local suggestions
+                setRecsData(localRecs);
+                setNeedsAssessment(recs.careerRecommendations.length === 0);
+              } else {
+                setRecsData(recs);
+                setNeedsAssessment(false);
+              }
             })
-            .catch((err) => {
-              console.error("Fetch recommendations error:", err);
-              setRecsData({ careerRecommendations: [], courseRecommendations: [], collegeRecommendations: [] });
-              setNeedsAssessment(true);
-            })
+            .catch(() =>
+              // Fallback to simple recommendations endpoint
+              trySimple()
+                .then((data) => {
+                  const hasAny = Array.isArray(data?.recommendations) && data.recommendations.length > 0;
+                  if (!hasAny || data.recommendations[0]?.title === "No Assessment Yet") {
+                    setRecsData(localRecs);
+                    setNeedsAssessment(true);
+                  } else {
+                    // We don't have structured career/course/college; keep local or placeholders
+                    setRecsData(localRecs);
+                    setNeedsAssessment(false);
+                  }
+                })
+                .catch(() => {
+                  setRecsData(localRecs);
+                  setNeedsAssessment(localRecs.careerRecommendations.length === 0);
+                })
+            )
             .finally(() => setRecsLoading(false));
         } else {
-          setRecsData({ careerRecommendations: [], courseRecommendations: [], collegeRecommendations: [] });
-          setNeedsAssessment(true);
+          setRecsData(localRecs);
+          setNeedsAssessment(localRecs.careerRecommendations.length === 0);
         }
       }
     } catch (err) {
