@@ -50,7 +50,7 @@ export default function Dashboard() {
   const [recsData, setRecsData] = useState<RecommendationData>({ careerRecommendations: [], courseRecommendations: [], collegeRecommendations: [] });
   const [recsLoading, setRecsLoading] = useState(false);
   const [needsAssessment, setNeedsAssessment] = useState(false);
-  const apiUrl = "http://localhost:4000"; // Hardcoded for compilation, replace with your actual API URL
+        const apiUrl = import.meta.env.VITE_API_URL;
 
   const completion = useMemo(() => {
     const p = profile || {};
