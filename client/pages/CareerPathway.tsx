@@ -584,6 +584,20 @@ type TreeNode = {
   children?: TreeNode[];
 };
 
+// Demo roadmap fallback
+const DEMO_TREE: TreeNode = {
+  id: "demo-degree",
+  label: "B.Tech CSE",
+  branch: "degree",
+  meta: { salary: "₹6–12 LPA", skills: ["DSA", "Web", "DBMS"], opportunities: ["Internships", "Hackathons"] },
+  children: [
+    { id: "demo-college", label: "IIT Jammu", branch: "higher", meta: { opportunities: ["Clubs", "Labs"] } },
+    { id: "demo-govt", label: "Govt IT Officer", branch: "govt", meta: { salary: "₹7–10 LPA" } },
+    { id: "demo-higher", label: "M.Tech AI", branch: "higher", meta: { opportunities: ["Research", "TAship"] } },
+    { id: "demo-private", label: "Software Engineer", branch: "private", meta: { salary: "₹10–30 LPA" } },
+  ],
+};
+
 type PositionedNode = TreeNode & { x: number; y: number; depth: number };
 type Edge = { from: PositionedNode; to: PositionedNode };
 
@@ -708,7 +722,8 @@ export default function CareerPathway() {
   }, []);
 
   const currentTree = useMemo(() => degreeTrees.find((d) => d.id === degreeId)?.tree, [degreeTrees, degreeId]);
-  const { nodes, edges, size, nodeSize } = useMemo(() => (currentTree ? layoutTree(currentTree) : { nodes: [], edges: [], size: { width: 0, height: 0 }, nodeSize: { w: 220, h: 64 } }), [currentTree]);
+  const displayTree = currentTree ?? DEMO_TREE;
+  const { nodes, edges, size, nodeSize } = useMemo(() => layoutTree(displayTree), [displayTree]);
 
   return (
     <div className="grid gap-6 lg:grid-cols-[300px_1fr_340px] mt-20">
