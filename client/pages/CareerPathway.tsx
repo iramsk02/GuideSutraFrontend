@@ -695,22 +695,23 @@ export default function CareerPathway() {
         const apiUrl = import.meta.env.VITE_API_URL;
 
 
-  // Fetch recommendation mapping from backend
+  // Fetch recommendation mapping from backend (gracefully fallback to demo)
   useEffect(() => {
-    fetch(`${apiUrl}/recommendation-mapping`)
-      .then((res) => res.json())
+    if (!apiUrl) return;
+    const controller = new AbortController();
+
+    fetch(`${apiUrl}/recommendation-mapping`, { signal: controller.signal })
+      .then((res) => (res.ok ? res.json() : Promise.reject(new Error("Failed response"))))
       .then((data) => {
-        // Transform backend mapping to tree format for each degree
-       
         const trees: typeof degreeTrees = Object.entries(data).map(([careerName, courses]) => {
-          const children = Object.entries(courses).map(([courseName, colleges]) => ({
+          const children = Object.entries(courses as Record<string, string[]>).map(([courseName, colleges]) => ({
             id: `${careerName}-${courseName}`,
             label: courseName,
             branch: "degree" as Branch,
-            children: colleges.map((col) => ({
+            children: (colleges as string[]).map((col) => ({
               id: `${careerName}-${courseName}-${col}`,
               label: col,
-              branch: "higher" as Branch, // you can choose gov/private based on your logic
+              branch: "higher" as Branch,
               meta: { opportunities: ["Available here"] },
             })),
           }));
@@ -718,8 +719,13 @@ export default function CareerPathway() {
         });
         setDegreeTrees(trees);
         if (trees.length) setDegreeId(trees[0].id);
+      })
+      .catch((err) => {
+        console.error("recommendation-mapping fetch failed:", err);
       });
-  }, []);
+
+    return () => controller.abort();
+  }, [apiUrl]);
 
   const currentTree = useMemo(() => degreeTrees.find((d) => d.id === degreeId)?.tree, [degreeTrees, degreeId]);
   const displayTree = currentTree ?? DEMO_TREE;
