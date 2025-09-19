@@ -738,18 +738,8 @@ export default function CareerPathway() {
   }, [apiUrl]);
 
   const currentTree = useMemo(() => degreeTrees.find((d) => d.id === degreeId)?.tree, [degreeTrees, degreeId]);
-  const displayTree: TreeNode = useMemo(() => {
-    if (currentTree) {
-      return {
-        id: "root-combined",
-        label: "Career Paths",
-        branch: "degree" as Branch,
-        children: [cloneWithPrefix(DEMO_TREE, "demo-"), cloneWithPrefix(currentTree, "live-")],
-      };
-    }
-    return cloneWithPrefix(DEMO_TREE, "demo-");
-  }, [currentTree]);
-  const { nodes, edges, size, nodeSize } = useMemo(() => layoutTree(displayTree), [displayTree]);
+  const demoLayout = useMemo(() => layoutTree(DEMO_TREE), []);
+  const liveLayout = useMemo(() => (currentTree ? layoutTree(currentTree) : null), [currentTree]);
 
   return (
     <div className="grid gap-6 lg:grid-cols-[300px_1fr_340px] mt-20">
@@ -794,20 +784,49 @@ export default function CareerPathway() {
           <CardTitle>Career Roadmap</CardTitle>
           <CardDescription>Interactive flowchart. Click a node to see details.</CardDescription>
         </CardHeader>
-        <CardContent className="pt-4">
-          <div className="relative">
-            <svg width={size.width} height={size.height} className="max-w-none">
-              {edges.map((e, idx) => {
-                const c = BRANCH_COLORS[e.to.branch];
-                const x1 = e.from.x + 220;
-                const y1 = e.from.y + nodeSize.h / 2;
-                const x2 = e.to.x;
-                const y2 = e.to.y + nodeSize.h / 2;
-                const mx = (x1 + x2) / 2;
-                return <path key={idx} d={`M ${x1},${y1} C ${mx},${y1} ${mx},${y2} ${x2},${y2}`} stroke={c.stroke} strokeWidth={2} fill="none" />;
-              })}
-              {nodes.map((n) => <NodeView key={n.id} n={n} selected={selected?.id === n.id} onSelect={setSelected} />)}
-            </svg>
+        <CardContent className="pt-4 space-y-6">
+          <div>
+            <h4 className="text-sm font-medium mb-2">Demo Roadmap</h4>
+            <div className="relative">
+              <svg width={demoLayout.size.width} height={demoLayout.size.height} className="max-w-none">
+                {demoLayout.edges.map((e, idx) => {
+                  const c = BRANCH_COLORS[e.to.branch];
+                  const x1 = e.from.x + 220;
+                  const y1 = e.from.y + demoLayout.nodeSize.h / 2;
+                  const x2 = e.to.x;
+                  const y2 = e.to.y + demoLayout.nodeSize.h / 2;
+                  const mx = (x1 + x2) / 2;
+                  return <path key={`demo-edge-${idx}`} d={`M ${x1},${y1} C ${mx},${y1} ${mx},${y2} ${x2},${y2}`} stroke={c.stroke} strokeWidth={2} fill="none" />;
+                })}
+                {demoLayout.nodes.map((n) => (
+                  <NodeView key={`demo-${n.id}`} n={n} selected={selected?.id === n.id} onSelect={setSelected} />
+                ))}
+              </svg>
+            </div>
+          </div>
+
+          <div>
+            <h4 className="text-sm font-medium mb-2">Live Roadmap</h4>
+            {!liveLayout ? (
+              <p className="text-sm text-muted-foreground">Choose a career to view the live roadmap.</p>
+            ) : (
+              <div className="relative">
+                <svg width={liveLayout.size.width} height={liveLayout.size.height} className="max-w-none">
+                  {liveLayout.edges.map((e, idx) => {
+                    const c = BRANCH_COLORS[e.to.branch];
+                    const x1 = e.from.x + 220;
+                    const y1 = e.from.y + liveLayout.nodeSize.h / 2;
+                    const x2 = e.to.x;
+                    const y2 = e.to.y + liveLayout.nodeSize.h / 2;
+                    const mx = (x1 + x2) / 2;
+                    return <path key={`live-edge-${idx}`} d={`M ${x1},${y1} C ${mx},${y1} ${mx},${y2} ${x2},${y2}`} stroke={c.stroke} strokeWidth={2} fill="none" />;
+                  })}
+                  {liveLayout.nodes.map((n) => (
+                    <NodeView key={`live-${n.id}`} n={n} selected={selected?.id === n.id} onSelect={setSelected} />
+                  ))}
+                </svg>
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>
