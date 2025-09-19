@@ -598,6 +598,14 @@ const DEMO_TREE: TreeNode = {
   ],
 };
 
+function cloneWithPrefix(t: TreeNode, prefix: string): TreeNode {
+  return {
+    ...t,
+    id: `${prefix}${t.id}`,
+    children: t.children?.map((c) => cloneWithPrefix(c, prefix)),
+  };
+}
+
 type PositionedNode = TreeNode & { x: number; y: number; depth: number };
 type Edge = { from: PositionedNode; to: PositionedNode };
 
@@ -730,7 +738,17 @@ export default function CareerPathway() {
   }, [apiUrl]);
 
   const currentTree = useMemo(() => degreeTrees.find((d) => d.id === degreeId)?.tree, [degreeTrees, degreeId]);
-  const displayTree = currentTree ?? DEMO_TREE;
+  const displayTree: TreeNode = useMemo(() => {
+    if (currentTree) {
+      return {
+        id: "root-combined",
+        label: "Career Paths",
+        branch: "degree" as Branch,
+        children: [cloneWithPrefix(DEMO_TREE, "demo-"), cloneWithPrefix(currentTree, "live-")],
+      };
+    }
+    return cloneWithPrefix(DEMO_TREE, "demo-");
+  }, [currentTree]);
   const { nodes, edges, size, nodeSize } = useMemo(() => layoutTree(displayTree), [displayTree]);
 
   return (
