@@ -88,7 +88,7 @@ export default function Landing() {
               reminders—all in one place.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
-              <Link to="/career-quiz">
+              <Link to="/signup?role=student">
                 <Button size="lg" className="rounded-full px-6">
                   Take Career Test
                 </Button>
@@ -231,10 +231,10 @@ export default function Landing() {
                   <circle cx="420" cy="150" r="5" fill="#2563eb" />
                 </g>
               </svg>
-              <p className="mt-3 text-sm text-muted-foreground">
+              {/* <p className="mt-3 text-sm text-muted-foreground">
                 Students exploring courses, laptops, and a growth chart showing
                 progress.
-              </p>
+              </p> */}
             </div>
           </div>
         </div>
@@ -249,7 +249,7 @@ export default function Landing() {
                 <Building2 />
               </div>
               <div>
-                <p className="text-2xl font-bold">7200+</p>
+                <p className="text-2xl font-bold">70+</p>
                 <p className="text-muted-foreground">Colleges</p>
               </div>
             </CardContent>
@@ -401,10 +401,10 @@ export default function Landing() {
                 your strengths.
               </p>
               <div className="mt-4 flex gap-3">
-                <Link to="/career-pathway">
+                <Link to="/signup">
                   <Button>Take the Test</Button>
                 </Link>
-                <Link to="/career-pathway">
+                <Link to="/signup">
                   <Button variant="outline">Learn more</Button>
                 </Link>
               </div>
@@ -431,12 +431,12 @@ export default function Landing() {
               <ShieldCheck className="text-emerald-600" /> Trusted by 50,000+
               students
             </span>
-            <span className="flex items-center gap-2">
+            {/* <span className="flex items-center gap-2">
               <Building2 /> Partner Colleges
-            </span>
-            <span className="flex items-center gap-2">
+            </span> */}
+            {/* <span className="flex items-center gap-2">
               <Building2 /> Global Universities
-            </span>
+            </span> */}
           </div>
         </div>
       </section>
@@ -480,7 +480,7 @@ export default function Landing() {
           <AccordionItem value="q1">
             <AccordionTrigger>Is the test free?</AccordionTrigger>
             <AccordionContent>
-              Yes, the career test is free and takes about 10 minutes.
+              Yes, the first 3 career test are free and takes about 10 minutes.
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="q2">
@@ -494,7 +494,7 @@ export default function Landing() {
               Do you work with international colleges?
             </AccordionTrigger>
             <AccordionContent>
-              We list global programs and can connect you with mentors abroad.
+              No currently We are focused On Jammu & Kashmir.
             </AccordionContent>
           </AccordionItem>
         </Accordion>
@@ -507,7 +507,7 @@ export default function Landing() {
             <div className="md:flex md:items-center md:justify-between md:gap-6">
               <div className="mb-4 md:mb-0">
                 <h3 className="text-lg font-semibold">
-                  Get the latest career insights & scholarship alerts
+                  Get the latest career insights  
                 </h3>
                 <p className="text-sm text-muted-foreground">
                   No spam. Unsubscribe anytime.
@@ -534,7 +534,7 @@ export default function Landing() {
               Don’t leave your future to chance. Start now!
             </h3>
             <div className="mt-4">
-              <Link to="/career-pathway">
+              <Link to="/signup">
                 <Button className="rounded-full px-6">
                   Start Your Journey
                 </Button>

@@ -232,6 +232,7 @@ export default function Dashboard() {
     } catch (err) {
       console.error("Dashboard load error:", err);
     }
+    console.log(recsData)
   }, []);
 
   // Build a simple roadmap using CSS Grid
