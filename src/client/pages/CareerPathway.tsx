@@ -550,16 +550,16 @@ import {
   CardHeader,
   CardTitle,
   CardDescription,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+} from "../components/ui/card";
+import { Badge } from "../components/ui/badge";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Separator } from "@/components/ui/separator";
+} from "../components/ui/select";
+import { Separator } from "../components/ui/separator";
 import { GraduationCap, Landmark, Briefcase, Beaker } from "lucide-react";
 
 // Types

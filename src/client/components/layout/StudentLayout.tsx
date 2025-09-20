@@ -18,11 +18,11 @@ import {
   SidebarRail,
   SidebarSeparator,
   SidebarTrigger,
-} from "@/components/ui/sidebar";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
+} from "../ui/sidebar";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Badge } from "../ui/badge"
+import { Button } from "../ui/button";
+import { Separator } from "../ui/separator";
 import {
   Link,
   NavLink,
@@ -41,7 +41,7 @@ import {
   Brain,
   CalendarDays,
 } from "lucide-react";
-import Chatbot from "@/components/Chatbot";
+import Chatbot from "../Chatbot";
 
 type Profile = {
   name?: string;

@@ -239,6 +239,7 @@ export default function Signin() {
       });
 
       const data = await response.json();
+      console.log("hiii")
 
       if (!response.ok) {
         return toast.error(data.error || "Signin failed");

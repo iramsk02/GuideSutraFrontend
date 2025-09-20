@@ -1,21 +1,21 @@
 import { Link } from "react-router-dom";
 // import Chatbot from "@/components/Chatbot";
-import { Button } from "@/components/ui/button";
+import { Button } from "../components/ui/button";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
   CardDescription,
-} from "@/components/ui/card";
+} from "../components/ui/card";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Input } from "@/components/ui/input";
+} from "../components/ui/accordion";
+import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar";
+import { Input } from "../components/ui/input";
 import {
   Briefcase,
   Building2,

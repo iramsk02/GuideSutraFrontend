@@ -5,10 +5,10 @@ import {
   CardHeader,
   CardTitle,
   CardDescription,
-} from "@/components/ui/card";
-import { Calendar } from "@/components/ui/calendar";
-import { Switch } from "@/components/ui/switch";
-import { Badge } from "@/components/ui/badge";
+} from "../components/ui/card";
+import { Calendar } from "../components/ui/calendar";
+import { Switch } from "../components/ui/switch";
+import { Badge } from "../components/ui/badge";
 
 interface EventItem {
   title: string;
