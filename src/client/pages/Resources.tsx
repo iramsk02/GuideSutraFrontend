@@ -43,7 +43,7 @@ export default function Resources() {
   }, [profile, quiz]);
 
   return (
-    <div className="space-y-6 mt-20">
+    <div className="space-y-6 mt-20 ml-60">
       <Card>
         <CardHeader className="pb-2">
           <CardTitle>Resources</CardTitle>

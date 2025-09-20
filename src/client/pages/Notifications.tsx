@@ -89,7 +89,7 @@ export default function Notifications() {
   }
 
   return (
-    <div className="space-y-6 mt-20">
+    <div className="space-y-6 mt-20 ml-60">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h1 className="text-2xl font-semibold">Your Reminders & Alerts</h1>

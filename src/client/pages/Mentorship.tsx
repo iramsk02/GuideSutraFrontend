@@ -148,7 +148,7 @@ export default function Mentorship() {
   }
 
   return (
-    <div className="space-y-6 mt-20">
+    <div className="space-y-6 mt-20 ml-60 ">
       {/* Hero */}
       <div className="flex flex-col gap-4 items-start justify-between md:flex-row md:items-center">
         <div>

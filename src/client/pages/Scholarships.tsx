@@ -200,7 +200,7 @@ export default function Scholarships() {
   }
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
+    <div className="ml-60 grid gap-6 lg:grid-cols-[1fr_320px]">
       {/* Main */}
       <div className="space-y-6 mt-20">
         {/* Filters */}

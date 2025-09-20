@@ -1,7 +1,8 @@
 
 
 // export default StudentLayout;
-import { ReactNode, useEffect, useMemo, useState } from "react";
+import type { ReactNode } from "react";
+import {  useEffect, useMemo, useState } from "react";
 import {
   Sidebar,
   SidebarContent,
@@ -112,7 +113,7 @@ export function StudentLayout({ children }: { children: ReactNode }) {
   return (
     <>
       <SidebarProvider>
-        <Sidebar className="border-r border-sidebar-border " collapsible="icon">
+        <Sidebar className="border-r border-sidebar-border w-60 " collapsible="icon">
           <SidebarHeader>
             <div className="flex items-center gap-3 p-2">
               <Avatar className="h-12 w-12 ring-2 ring-primary/20">
@@ -151,7 +152,7 @@ export function StudentLayout({ children }: { children: ReactNode }) {
           </SidebarHeader>
           <SidebarContent>
             <SidebarGroup>
-              <SidebarGroupLabel className="text-xs uppercase tracking-wide text-muted-foreground/80">
+              <SidebarGroupLabel className="text-xs  uppercase tracking-wide text-muted-foreground/80">
                 Navigation
               </SidebarGroupLabel>
               <SidebarGroupContent>
@@ -160,7 +161,7 @@ export function StudentLayout({ children }: { children: ReactNode }) {
                     const isAssessment = to === "/career-quiz";
                     return (
                       <SidebarMenuItem key={to}>
-                        <NavLink to={to} className="block">
+                        <NavLink to={to} className="block z-10">
                           {({ isActive }) => (
                             <SidebarMenuButton
                               isActive={isActive}
@@ -195,10 +196,10 @@ export function StudentLayout({ children }: { children: ReactNode }) {
           </SidebarContent>
           <SidebarSeparator />
           <SidebarFooter>
-            <div className="p-2">
+            <div className="p-2 text-white">
               <Link to="/scholarships">
-                <Button className="w-full" variant="default">
-                  <Sparkles className="mr-2" /> Explore Scholarships
+                <Button className="w-full bg-blue-950" variant="default">
+                  <Sparkles className="mr-2 text-white" /> Explore Scholarships
                 </Button>
               </Link>
             </div>
@@ -206,9 +207,9 @@ export function StudentLayout({ children }: { children: ReactNode }) {
           <SidebarRail />
         </Sidebar>
         <SidebarInset>
-          <div className="fixed  top-0 z-10 w-screen bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
+          <div className="fixed ml-60  top-0 z-10 w-screen bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
             <div className="flex h-14 items-center gap-3 px-4">
-              <SidebarTrigger />
+              {/* <SidebarTrigger /> */}
               <Separator orientation="vertical" className="mr-2 h-6" />
               <div className="flex items-center gap-2">
                 <span className="text-sm font-semibold text-primary">

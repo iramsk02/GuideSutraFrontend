@@ -99,7 +99,7 @@ const filtered = useMemo(() => {
   const paged = filtered.slice((pageClamped - 1) * perPage, pageClamped * perPage);
 
   return (
-    <div className="space-y-6 mt-20">
+    <div className="space-y-6 mt-20 ml-60">
       {/* Filters */}
       <Card>
         <CardHeader className="pb-2">

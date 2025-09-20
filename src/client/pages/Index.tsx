@@ -13,7 +13,7 @@ import { Progress } from "../components/ui/progress";
 import { CalendarDays, Bell } from "lucide-react";
 
 // Custom Node Component to display icons and names
-const NodeComponent = ({ label, icon }) => (
+const NodeComponent = ({ label, icon }:any) => (
   <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-md flex items-center gap-3 w-56">
     <div className="w-6 h-6 text-gray-800">{icon}</div>
     <div className="text-base font-semibold text-gray-800">{label}</div>
@@ -343,7 +343,7 @@ export default function Dashboard() {
   );
 
   return (
-    <div className="mt-20 space-y-8">
+    <div className="ml-60 mt-20 space-y-8">
       {/* Profile Card */}
       {profile && (
         <Card>
@@ -391,11 +391,11 @@ export default function Dashboard() {
               <Badge variant="outline">{quiz.stream}</Badge>
             </div>
             <p>Score: {quiz.score}%</p>
-            {quiz.strengths?.length > 0 && (
+            {quiz.strengths?.length! > 0 && (
               <div>
                 <span>Strengths: </span>
                 <div className="mt-1 flex flex-wrap gap-2">
-                  {quiz.strengths.map((s) => (
+                  {quiz.strengths!.map((s) => (
                     <Badge key={s} variant="secondary">
                       {s}
                     </Badge>
@@ -403,11 +403,11 @@ export default function Dashboard() {
                 </div>
               </div>
             )}
-            {quiz.weaknesses?.length > 0 && (
+            {quiz.weaknesses?.length! > 0 && (
               <div>
                 <span>Areas to Improve: </span>
                 <div className="mt-1 flex flex-wrap gap-2">
-                  {quiz.weaknesses.map((w) => (
+                  {quiz.weaknesses!.map((w) => (
                     <Badge key={w} variant="destructive">
                       {w}
                     </Badge>

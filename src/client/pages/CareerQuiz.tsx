@@ -1082,9 +1082,9 @@ export default function CareerQuiz() {
           <h2 className="text-2xl font-bold mb-4">Congratulations!</h2>
           <div className="mb-4 flex justify-center items-center gap-2 flex-wrap">
             <span>
-              You scored {result.score}% and your recommended stream is
+              You scored {result!.score}% and your recommended stream is
             </span>
-            <Badge variant="outline">{result.stream}</Badge>
+            <Badge variant="outline">{result!.stream}</Badge>
           </div>
           <Button onClick={saveAssessment} disabled={saving || saved}>
             {saving ? "Saving..." : saved ? "Saved" : "Save Assessment"}

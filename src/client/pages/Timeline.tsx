@@ -48,7 +48,7 @@ export default function Timeline() {
   const dayEvents = events.filter((e) => e.date === selectedISO);
 
   return (
-    <div className="space-y-6 mt-20">
+    <div className="space-y-6 mt-20 ml-60">
       <Card>
         <CardHeader className="pb-2">
           <div className="flex items-start justify-between gap-3">
