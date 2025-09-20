@@ -148,19 +148,27 @@ export default function Mentorship() {
   }
 
   return (
-    <div className="space-y-6 mt-20 ml-60 ">
+    <div className="space-y-8">
+      {/* Page Header */}
+      <div className="page-header">
+        <h1 className="page-title">Mentorship & Guidance</h1>
+        <p className="page-description">
+          Connect with industry experts, alumni, and counselors to get personalized guidance for your career journey.
+        </p>
+      </div>
+
       {/* Hero */}
-      <div className="flex flex-col gap-4 items-start justify-between md:flex-row md:items-center">
-        <div>
-          <h1 className="text-2xl font-semibold">
+      <div className="flex flex-col gap-6 items-start justify-between md:flex-row md:items-center p-6 rounded-2xl bg-gradient-to-r from-primary/5 to-accent/5 border">
+        <div className="flex-1">
+          <h2 className="text-3xl font-bold text-foreground mb-3">
             Get Guidance from Experts and Alumni
-          </h1>
-          <p className="text-muted-foreground">
-            Book 1:1 sessions, ask questions, and learn from real experiences.
+          </h2>
+          <p className="text-lg text-muted-foreground leading-relaxed">
+            Book 1:1 sessions, ask questions, and learn from real experiences of professionals who've walked the path before you.
           </p>
         </div>
-        <Button className="gap-2">
-          <UsersRound className="h-4 w-4" /> Talk to Alumni / Counselors
+        <Button className="gradient-primary hover:opacity-90 gap-2 px-6 py-3 text-lg font-semibold shadow-lg">
+          <UsersRound className="h-5 w-5" /> Talk to Alumni / Counselors
         </Button>
       </div>
 
@@ -214,7 +222,7 @@ export default function Mentorship() {
                           </div>
                         </div>
                       </div>
-                      <div className="mt-4 flex items-center justify-between">
+                      <div className="mt-4 flex items-center  justify-between">
                         <Button
                           size="sm"
                           onClick={() => setSelectedMentor(m)}
@@ -323,7 +331,7 @@ export default function Mentorship() {
         mode="single"
         selected={date}
         onSelect={setDate}
-        className="rounded-lg border shadow-lg bg-white dark:bg-neutral-900 p-3"
+        className="rounded-lg border shadow-lg bg-white  p-3"
       />
     {/* </div> */}
               <div>

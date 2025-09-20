@@ -343,30 +343,43 @@ export default function Dashboard() {
   );
 
   return (
-    <div className="ml-60 mt-20 space-y-8">
+    <div className="space-y-8">
+      {/* Page Header */}
+      <div className="page-header">
+        <h1 className="page-title">Dashboard</h1>
+        <p className="page-description">
+          Welcome back! Here's your personalized career guidance overview.
+        </p>
+      </div>
+
       {/* Profile Card */}
       {profile && (
-        <Card>
-          <CardContent className="py-5 flex flex-wrap items-center justify-between gap-6">
-            <div>
-              <p className="text-base font-semibold">
-                Hi {profile.name?.split(" ")[0]} 👋
-              </p>
-              <p className="text-sm text-muted-foreground">
-                Your career roadmap awaits
-              </p>
+        <Card className="card-hover animate-slide-up">
+          <CardContent className="py-6 flex flex-wrap items-center justify-between gap-6">
+            <div className="flex items-center gap-4">
+              <div className="h-16 w-16 rounded-full bg-gradient-primary flex items-center justify-center text-white text-xl font-bold shadow-lg">
+                {profile.name?.split(" ").map(n => n[0]).join('') || 'GS'}
+              </div>
+              <div>
+                <h2 className="text-xl font-semibold text-foreground">
+                  Hi {profile.name?.split(" ")[0]} 👋
+                </h2>
+                <p className="text-muted-foreground">
+                  Your career roadmap awaits
+                </p>
+              </div>
             </div>
             <div className="min-w-[260px]">
-              <div className="mb-1 flex items-center justify-between text-xs text-muted-foreground">
+              <div className="mb-2 flex items-center justify-between text-sm font-medium text-foreground">
                 <span>Profile Progress</span>
-                <span>{completion}%</span>
+                <span className="text-primary">{completion}%</span>
               </div>
-              <Progress value={completion} />
+              <Progress value={completion} className="h-2" />
             </div>
             {profile.interests?.length! > 0 && (
               <div className="flex flex-wrap gap-2">
                 {profile.interests!.map((t) => (
-                  <Badge key={t} variant="outline">
+                  <Badge key={t} variant="outline" className="bg-accent/40 border-transparent">
                     {t}
                   </Badge>
                 ))}
@@ -378,44 +391,57 @@ export default function Dashboard() {
 
       {/* Quiz Result Card */}
       {quiz && quiz.stream && (
-        <Card>
-          <CardHeader>
-            <CardTitle>Assessment Result</CardTitle>
+        <Card className="card-hover animate-slide-up">
+          <CardHeader className="pb-4">
+            <CardTitle className="flex items-center gap-2">
+              <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
+                <span className="text-primary text-sm font-bold">✓</span>
+              </div>
+              Assessment Result
+            </CardTitle>
             <CardDescription>
               Your career interests based on the assessment
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-3">
-            <div className="flex items-center gap-2">
-              <span>Recommended Stream:</span>
-              <Badge variant="outline">{quiz.stream}</Badge>
+          <CardContent className="space-y-4">
+            <div className="flex items-center gap-3">
+              <span className="font-medium text-foreground">Recommended Stream:</span>
+              <Badge variant="secondary" className="text-sm px-3 py-1">
+                {quiz.stream}
+              </Badge>
+              <div className="ml-auto text-right">
+                <span className="text-2xl font-bold text-primary">{quiz.score}%</span>
+                <span className="text-sm text-muted-foreground ml-1">Score</span>
+              </div>
             </div>
-            <p>Score: {quiz.score}%</p>
+            
             {quiz.strengths?.length! > 0 && (
               <div>
-                <span>Strengths: </span>
-                <div className="mt-1 flex flex-wrap gap-2">
+                <h4 className="font-medium text-foreground mb-2">Strengths</h4>
+                <div className="flex flex-wrap gap-2">
                   {quiz.strengths!.map((s) => (
-                    <Badge key={s} variant="secondary">
+                    <Badge key={s} variant="secondary" className="bg-green-50 text-green-700 border-green-200">
                       {s}
                     </Badge>
                   ))}
                 </div>
               </div>
             )}
+            
             {quiz.weaknesses?.length! > 0 && (
               <div>
-                <span>Areas to Improve: </span>
-                <div className="mt-1 flex flex-wrap gap-2">
+                <h4 className="font-medium text-foreground mb-2">Areas to Improve</h4>
+                <div className="flex flex-wrap gap-2">
                   {quiz.weaknesses!.map((w) => (
-                    <Badge key={w} variant="destructive">
+                    <Badge key={w} variant="outline" className="bg-amber-50 text-amber-700 border-amber-200">
                       {w}
                     </Badge>
                   ))}
                 </div>
               </div>
             )}
-            <Button asChild className="mt-2">
+            
+            <Button asChild className="mt-4 gradient-primary hover:opacity-90">
               <Link to="/career-quiz">Retake Assessment</Link>
             </Button>
           </CardContent>
@@ -423,58 +449,71 @@ export default function Dashboard() {
       )}
 
       {/* Career Roadmap */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Career Roadmap</CardTitle>
+      <Card className="card-hover animate-slide-up">
+        <CardHeader className="pb-4">
+          <CardTitle className="flex items-center gap-2">
+            <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
+              <span className="text-primary text-sm">🗺️</span>
+            </div>
+            Career Roadmap
+          </CardTitle>
           <CardDescription>
-            Interactive flowchart. Click a node to see details.
+            Your personalized career pathway based on your profile and interests
           </CardDescription>
         </CardHeader>
         <CardContent>
           {recsLoading ? (
-            <p className="text-muted-foreground text-center">
-              Loading roadmap...
-            </p>
+            <div className="flex items-center justify-center py-8">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+              <span className="ml-3 text-muted-foreground">Loading roadmap...</span>
+            </div>
           ) : (
-            roadMapItems
+            <div className="bg-gradient-to-r from-primary/5 to-accent/5 rounded-lg p-6">
+              {roadMapItems}
+            </div>
           )}
         </CardContent>
       </Card>
 
       {/* Scholarships (static preview) */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Scholarships</CardTitle>
+      <Card className="card-hover animate-slide-up">
+        <CardHeader className="pb-4">
+          <CardTitle className="flex items-center gap-2">
+            <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
+              <span className="text-primary text-sm">💰</span>
+            </div>
+            Scholarships
+          </CardTitle>
           <CardDescription>Handpicked opportunities for you</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-3">
+        <CardContent className="space-y-4">
           {staticScholarships.map((s) => {
             const left = daysLeft(s.deadline);
             const urgent = left <= 7;
             return (
               <div
                 key={s.title}
-                className="flex flex-wrap items-center justify-between gap-3 border-b pb-3 last:border-b-0"
+                className="flex flex-wrap items-center justify-between gap-3 p-4 rounded-lg border bg-card/50 hover:bg-card/80 transition-colors"
               >
-                <div className="min-w-0">
-                  <p className="font-medium leading-tight truncate">
+                <div className="min-w-0 flex-1">
+                  <p className="font-medium leading-tight text-foreground">
                     {s.title}
                   </p>
-                  <div className="mt-1 flex items-center gap-2 text-sm text-muted-foreground">
-                    <Badge variant="outline">{s.tag}</Badge>
+                  <div className="mt-2 flex items-center gap-2 text-sm text-muted-foreground">
+                    <Badge variant="outline" className="text-xs">{s.tag}</Badge>
                     <span className="inline-flex items-center gap-1">
-                      <CalendarDays className="h-4 w-4" />{" "}
+                      <CalendarDays className="h-4 w-4" />
                       {new Date(s.deadline).toLocaleDateString()}
                     </span>
                   </div>
                 </div>
                 <div className="shrink-0">
                   <Badge
-                    className={
+                    className={`text-xs px-3 py-1 ${
                       urgent
                         ? "bg-red-500 text-white"
                         : "bg-amber-500 text-white"
-                    }
+                    }`}
                   >
                     {left > 0 ? `${left} days left` : "Closed"}
                   </Badge>
@@ -482,37 +521,44 @@ export default function Dashboard() {
               </div>
             );
           })}
-          <Button asChild variant="outline" className="mt-2">
+          <Button asChild variant="outline" className="w-full mt-4">
             <Link to="/scholarships">View all scholarships</Link>
           </Button>
         </CardContent>
       </Card>
 
       {/* Reminders (static preview) */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Reminders</CardTitle>
+      <Card className="card-hover animate-slide-up">
+        <CardHeader className="pb-4">
+          <CardTitle className="flex items-center gap-2">
+            <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
+              <span className="text-primary text-sm">🔔</span>
+            </div>
+            Reminders
+          </CardTitle>
           <CardDescription>Stay on top of deadlines</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-3">
+        <CardContent className="space-y-4">
           {staticReminders.map((r) => {
             const left = daysLeft(r.due);
             const urgent = left <= 7;
             return (
               <div
                 key={r.id}
-                className="flex items-center justify-between gap-3 border-b pb-3 last:border-b-0"
+                className="flex items-center justify-between gap-3 p-4 rounded-lg border bg-card/50 hover:bg-card/80 transition-colors"
               >
-                <div className="flex items-center gap-2 min-w-0">
-                  <Bell className="h-4 w-4 text-muted-foreground" />
-                  <span className="truncate">{r.title}</span>
+                <div className="flex items-center gap-3 min-w-0 flex-1">
+                  <div className="h-8 w-8 rounded-full bg-muted flex items-center justify-center">
+                    <Bell className="h-4 w-4 text-muted-foreground" />
+                  </div>
+                  <span className="truncate font-medium text-foreground">{r.title}</span>
                 </div>
                 <div className="text-sm">
                   <Badge
                     variant="outline"
-                    className={
-                      urgent ? "border-transparent bg-red-500 text-white" : ""
-                    }
+                    className={`text-xs px-3 py-1 ${
+                      urgent ? "border-transparent bg-red-500 text-white" : "bg-muted text-foreground"
+                    }`}
                   >
                     {left > 0 ? `${left} days` : "Today"}
                   </Badge>
@@ -520,7 +566,7 @@ export default function Dashboard() {
               </div>
             );
           })}
-          <Button asChild variant="outline" className="mt-2">
+          <Button asChild variant="outline" className="w-full mt-4">
             <Link to="/notifications">View all reminders</Link>
           </Button>
         </CardContent>

@@ -34,62 +34,64 @@ import {
 
 export default function Landing() {
   return (
-    <div className="min-h-screen  flex flex-col bg-gradient-to-b from-blue-50/60 to-white">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-background via-background to-muted/20">
       {/* Header */}
-      <header className="sticky top-0 z-20 w-full border-b mt-0 bg-white/80 backdrop-blur">
-        <div className="mx-auto max-w-6xl px-4 h-14 flex items-center justify-between">
-          <Link to="/" className="font-semibold text-primary">
+      <header className="sticky top-0 z-20 w-full glass-effect border-b shadow-sm">
+        <div className="mx-auto max-w-6xl px-6 h-16 flex items-center justify-between">
+          <Link to="/" className="font-bold text-2xl text-gradient">
             GuideSutra
           </Link>
-          <nav className="hidden gap-6 text-sm md:flex">
+          <nav className="hidden gap-8 text-sm md:flex">
             <a
               href="#about"
-              className="text-muted-foreground hover:text-foreground"
+              className="text-muted-foreground hover:text-foreground transition-colors font-medium"
             >
               About
             </a>
             <a
               href="#features"
-              className="text-muted-foreground hover:text-foreground"
+              className="text-muted-foreground hover:text-foreground transition-colors font-medium"
             >
               Features
             </a>
             <a
               href="#contact"
-              className="text-muted-foreground hover:text-foreground"
+              className="text-muted-foreground hover:text-foreground transition-colors font-medium"
             >
               Contact
             </a>
           </nav>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <Link
               to="/signin"
-              className="hidden text-sm text-muted-foreground md:block"
+              className="hidden text-sm text-muted-foreground hover:text-foreground transition-colors font-medium md:block"
             >
               Login
             </Link>
             <Link to="/signup">
-              <Button className="rounded-full px-5">Signup</Button>
+              <Button className="gradient-primary hover:opacity-90 rounded-full px-6 shadow-md">
+                Get Started
+              </Button>
             </Link>
           </div>
         </div>
       </header>
 
       {/* Hero */}
-      <section className="mx-auto max-w-6xl px-4 pt-12 pb-10 md:pt-20 md:pb-16">
-        <div className="grid items-center gap-8 md:grid-cols-2">
-          <div>
-            <h1 className="text-3xl md:text-5xl font-extrabold leading-tight">
+      <section className="mx-auto max-w-6xl px-6 pt-16 pb-12 md:pt-24 md:pb-20">
+        <div className="grid items-center gap-12 md:grid-cols-2">
+          <div className="animate-slide-up">
+            <h1 className="text-4xl md:text-6xl font-bold leading-tight text-foreground">
               Discover the right course, the right college, and the right career
-              for you.
+              <span className="text-gradient"> for you.</span>
             </h1>
-            <p className="mt-4 text-muted-foreground text-lg">
+            <p className="mt-6 text-muted-foreground text-xl leading-relaxed">
               Assessments, career pathways, college finder, and smart
               reminders—all in one place.
             </p>
-            <div className="mt-6 flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-wrap gap-4">
               <Link to="/signup?role=student">
-                <Button size="lg" className="rounded-full px-6">
+                <Button size="lg" className="gradient-primary hover:opacity-90 rounded-full px-8 py-3 text-lg font-semibold shadow-lg">
                   Take Career Test
                 </Button>
               </Link>
@@ -97,37 +99,37 @@ export default function Landing() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="rounded-full px-6"
+                  className="rounded-full px-8 py-3 text-lg font-semibold border-2 hover:bg-accent/50"
                 >
                   Explore Colleges
                 </Button>
               </Link>
             </div>
-            <div className="mt-6">
-              <div className="text-sm text-muted-foreground mb-2">
+            <div className="mt-8">
+              <div className="text-sm text-muted-foreground mb-3 font-medium">
                 Get started as
               </div>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-3">
                 <Link to="/signup?role=student">
-                  <Button variant="secondary" className="rounded-full">
+                  <Button variant="secondary" className="rounded-full px-6 py-2 font-medium hover:bg-accent/80">
                     Student
                   </Button>
                 </Link>
                 <Link to="/signup?role=parent">
-                  <Button variant="secondary" className="rounded-full">
+                  <Button variant="secondary" className="rounded-full px-6 py-2 font-medium hover:bg-accent/80">
                     Parent
                   </Button>
                 </Link>
                 <Link to="/signup?role=counselor">
-                  <Button variant="secondary" className="rounded-full">
+                  <Button variant="secondary" className="rounded-full px-6 py-2 font-medium hover:bg-accent/80">
                     Counselor
                   </Button>
                 </Link>
-                <span className="inline-flex items-center text-sm text-muted-foreground ml-2">
+                <span className="inline-flex items-center text-sm text-muted-foreground ml-3">
                   or
                   <Link
                     to="/signin"
-                    className="ml-1 text-primary hover:underline"
+                    className="ml-2 text-primary hover:underline font-medium"
                   >
                     Log in
                   </Link>

@@ -84,63 +84,72 @@ export default function Signin() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-background via-background to-muted/20">
       {/* Header */}
-      <header className="w-full border-b bg-white/80 backdrop-blur">
-        <div className="mx-auto max-w-5xl h-14 px-4 flex items-center justify-between">
-          <Link to="/" className="font-semibold text-primary">GuideSutra</Link>
+      <header className="w-full glass-effect border-b shadow-sm">
+        <div className="mx-auto max-w-6xl h-16 px-6 flex items-center justify-between">
+          <Link to="/" className="font-bold text-2xl text-gradient">GuideSutra</Link>
           <p className="text-sm text-muted-foreground">
             New here?{" "}
-            <Link to="/signup" className="text-primary hover:underline">Create an account</Link>
+            <Link to="/signup" className="text-primary hover:underline font-medium">Create an account</Link>
           </p>
         </div>
       </header>
 
-      <main className="flex-1 grid place-items-center px-4 py-10 bg-gradient-to-b from-emerald-50/30 to-blue-50/20">
-        <div className="grid gap-8 md:grid-cols-2 max-w-5xl w-full items-center">
+      <main className="flex-1 grid place-items-center px-6 py-12">
+        <div className="grid gap-12 md:grid-cols-2 max-w-6xl w-full items-center">
           {/* Illustration */}
-          <div className="hidden md:block">
-            <div className="rounded-3xl border bg-white p-6 shadow-sm">
-              <svg viewBox="0 0 500 320" className="w-full h-auto">
-                <rect x="0" y="0" width="500" height="320" rx="20" fill="#f0f9ff"/>
-                <g>
-                  <path d="M80 120 L150 90 L220 120 L150 150 Z" fill="#93c5fd"/>
-                  <rect x="140" y="150" width="20" height="40" fill="#93c5fd"/>
-                  <circle cx="300" cy="200" r="50" fill="#bbf7d0"/>
-                  <polyline points="260,220 300,180 340,200" fill="none" stroke="#34d399" strokeWidth="6"/>
-                </g>
-              </svg>
-              <p className="mt-3 text-sm text-muted-foreground">
-                Learn, plan, and track your journey to success.
+          <div className="hidden md:block animate-fade-in">
+            <div className="rounded-3xl border bg-white/80 backdrop-blur-sm p-8 shadow-lg">
+              <div className="h-16 w-16 rounded-full bg-gradient-primary flex items-center justify-center text-white text-2xl font-bold mb-6 mx-auto">
+                🎓
+              </div>
+              <h3 className="text-2xl font-bold text-center text-foreground mb-4">
+                Your Career Journey Starts Here
+              </h3>
+              <p className="text-center text-muted-foreground leading-relaxed">
+                Join thousands of students who have discovered their perfect career path with our personalized guidance and comprehensive resources.
               </p>
+              <div className="mt-8 grid grid-cols-2 gap-4">
+                <div className="text-center p-4 rounded-lg bg-primary/5">
+                  <div className="text-2xl font-bold text-primary">70+</div>
+                  <div className="text-sm text-muted-foreground">Colleges</div>
+                </div>
+                <div className="text-center p-4 rounded-lg bg-primary/5">
+                  <div className="text-2xl font-bold text-primary">100+</div>
+                  <div className="text-sm text-muted-foreground">Careers</div>
+                </div>
+              </div>
             </div>
           </div>
 
           {/* Form */}
-          <Card className="shadow-sm">
-            <CardHeader className="pb-2">
-              <CardTitle>Welcome back</CardTitle>
-              <CardDescription>Sign in to continue your journey.</CardDescription>
+          <Card className="shadow-lg border-0 bg-white/80 backdrop-blur-sm animate-slide-up">
+            <CardHeader className="pb-6 text-center">
+              <CardTitle className="text-2xl font-bold">Welcome back</CardTitle>
+              <CardDescription className="text-base">Sign in to continue your journey</CardDescription>
             </CardHeader>
             <CardContent>
-              <form onSubmit={submit} className="space-y-4">
-                <div>
-                  <label className="mb-1 block text-sm font-medium">Email</label>
+              <form onSubmit={submit} className="space-y-6">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-foreground">Email</label>
                   <Input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="you@example.com"
                     required
+                    className="h-12 focus-ring"
                   />
                 </div>
-                <div>
-                  <label className="mb-1 block text-sm font-medium">Password</label>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-foreground">Password</label>
                   <Input
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
+                    className="h-12 focus-ring"
                   />
                 </div>
                 <div className="flex items-center justify-between">
@@ -154,13 +163,13 @@ export default function Signin() {
                       Remember me
                     </label>
                   </div>
-                  <Link to="/forgot-password" className="text-sm text-primary hover:underline">
+                  <Link to="/forgot-password" className="text-sm text-primary hover:underline font-medium">
                     Forgot Password?
                   </Link>
                 </div>
 
-                <Button type="submit" className="w-full" disabled={isLoading}>
-                  {isLoading ? <Loader className="animate-spin mr-2 inline-block" /> : "Sign In"}
+                <Button type="submit" className="w-full h-12 gradient-primary hover:opacity-90 font-semibold" disabled={isLoading}>
+                  {isLoading ? <Loader className="animate-spin mr-2 h-4 w-4" /> : "Sign In"}
                 </Button>
               </form>
             </CardContent>

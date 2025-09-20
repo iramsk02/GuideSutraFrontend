@@ -1027,68 +1027,90 @@ export default function CareerQuiz() {
   }
 
   return (
-    <div className="min-h-[calc(100vh-3.5rem)] mt-20">
-      <div className="sticky top-0 z-10 mb-4 bg-background/80 backdrop-blur border rounded-md">
-        <div className="flex items-center justify-between p-3">
-          <div className="flex items-center gap-2">
-            <Brain className="text-primary" /> <span className="font-semibold">GuideSutra Quiz</span>
-          </div>
-          <div className="min-w-[220px]">
-            <div className="flex items-center justify-between text-xs text-muted-foreground mb-1">
-              <span>Progress</span>
-              <span>{percent}% Completed</span>
+    <div className="space-y-8">
+      {/* Page Header */}
+      <div className="page-header">
+        <h1 className="page-title">Career Assessment</h1>
+        <p className="page-description">
+          Discover your ideal career path through our comprehensive assessment.
+        </p>
+      </div>
+
+      <div className="sticky top-0 z-10 mb-6 glass-effect border rounded-lg shadow-sm">
+        <div className="flex items-center justify-between p-4">
+          <div className="flex items-center gap-3">
+            <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
+              <Brain className="h-5 w-5 text-primary" />
             </div>
-            <Progress value={percent} />
+            <div>
+              <span className="font-semibold text-lg">GuideSutra Quiz</span>
+              <p className="text-sm text-muted-foreground">Question {index + 1} of {total}</p>
+            </div>
+          </div>
+          <div className="min-w-[240px]">
+            <div className="flex items-center justify-between text-sm font-medium text-foreground mb-2">
+              <span>Progress</span>
+              <span className="text-primary">{percent}% Completed</span>
+            </div>
+            <Progress value={percent} className="h-2" />
           </div>
         </div>
       </div>
 
       {!done ? (
-        <div className="grid gap-4 lg:grid-cols-[1fr_360px]">
-          <Card className="shadow-sm">
-            <CardHeader className="pb-2">
-              <CardTitle>
+        <div className="grid gap-6 lg:grid-cols-[1fr_400px]">
+          <Card className="card-hover animate-slide-up">
+            <CardHeader className="pb-4">
+              <CardTitle className="flex items-center gap-2">
+                <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
+                  <span className="text-primary text-sm font-bold">{index + 1}</span>
+                </div>
                 Question {index + 1} of {total}
               </CardTitle>
-              <CardDescription>{tip}</CardDescription>
+              <CardDescription className="text-base">{tip}</CardDescription>
             </CardHeader>
-            <CardContent>
-              <p className="mb-4">{current.prompt}</p>
-              <div className="grid gap-2">
+            <CardContent className="space-y-6">
+              <p className="text-lg font-medium text-foreground leading-relaxed">{current.prompt}</p>
+              <div className="grid gap-3">
                 {current.options.map(opt => (
                   <Button
                     key={opt}
                     variant={answers[current.id] === opt ? "default" : "outline"}
                     onClick={() => select(opt)}
-                    className="justify-start"
+                    className="justify-start h-12 text-left font-medium hover:bg-accent/50"
                   >
                     {opt}
                   </Button>
                 ))}
               </div>
             </CardContent>
-            <div className="flex justify-between p-3">
-              <Button variant="outline" onClick={back} disabled={index === 0}>
-                <ArrowLeft /> Back
+            <div className="flex justify-between p-6 border-t">
+              <Button variant="outline" onClick={back} disabled={index === 0} className="px-6">
+                <ArrowLeft className="mr-2 h-4 w-4" /> Back
               </Button>
-              <Button onClick={next}>
-                Next <ArrowRight />
+              <Button onClick={next} className="gradient-primary hover:opacity-90 px-6">
+                Next <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </div>
           </Card>
         </div>
       ) : (
-        <div className="relative text-center py-10">
-          <h2 className="text-2xl font-bold mb-4">Congratulations!</h2>
-          <div className="mb-4 flex justify-center items-center gap-2 flex-wrap">
-            <span>
-              You scored {result!.score}% and your recommended stream is
-            </span>
-            <Badge variant="outline">{result!.stream}</Badge>
+        <div className="relative text-center py-12">
+          <div className="animate-scale-in">
+            <div className="h-20 w-20 rounded-full bg-gradient-primary flex items-center justify-center text-white text-3xl font-bold mx-auto mb-6">
+              🎉
+            </div>
+            <h2 className="text-4xl font-bold mb-6 text-foreground">Congratulations!</h2>
+            <div className="mb-8 flex justify-center items-center gap-3 flex-wrap">
+              <span className="text-xl text-muted-foreground">
+                You scored <span className="text-3xl font-bold text-primary">{result!.score}%</span> and your recommended stream is
+              </span>
+              <Badge variant="secondary" className="text-lg px-4 py-2">{result!.stream}</Badge>
+            </div>
+            <Button onClick={saveAssessment} disabled={saving || saved} className="gradient-primary hover:opacity-90 px-8 py-3 text-lg font-semibold">
+              {saving ? "Saving..." : saved ? "Saved" : "Save Assessment"}
+            </Button>
           </div>
-          <Button onClick={saveAssessment} disabled={saving || saved}>
-            {saving ? "Saving..." : saved ? "Saved" : "Save Assessment"}
-          </Button>
           <div ref={confettiRef} className="absolute inset-0 pointer-events-none"></div>
         </div>
       )}

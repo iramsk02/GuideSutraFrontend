@@ -200,19 +200,33 @@ export default function Scholarships() {
   }
 
   return (
-    <div className="ml-60 grid gap-6 lg:grid-cols-[1fr_320px]">
-      {/* Main */}
-      <div className="space-y-6 mt-20">
-        {/* Filters */}
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle>Scholarship Finder</CardTitle>
-            <CardDescription>
-              Find scholarships that match your profile.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="grid gap-3 md:grid-cols-4">
+    <div className="space-y-8">
+      {/* Page Header */}
+      <div className="page-header">
+        <h1 className="page-title">Scholarship Finder</h1>
+        <p className="page-description">
+          Discover scholarships that match your profile and unlock funding opportunities for your education.
+        </p>
+      </div>
+
+      <div className="grid gap-8 lg:grid-cols-[1fr_320px]">
+        {/* Main */}
+        <div className="space-y-6">
+          {/* Filters */}
+          <Card className="card-hover animate-slide-up">
+            <CardHeader className="pb-4">
+              <CardTitle className="flex items-center gap-2">
+                <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
+                  <span className="text-primary text-sm">🔍</span>
+                </div>
+                Filter Scholarships
+              </CardTitle>
+              <CardDescription>
+                Find scholarships that match your profile and preferences.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid gap-4 md:grid-cols-4">
               <div>
                 <label className="mb-1 block text-sm font-medium">Stream</label>
                 <Select
@@ -380,10 +394,9 @@ export default function Scholarships() {
             </Card>
           )}
         </div>
-      </div>
 
-      {/* Sidebar */}
-      <div className="space-y-4 lg:sticky lg:top-16 h-max">
+        {/* Sidebar */}
+        <div className="space-y-4 lg:sticky lg:top-16 h-max">
         <Card>
           <CardHeader>
             <CardTitle>Saved Scholarships</CardTitle>
@@ -434,6 +447,8 @@ export default function Scholarships() {
             <p>• Write a concise statement highlighting impact and need.</p>
           </CardContent>
         </Card>
+        </div>
+        </div>
       </div>
     </div>
   );

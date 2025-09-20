@@ -43,25 +43,40 @@ export default function Resources() {
   }, [profile, quiz]);
 
   return (
-    <div className="space-y-6 mt-20 ml-60">
-      <Card>
-        <CardHeader className="pb-2">
-          <CardTitle>Resources</CardTitle>
+    <div className="space-y-8">
+      {/* Page Header */}
+      <div className="page-header">
+        <h1 className="page-title">Learning Resources</h1>
+        <p className="page-description">
+          Access curated study materials, e-books, and skill courses tailored to your interests and career goals.
+        </p>
+      </div>
+
+      <Card className="card-hover animate-slide-up">
+        <CardHeader className="pb-4">
+          <CardTitle className="flex items-center gap-2">
+            <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
+              <span className="text-primary text-sm">📚</span>
+            </div>
+            Recommended Resources
+          </CardTitle>
           <CardDescription>
-            E-books, study materials, and skill courses tailored to you
+            E-books, study materials, and skill courses tailored to your profile
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
-            {materials.map((m) => (
-              <Card key={m.title} className="hover:shadow-sm">
-                <CardContent className="p-4">
-                  <div className="mb-2">
-                    <Badge variant="outline">{m.tag}</Badge>
+          <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
+            {materials.map((m, index) => (
+              <Card key={m.title} className="card-hover animate-slide-up" style={{ animationDelay: `${index * 100}ms` }}>
+                <CardContent className="p-6">
+                  <div className="mb-4">
+                    <Badge variant="outline" className="text-xs">{m.tag}</Badge>
                   </div>
-                  <p className="font-medium">{m.title}</p>
-                  <div className="mt-3">
-                    <Button size="sm">Open</Button>
+                  <h3 className="font-semibold text-foreground mb-3 leading-tight">{m.title}</h3>
+                  <div className="mt-4">
+                    <Button size="sm" className="gradient-primary hover:opacity-90 w-full">
+                      Open Resource
+                    </Button>
                   </div>
                 </CardContent>
               </Card>

@@ -161,47 +161,73 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <header className="w-full border-b bg-white/80 backdrop-blur">
-        <div className="mx-auto max-w-5xl h-14 px-4 flex items-center justify-between">
-          <Link to="/" className="font-semibold text-primary">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-background via-background to-muted/20">
+      <header className="w-full glass-effect border-b shadow-sm">
+        <div className="mx-auto max-w-6xl h-16 px-6 flex items-center justify-between">
+          <Link to="/" className="font-bold text-2xl text-gradient">
             GuideSutra
           </Link>
           <p className="text-sm text-muted-foreground">
             Already have an account?{" "}
-            <Link to="/signin" className="text-primary hover:underline">
+            <Link to="/signin" className="text-primary hover:underline font-medium">
               Sign In
             </Link>
           </p>
         </div>
       </header>
 
-      <main className="flex-1 grid place-items-center px-4 py-10 bg-gradient-to-b from-blue-50/40 to-emerald-50/20">
-        <div className="grid gap-8 md:grid-cols-2 max-w-5xl w-full">
-          <div className="order-2 md:order-1 hidden md:block">
-            <div className="rounded-3xl border bg-white p-6 shadow-sm">
-              <p className="mt-3 text-sm text-muted-foreground">
-                Plan your future with friendly guidance and tools.
+      <main className="flex-1 grid place-items-center px-6 py-12">
+        <div className="grid gap-12 md:grid-cols-2 max-w-6xl w-full">
+          <div className="order-2 md:order-1 hidden md:block animate-fade-in">
+            <div className="rounded-3xl border bg-white/80 backdrop-blur-sm p-8 shadow-lg">
+              <div className="h-16 w-16 rounded-full bg-gradient-primary flex items-center justify-center text-white text-2xl font-bold mb-6 mx-auto">
+                🚀
+              </div>
+              <h3 className="text-2xl font-bold text-center text-foreground mb-4">
+                Start Your Career Journey
+              </h3>
+              <p className="text-center text-muted-foreground leading-relaxed mb-6">
+                Join thousands of students who have discovered their perfect career path with our personalized guidance and comprehensive resources.
               </p>
+              <div className="space-y-4">
+                <div className="flex items-center gap-3 p-3 rounded-lg bg-primary/5">
+                  <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
+                    <span className="text-primary text-sm">✓</span>
+                  </div>
+                  <span className="text-sm font-medium">Personalized career assessment</span>
+                </div>
+                <div className="flex items-center gap-3 p-3 rounded-lg bg-primary/5">
+                  <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
+                    <span className="text-primary text-sm">✓</span>
+                  </div>
+                  <span className="text-sm font-medium">College and course recommendations</span>
+                </div>
+                <div className="flex items-center gap-3 p-3 rounded-lg bg-primary/5">
+                  <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
+                    <span className="text-primary text-sm">✓</span>
+                  </div>
+                  <span className="text-sm font-medium">Scholarship opportunities</span>
+                </div>
+              </div>
             </div>
           </div>
 
-          <Card className="order-1 md:order-2 shadow-sm">
-            <div className="px-6 pt-4">
-              <div className="mb-2 flex items-center justify-between text-xs text-muted-foreground">
+          <Card className="order-1 md:order-2 shadow-lg border-0 bg-white/80 backdrop-blur-sm animate-slide-up">
+            <div className="px-6 pt-6">
+              <div className="mb-4 flex items-center justify-between text-sm font-medium text-foreground">
                 <span>Profile completion</span>
-                <span>{percent}%</span>
+                <span className="text-primary">{percent}%</span>
               </div>
-              <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
+              <div className="h-3 w-full overflow-hidden rounded-full bg-muted">
                 <div
-                  className="h-full bg-primary"
+                  className="h-full bg-gradient-primary transition-all duration-300"
                   style={{ width: `${percent}%` }}
                 />
               </div>
             </div>
-            <CardHeader className="pb-2">
-              <CardTitle>Create your account</CardTitle>
-              <CardDescription>It takes less than 2 minutes.</CardDescription>
+            <CardHeader className="pb-6 text-center">
+              <CardTitle className="text-2xl font-bold">Create your account</CardTitle>
+              <CardDescription className="text-base">It takes less than 2 minutes.</CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={submit}>
@@ -330,7 +356,7 @@ export default function Signup() {
                     </label>
                   </div>
 
-                  <Button type="submit" className="w-full" disabled={loading}>
+                  <Button type="submit" className="w-full h-12 gradient-primary hover:opacity-90 font-semibold" disabled={loading}>
                     {loading ? (
                       <span className="inline-flex items-center gap-2">
                         <Loader2 className="h-4 w-4 animate-spin" /> Creating

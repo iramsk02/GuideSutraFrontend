@@ -111,37 +111,39 @@ export function StudentLayout({ children }: { children: ReactNode }) {
   }
 
   return (
-    <>
+    <div className="page-container">
       <SidebarProvider>
-        <Sidebar className="border-r border-sidebar-border w-60 " collapsible="icon">
-          <SidebarHeader>
-            <div className="flex items-center gap-3 p-2">
-              <Avatar className="h-12 w-12 ring-2 ring-primary/20">
+        <Sidebar className="border-r border-sidebar-border w-60 shadow-lg" collapsible="icon">
+          <SidebarHeader className="p-4">
+            <div className="flex items-center gap-3">
+              <Avatar className="h-12 w-12 ring-2 ring-primary/20 shadow-md">
                 <AvatarImage src="/Profile.png" alt="Student" />
-                <AvatarFallback>IS</AvatarFallback>
+                <AvatarFallback className="bg-gradient-primary text-white font-semibold">
+                  {profile?.name?.split(' ').map(n => n[0]).join('') || 'GS'}
+                </AvatarFallback>
               </Avatar>
-              <div className="min-w-0">
+              <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
-                  <span className="font-semibold truncate">
+                  <span className="font-semibold truncate text-foreground">
                     {profile?.name || "Guest"}
                   </span>
-                  {profile?.grade ? (
-                    <Badge variant="secondary" className="shrink-0">
+                  {profile?.grade && (
+                    <Badge variant="secondary" className="shrink-0 text-xs">
                       {profile.grade}
                     </Badge>
-                  ) : null}
-                  {profile?.role ? (
-                    <Badge variant="outline" className="shrink-0 capitalize">
+                  )}
+                  {profile?.role && (
+                    <Badge variant="outline" className="shrink-0 capitalize text-xs">
                       {profile.role}
                     </Badge>
-                  ) : null}
+                  )}
                 </div>
-                <div className="mt-2 flex flex-wrap gap-1.5">
+                <div className="mt-2 flex flex-wrap gap-1">
                   {interests.map((tag) => (
                     <Badge
                       key={tag}
                       variant="outline"
-                      className="bg-accent/40 border-transparent text-foreground/80"
+                      className="bg-accent/40 border-transparent text-foreground/80 text-xs px-2 py-0.5"
                     >
                       {tag}
                     </Badge>
@@ -150,13 +152,13 @@ export function StudentLayout({ children }: { children: ReactNode }) {
               </div>
             </div>
           </SidebarHeader>
-          <SidebarContent>
+          <SidebarContent className="px-2">
             <SidebarGroup>
-              <SidebarGroupLabel className="text-xs  uppercase tracking-wide text-muted-foreground/80">
+              <SidebarGroupLabel className="text-xs uppercase tracking-wide text-muted-foreground/80 px-2 py-1">
                 Navigation
               </SidebarGroupLabel>
               <SidebarGroupContent>
-                <SidebarMenu>
+                <SidebarMenu className="space-y-1">
                   {nav.map(({ to, label, icon: Icon }) => {
                     const isAssessment = to === "/career-quiz";
                     return (
@@ -165,20 +167,28 @@ export function StudentLayout({ children }: { children: ReactNode }) {
                           {({ isActive }) => (
                             <SidebarMenuButton
                               isActive={isActive}
-                              className={
-                                isAssessment
-                                  ? "relative bg-amber-50/80 text-amber-900 border border-amber-200 ring-2 ring-amber-200 shadow-sm hover:bg-amber-100"
-                                  : undefined
-                              }
+                              className={`
+                                group relative transition-all duration-200 hover:bg-accent/50
+                                ${isAssessment
+                                  ? "bg-amber-50/80 text-amber-900 border border-amber-200 ring-2 ring-amber-200 shadow-sm hover:bg-amber-100"
+                                  : isActive
+                                    ? "bg-primary/10 text-primary border-primary/20"
+                                    : "hover:bg-accent/50"
+                                }
+                              `}
                             >
                               <Icon
-                                className={
-                                  isAssessment
+                                className={`
+                                  transition-colors duration-200
+                                  ${isAssessment
                                     ? "text-amber-600"
-                                    : "text-muted-foreground"
-                                }
+                                    : isActive
+                                      ? "text-primary"
+                                      : "text-muted-foreground group-hover:text-foreground"
+                                  }
+                                `}
                               />
-                              <span>{label}</span>
+                              <span className="font-medium">{label}</span>
                               {isAssessment && (
                                 <span className="ml-auto inline-flex items-center rounded-full bg-amber-200 px-2 py-0.5 text-[10px] font-medium text-amber-900 animate-pulse">
                                   Start here
@@ -195,36 +205,36 @@ export function StudentLayout({ children }: { children: ReactNode }) {
             </SidebarGroup>
           </SidebarContent>
           <SidebarSeparator />
-          <SidebarFooter>
-            <div className="p-2 text-white">
-              <Link to="/scholarships">
-                <Button className="w-full bg-blue-950" variant="default">
-                  <Sparkles className="mr-2 text-white" /> Explore Scholarships
-                </Button>
-              </Link>
-            </div>
+          <SidebarFooter className="p-4">
+            <Link to="/scholarships" className="block">
+              <Button className="w-full gradient-primary hover:opacity-90 transition-opacity duration-200 shadow-md">
+                <Sparkles className="mr-2 h-4 w-4" />
+                Explore Scholarships
+              </Button>
+            </Link>
           </SidebarFooter>
           <SidebarRail />
         </Sidebar>
         <SidebarInset>
-          <div className="fixed ml-60  top-0 z-10 w-screen bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
-            <div className="flex h-14 items-center gap-3 px-4">
-              {/* <SidebarTrigger /> */}
+          <div className="fixed ml-60 top-0 z-10 w-screen glass-effect border-b shadow-sm">
+            <div className="flex h-14 items-center gap-3 px-6">
               <Separator orientation="vertical" className="mr-2 h-6" />
               <div className="flex items-center gap-2">
                 <span className="text-sm font-semibold text-primary">
                   GuideSutra
                 </span>
                 <span className="text-muted-foreground">/</span>
-                <span className="text-sm text-foreground/80">{title}</span>
+                <span className="text-sm text-foreground/80 font-medium">{title}</span>
               </div>
             </div>
           </div>
-          <div className="px-6 py-6 lg:px-8">{children}</div>
+          <div className="page-content animate-fade-in">
+            {children}
+          </div>
         </SidebarInset>
       </SidebarProvider>
       <Chatbot />
-    </>
+    </div>
   );
 }
 
