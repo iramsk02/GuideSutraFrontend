@@ -9,11 +9,10 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          react: ['react', 'react-dom'],
-          ui: ['@/components/ui'],
+          vendor: ['react', 'react-dom']
         },
       },
     },
-    chunkSizeWarningLimit: 1000, // increase limit
+    chunkSizeWarningLimit: 1000, // bump limit to 1MB
   },
 })
