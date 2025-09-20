@@ -1,5 +1,5 @@
-import { ReactNode } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import type { ReactNode } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
 
 export default function Placeholder({
   title,

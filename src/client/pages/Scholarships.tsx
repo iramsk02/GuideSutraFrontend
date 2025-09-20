@@ -5,18 +5,18 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+} from "../components/ui/card";
+import { Badge } from "../components/ui/badge";
+import { Button } from "../components/ui/button";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Progress } from "@/components/ui/progress";
-import { Separator } from "@/components/ui/separator";
+} from "../components/ui/select";
+import { Progress } from "../components/ui/progress";
+import { Separator } from "../components/ui/separator";
 import { toast } from "sonner";
 import { useEffect } from "react";
 import {
@@ -24,7 +24,7 @@ import {
   getQuizResult,
   normalizeStream,
   profileGenderToFilter,
-} from "@/lib/user";
+} from "../lib/user";
 import {
   Banknote,
   GraduationCap,

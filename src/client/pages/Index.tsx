@@ -1,15 +1,15 @@
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "../components/ui/badge";
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import { Button } from "../components/ui/button";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
   CardDescription,
-} from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
+} from "../components/ui/card";
+import { Progress } from "../components/ui/progress";
 import { CalendarDays, Bell } from "lucide-react";
 
 // Custom Node Component to display icons and names
@@ -363,9 +363,9 @@ export default function Dashboard() {
               </div>
               <Progress value={completion} />
             </div>
-            {profile.interests?.length > 0 && (
+            {profile.interests?.length! > 0 && (
               <div className="flex flex-wrap gap-2">
-                {profile.interests.map((t) => (
+                {profile.interests!.map((t) => (
                   <Badge key={t} variant="outline">
                     {t}
                   </Badge>

@@ -730,10 +730,10 @@ import {
   CardHeader,
   CardTitle,
   CardDescription,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { Badge } from "@/components/ui/badge";
+} from "../components/ui/card";
+import { Button } from "../components/ui/button";
+import { Progress } from "../components/ui/progress";
+import { Badge } from "../components/ui/badge";
 import { toast } from "sonner";
 import { ArrowLeft, ArrowRight, Brain } from "lucide-react";
 
