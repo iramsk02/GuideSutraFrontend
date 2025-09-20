@@ -360,7 +360,7 @@ export default function Landing() {
           {[
             {
               name: "Aisha",
-              quote: "NovaPath helped me pick CS and shortlist scholarships.",
+              quote: "GuideSutra helped me pick CS and shortlist scholarships.",
               img: "/placeholder.svg",
             },
             {
@@ -548,7 +548,7 @@ export default function Landing() {
       <footer id="contact" className="mt-auto border-t bg-white">
         <div className="mx-auto max-w-6xl px-4 py-8 grid gap-4 md:grid-cols-2">
           <div className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} NovaPath. All rights reserved.
+            © {new Date().getFullYear()} GuideSutra. All rights reserved.
           </div>
           <div className="flex flex-wrap items-center gap-4 justify-start md:justify-end text-sm">
             <a href="#about" className="hover:underline">

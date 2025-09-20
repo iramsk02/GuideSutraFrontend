@@ -221,7 +221,7 @@ export default function Parents() {
             <p>Mon–Fri, 9am–6pm IST</p>
             <p>Call: +91-800-555-0101</p>
             <Button asChild className="w-full">
-              <a href="mailto:help@novapath.example">Email Us</a>
+              <a href="mailto:help@GuideSutra.example">Email Us</a>
             </Button>
           </CardContent>
         </Card>

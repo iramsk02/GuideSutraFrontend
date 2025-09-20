@@ -101,14 +101,14 @@ export default function Dashboard() {
 
   useEffect(() => {
     try {
-      const storedProfile = localStorage.getItem("novapath_profile");
+      const storedProfile = localStorage.getItem("GuideSutra_profile");
       if (storedProfile) {
         const parsedProfile = JSON.parse(storedProfile);
         setProfile(parsedProfile);
 
         // Load quiz result from local storage
         try {
-          const rawQuiz = localStorage.getItem("novapath_quiz_result");
+          const rawQuiz = localStorage.getItem("GuideSutra_quiz_result");
           if (rawQuiz) setQuiz(JSON.parse(rawQuiz));
         } catch {}
 

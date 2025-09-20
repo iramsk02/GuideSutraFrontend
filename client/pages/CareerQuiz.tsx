@@ -958,7 +958,7 @@ export default function CareerQuiz() {
 
   const profileData = useMemo(() => {
     try {
-      const stored = localStorage.getItem("novapath_profile");
+      const stored = localStorage.getItem("GuideSutra_profile");
       return stored ? JSON.parse(stored) : null;
     } catch {
       return null;
@@ -1031,7 +1031,7 @@ export default function CareerQuiz() {
       <div className="sticky top-0 z-10 mb-4 bg-background/80 backdrop-blur border rounded-md">
         <div className="flex items-center justify-between p-3">
           <div className="flex items-center gap-2">
-            <Brain className="text-primary" /> <span className="font-semibold">NovaPath Quiz</span>
+            <Brain className="text-primary" /> <span className="font-semibold">GuideSutra Quiz</span>
           </div>
           <div className="min-w-[220px]">
             <div className="flex items-center justify-between text-xs text-muted-foreground mb-1">

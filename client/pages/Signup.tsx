@@ -165,7 +165,7 @@ export default function Signup() {
       <header className="w-full border-b bg-white/80 backdrop-blur">
         <div className="mx-auto max-w-5xl h-14 px-4 flex items-center justify-between">
           <Link to="/" className="font-semibold text-primary">
-            NovaPath
+            GuideSutra
           </Link>
           <p className="text-sm text-muted-foreground">
             Already have an account?{" "}

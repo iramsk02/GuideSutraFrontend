@@ -276,7 +276,7 @@ export default function Signin() {
       {/* Header */}
       <header className="w-full border-b bg-white/80 backdrop-blur">
         <div className="mx-auto max-w-5xl h-14 px-4 flex items-center justify-between">
-          <Link to="/" className="font-semibold text-primary">NovaPath</Link>
+          <Link to="/" className="font-semibold text-primary">GuideSutra</Link>
           <p className="text-sm text-muted-foreground">
             New here?{" "}
             <Link to="/signup" className="text-primary hover:underline">Create an account</Link>
