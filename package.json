@@ -12,7 +12,9 @@
   },
   "scripts": {
     "dev": "vite",
+    "build": "npm run build:client",
     "build:client": "vite build",
+    "start": "node dist/server/node-build.mjs",
     "test": "vitest --run",
     "format.fix": "prettier --write .",
     "typecheck": "tsc"
