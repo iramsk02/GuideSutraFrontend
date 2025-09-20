@@ -347,7 +347,7 @@ export default function Signin() {
 
       <footer className="border-t bg-white">
         <div className="mx-auto max-w-5xl px-4 py-6 flex flex-wrap items-center justify-between gap-3 text-sm">
-          <div className="text-muted-foreground">© {new Date().getFullYear()} NovaPath</div>
+          <div className="text-muted-foreground">© {new Date().getFullYear()} GuideSutra</div>
           <nav className="flex items-center gap-4">
             <a href="#privacy" className="hover:underline">Privacy</a>
             <a href="#support" className="hover:underline">Support</a>
