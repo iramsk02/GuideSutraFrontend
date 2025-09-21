@@ -13,7 +13,7 @@ import { Calendar } from "../components/ui/calendar";
 import { Separator } from "../components/ui/separator";
 import { Input } from "../components/ui/input";
 import { toast } from "sonner";
-import { CalendarClock, MessageSquareText, UsersRound } from "lucide-react";
+import { CalendarClock, MessageSquareText, UsersRound, Search } from "lucide-react";
 
 interface Mentor {
   id: string;
@@ -148,91 +148,89 @@ export default function Mentorship() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 px-4 md:px-8 mt-20">
       {/* Page Header */}
-      <div className="page-header">
-        <h1 className="page-title">Mentorship & Guidance</h1>
-        <p className="page-description">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold text-gray-900 tracking-tight">Mentorship & Guidance</h1>
+        <p className="mt-3 text-lg text-gray-600 max-w-2xl mx-auto">
           Connect with industry experts, alumni, and counselors to get personalized guidance for your career journey.
         </p>
       </div>
 
       {/* Hero */}
-      <div className="flex flex-col gap-6 items-start justify-between md:flex-row md:items-center p-6 rounded-2xl bg-gradient-to-r from-primary/5 to-accent/5 border">
-        <div className="flex-1">
-          <h2 className="text-3xl font-bold text-foreground mb-3">
-            Get Guidance from Experts and Alumni
-          </h2>
-          <p className="text-lg text-muted-foreground leading-relaxed">
-            Book 1:1 sessions, ask questions, and learn from real experiences of professionals who've walked the path before you.
-          </p>
+      <div className="rounded-3xl bg-white border border-gray-200 p-8 shadow-lg transition-transform duration-300 hover:scale-[1.01]">
+        <div className="flex flex-col gap-6 items-start justify-between md:flex-row md:items-center">
+          <div className="flex-1">
+            <h2 className="text-3xl font-bold text-gray-900 mb-2">
+              Get Guidance from Experts and Alumni
+            </h2>
+            <p className="text-lg text-gray-600 leading-relaxed">
+              Book 1:1 sessions, ask questions, and learn from real experiences of professionals who've walked the path before you.
+            </p>
+          </div>
+          <Button className="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-8 py-3 text-lg font-semibold shadow-xl gap-2 min-w-[280px]">
+            <UsersRound className="h-5 w-5" /> Book a Session
+          </Button>
         </div>
-        <Button className="gradient-primary hover:opacity-90 gap-2 px-6 py-3 text-lg font-semibold shadow-lg">
-          <UsersRound className="h-5 w-5" /> Talk to Alumni / Counselors
-        </Button>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-[1fr_360px]">
+      <div className="grid gap-8 grid-cols-1">
         {/* Left: Mentors + Forum */}
         <div className="space-y-6">
           {/* Mentor search */}
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle>Find a Mentor</CardTitle>
-              <CardDescription>
+          <Card className="rounded-3xl shadow-xl  border-gray-200">
+            <CardHeader className="p-8 pb-4">
+              <CardTitle className="text-2xl font-bold text-gray-900">Find a Mentor</CardTitle>
+              <CardDescription className="text-base text-gray-600">
                 Browse experts by domain and book a session.
               </CardDescription>
             </CardHeader>
-            <CardContent>
-              <div className="mb-4">
+            <CardContent className="p-8 pt-4">
+              <div className="mb-6">
                 <Input
                   placeholder="Search mentors or expertise (e.g., AI, ISRO, Product)"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
+                  className="h-12 rounded-xl focus-visible:ring-2 focus-visible:ring-blue-500"
                 />
               </div>
-              <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+              <div className="grid gap-6  grid-cols-3">
                 {filtered.map((m) => (
                   <Card
                     key={m.id}
-                    className="hover:shadow-md transition-shadow"
+                    className="rounded-3xl shadow-md border-gray-200 transition-transform hover:scale-[1.03]"
                   >
-                    <CardContent className="pt-6">
-                      <div className="flex items-start gap-3">
-                        <Avatar className="h-12 w-12 ring-2 ring-primary/15">
+                    <CardContent className="p-6 ">
+                      <div className="flex items-start gap-4 ">
+                        <Avatar className="h-14 w-14 ring-2 ring-blue-100 shadow-sm">
                           <AvatarImage src={m.image} alt={m.name} />
-                          <AvatarFallback>
+                          <AvatarFallback className="bg-blue-600 text-white font-semibold text-lg">
                             {m.name
                               .split(" ")
                               .map((n) => n[0])
                               .join("")}
                           </AvatarFallback>
                         </Avatar>
-                        <div className="min-w-0">
-                          <p className="font-medium leading-tight">{m.name}</p>
-                          <p className="text-sm text-muted-foreground">
+                        <div className="min-w-0 flex-1">
+                          <p className="font-semibold text-lg leading-tight text-gray-900">{m.name}</p>
+                          <p className="text-sm text-gray-600">
                             {m.title}
                           </p>
-                          <div className="mt-2 flex flex-wrap gap-1.5">
+                          <div className="mt-2 flex flex-wrap gap-2">
                             {m.expertise.map((e) => (
-                              <Badge key={e} variant="outline">
-                                {e}
-                              </Badge>
+                              <Badge key={e} variant="outline" className="rounded-full bg-gray-100 text-gray-700 border-gray-200 text-xs px-2 py-0.5">{e}</Badge>
                             ))}
                           </div>
+                          <div className="mt-4">
+                            <Button
+                              size="sm"
+                              onClick={() => setSelectedMentor(m)}
+                              className="w-full rounded-full gap-2 bg-blue-600 hover:bg-blue-700 text-white"
+                            >
+                              <CalendarClock className="h-4 w-4" /> Book Session
+                            </Button>
+                          </div>
                         </div>
-                      </div>
-                      <div className="mt-4 flex items-center  justify-between">
-                        <Button
-                          size="sm"
-                          onClick={() => setSelectedMentor(m)}
-                          className="gap-2"
-                        >
-                          <CalendarClock className="h-4 w-4" /> Book Session
-                        </Button>
-                        <span className="text-xs text-muted-foreground">
-                          ~30 min
-                        </span>
                       </div>
                     </CardContent>
                   </Card>
@@ -242,46 +240,46 @@ export default function Mentorship() {
           </Card>
 
           {/* Community Forum */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <MessageSquareText className="h-5 w-5" /> Community Forum
+          <Card className="rounded-3xl shadow-xl border-gray-200">
+            <CardHeader className="p-8">
+              <CardTitle className="flex items-center gap-2 text-2xl font-bold text-gray-900">
+                <MessageSquareText className="h-6 w-6 text-blue-600" /> Community Forum
               </CardTitle>
-              <CardDescription>
+              <CardDescription className="text-base text-gray-600">
                 Questions from students and replies from mentors.
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-6">
+            <CardContent className="p-8 pt-0 space-y-6">
               {THREADS.map((t) => (
                 <div
                   key={t.id}
-                  className="rounded-lg border p-4 bg-card shadow-sm"
+                  className="rounded-xl border border-gray-200 p-6 bg-gray-50 shadow-sm"
                 >
-                  <div className="flex items-start gap-3">
-                    <Avatar className="h-8 w-8">
-                      <AvatarFallback>{t.author[0]}</AvatarFallback>
+                  <div className="flex items-start gap-4">
+                    <Avatar className="h-10 w-10">
+                      <AvatarFallback className="bg-blue-50 text-blue-700 font-semibold text-sm">{t.author[0]}</AvatarFallback>
                     </Avatar>
                     <div className="min-w-0 flex-1">
-                      <p className="text-sm">
-                        <span className="font-medium">{t.author}</span>:{" "}
-                        {t.question}
+                      <p className="text-sm text-gray-900 font-medium">
+                        {t.author}:
                       </p>
-                      <div className="mt-3 space-y-3">
+                      <p className="text-base text-gray-800 mt-1">{t.question}</p>
+                      <div className="mt-4 space-y-3 pl-2 border-l-2 border-gray-200">
                         {t.replies.map((r, i) => (
                           <div key={i} className="flex items-start gap-3">
-                            <Avatar className="h-7 w-7">
-                              <AvatarFallback>{r.author[0]}</AvatarFallback>
+                            <Avatar className="h-8 w-8">
+                              <AvatarFallback className="bg-white text-gray-700 text-xs border border-gray-200">{r.author[0]}</AvatarFallback>
                             </Avatar>
-                            <div className="rounded-md bg-muted/40 p-2 text-sm">
+                            <div className="rounded-md bg-white p-4 text-sm border border-gray-200 shadow-sm flex-1">
                               <div className="flex items-center gap-2">
-                                <span className="font-medium">{r.author}</span>
+                                <span className="font-semibold text-gray-900">{r.author}</span>
                                 {r.mentor && (
-                                  <Badge className="ml-1" variant="secondary">
+                                  <Badge className="bg-blue-100 text-blue-700 font-medium border-blue-200 rounded-full px-2 py-0.5">
                                     Mentor
                                   </Badge>
                                 )}
                               </div>
-                              <p className="text-foreground/90">{r.text}</p>
+                              <p className="text-gray-800 mt-1">{r.text}</p>
                             </div>
                           </div>
                         ))}
@@ -295,61 +293,53 @@ export default function Mentorship() {
         </div>
 
         {/* Right: Booking widget */}
-        <div className="space-y-4 lg:sticky lg:top-16 h-max">
-          <Card className="shadow-md">
-            <CardHeader>
-              <CardTitle>Book a Session</CardTitle>
-              <CardDescription>
+        <div className="space-y-6 lg:sticky lg:top-16 h-max">
+          <Card className="rounded-3xl shadow-xl border-gray-200">
+            <CardHeader className="p-8 pb-4">
+              <CardTitle className="text-2xl font-bold text-gray-900">Book a Session</CardTitle>
+              <CardDescription className="text-base text-gray-600">
                 Select a mentor, pick a date and time.
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex items-center gap-2">
-                <Avatar className="h-10 w-10">
+            <CardContent className="p-8 pt-4 space-y-6">
+              <div className="flex items-center gap-3 p-4 rounded-xl border border-gray-200 bg-gray-50">
+                <Avatar className="h-12 w-12 rounded-full">
                   <AvatarImage src={selectedMentor?.image} />
-                  <AvatarFallback>{selectedMentor?.name?.[0]}</AvatarFallback>
+                  <AvatarFallback className="bg-blue-600 text-white text-lg font-semibold">{selectedMentor?.name?.[0]}</AvatarFallback>
                 </Avatar>
                 <div>
-                  <p className="text-sm font-medium leading-tight">
+                  <p className="text-lg font-semibold leading-tight text-gray-900">
                     {selectedMentor?.name}
                   </p>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-sm text-gray-600">
                     {selectedMentor?.title}
                   </p>
                 </div>
               </div>
               <Separator />
-              {/* <Calendar
-              
+              <Calendar
                 mode="single"
                 selected={date}
                 onSelect={setDate}
-                className="rounded-md border w-fit"
-              /> */}
-                {/* <div className="flex items-center justify-center p-6"> */}
-      <Calendar
-        mode="single"
-        selected={date}
-        onSelect={setDate}
-        className="rounded-lg border shadow-lg bg-white  p-3"
-      />
-    {/* </div> */}
+                className="p-0 rounded-xl"
+              />
               <div>
-                <p className="mb-2 text-sm font-medium">Available time slots</p>
-                <div className="grid grid-cols-3 gap-2">
+                <p className="mb-4 text-sm font-medium text-gray-700">Available time slots</p>
+                <div className="grid grid-cols-3 gap-3">
                   {TIMES.map((t) => (
                     <Button
                       key={t}
                       variant={slot === t ? "default" : "outline"}
                       onClick={() => setSlot(t)}
-                      size="sm"
+                      className={`rounded-full ${slot === t ? "bg-blue-600 hover:bg-blue-700 text-white" : "border-gray-300 bg-white hover:bg-gray-100"}`}
+                      size="lg"
                     >
                       {t}
                     </Button>
                   ))}
                 </div>
               </div>
-              <Button className="w-full" onClick={confirmBooking}>
+              <Button className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-lg font-semibold shadow-lg" onClick={confirmBooking}>
                 Confirm Booking
               </Button>
             </CardContent>

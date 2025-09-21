@@ -54,7 +54,7 @@ export default function Chatbot() {
       id: "m1",
       role: "assistant",
       content:
-        "Hi! I\'m Nova, your guide. Ask me about scholarships, colleges, or take the quiz!",
+        "Hi! I'm Nova, your guide. Ask me about scholarships, colleges, or take the quiz!",
     },
   ]);
   const endRef = useRef<HTMLDivElement | null>(null);
@@ -98,10 +98,10 @@ export default function Chatbot() {
           <TooltipTrigger asChild>
             <Button
               size="icon"
-              className="h-12 w-12 rounded-full shadow-lg"
+              className="h-14 w-14 rounded-full shadow-2xl bg-blue-600 hover:bg-blue-700 text-white transition-transform hover:scale-110"
               onClick={() => setOpen(true)}
             >
-              <MessageCircle className="h-5 w-5" />
+              <MessageCircle className="h-6 w-6" />
             </Button>
           </TooltipTrigger>
           <TooltipContent>Chat with Nova</TooltipContent>
@@ -109,53 +109,54 @@ export default function Chatbot() {
       </div>
 
       <Drawer open={open} onOpenChange={setOpen}>
-        <DrawerContent className="max-h-[70vh]">
-          <DrawerHeader className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="rounded-full bg-primary/10 p-2 text-primary">
-                <Bot className="h-5 w-5" />
+        <DrawerContent className="max-h-[70vh] rounded-t-3xl bg-white/80 backdrop-blur-md border-t border-gray-200">
+          <DrawerHeader className="flex items-center justify-between p-6 pb-2">
+            <div className="flex items-center gap-3">
+              <div className="rounded-full bg-blue-100 p-3 text-blue-600">
+                <Bot className="h-6 w-6" />
               </div>
               <div>
-                <DrawerTitle>Nova Assistant</DrawerTitle>
-                <p className="text-xs text-muted-foreground">
-                  Ask anything about careers, colleges and scholarships
+                <DrawerTitle className="text-xl font-bold text-gray-900">Nova Assistant</DrawerTitle>
+                <p className="text-sm text-gray-600">
+                  Ask me anything about careers, colleges and scholarships.
                 </p>
               </div>
             </div>
             <Button
               variant="ghost"
               size="icon"
+              className="h-10 w-10 rounded-full text-gray-500 hover:bg-gray-100"
               onClick={() => setOpen(false)}
               aria-label="Close"
             >
               <X className="h-5 w-5" />
             </Button>
           </DrawerHeader>
-          <div className="px-4 pb-4">
-            <div className="mb-3 flex flex-wrap gap-2">
+          <div className="px-6 pb-6 pt-2">
+            <div className="mb-4 flex flex-wrap gap-2">
               {quick.map((q) => (
                 <Link key={q.to} to={q.to} onClick={() => setOpen(false)}>
                   <Button
                     variant="outline"
-                    className="rounded-full h-8 px-3 text-xs"
+                    className="rounded-full h-8 px-4 text-xs bg-gray-100 text-gray-700 border-gray-200 hover:bg-gray-200"
                   >
                     {q.label}
                   </Button>
                 </Link>
               ))}
             </div>
-            <div className="border rounded-lg">
-              <ScrollArea className="h-56 p-3">
+            <div className="border border-gray-200 rounded-2xl bg-white shadow-lg">
+              <ScrollArea className="h-80 p-4">
                 {messages.map((m) => (
                   <div
                     key={m.id}
-                    className={`mb-2 flex ${m.role === "user" ? "justify-end" : "justify-start"}`}
+                    className={`mb-3 flex ${m.role === "user" ? "justify-end" : "justify-start"}`}
                   >
                     <div
-                      className={`max-w-[80%] rounded-2xl px-3 py-2 text-sm ${
+                      className={`max-w-[80%] rounded-2xl px-4 py-3 text-base ${
                         m.role === "user"
-                          ? "bg-primary text-primary-foreground"
-                          : "bg-muted"
+                          ? "bg-blue-600 text-white rounded-br-none"
+                          : "bg-gray-100 text-gray-800 rounded-bl-none"
                       }`}
                     >
                       {m.content.includes("/") ? (
@@ -165,7 +166,7 @@ export default function Chatbot() {
                               <Link
                                 key={i}
                                 to={part}
-                                className="underline"
+                                className="underline text-blue-300"
                                 onClick={() => setOpen(false)}
                               >
                                 {part}
@@ -183,7 +184,7 @@ export default function Chatbot() {
                 ))}
                 <div ref={endRef} />
               </ScrollArea>
-              <div className="flex items-center gap-2 border-t p-2">
+              <div className="flex items-center gap-3 border-t border-gray-200 p-4 bg-gray-50 rounded-b-2xl">
                 <Input
                   placeholder="Type your message..."
                   value={input}
@@ -191,9 +192,10 @@ export default function Chatbot() {
                   onKeyDown={(e) => {
                     if (e.key === "Enter") send();
                   }}
+                  className="flex-1 h-12 rounded-full px-4 border-gray-300"
                 />
-                <Button onClick={send} aria-label="Send">
-                  <Send className="h-4 w-4" />
+                <Button onClick={send} aria-label="Send" className="h-12 w-12 rounded-full bg-blue-600 hover:bg-blue-700 text-white shadow-md">
+                  <Send className="h-5 w-5" />
                 </Button>
               </div>
             </div>

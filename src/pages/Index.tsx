@@ -14,9 +14,11 @@ import { CalendarDays, Bell } from "lucide-react";
 
 // Trendy Node Component
 const NodeComponent = ({ label, icon }: any) => (
-  <div className="bg-gradient-to-br from-white to-gray-50 border border-gray-200 rounded-xl p-5 shadow-lg flex items-center gap-4 w-60 hover:scale-105 transition-transform duration-300 cursor-pointer">
-    <div className="w-7 h-7 text-gray-800">{icon}</div>
-    <div className="text-lg font-semibold text-gray-800 truncate">{label}</div>
+  <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm flex flex-col items-center gap-4 min-w-[200px] hover:scale-105 transition-transform duration-300 cursor-pointer">
+    <div className="w-10 h-10 text-blue-600">{icon}</div>
+    <div className="text-lg font-semibold text-gray-800 text-center truncate w-full">
+      {label}
+    </div>
   </div>
 );
 
@@ -203,21 +205,27 @@ export default function Dashboard() {
     <div className="flex flex-wrap justify-center items-center gap-6">
       <NodeComponent
         label={topCareer?.careerName || "Software Engineer"}
-        icon={<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 16v-2.336c0-1.631-.47-3.262-1.41-4.636-.939-1.375-2.298-2.482-3.868-3.218-.328-.154-.672-.279-1.026-.388.006-.021.011-.04.017-.06.273-.615.421-1.282.421-1.962 0-2.485-2.015-4.5-4.5-4.5s-4.5 2.015-4.5 4.5c0 .68.148 1.347.421 1.962-.354.109-.698.234-1.026.388-1.57.736-2.929 1.843-3.868 3.218-.939 1.374-1.41 3.005-1.41 4.636v2.336h16zM8 20v-2h8v2h-8z"/></svg>}
+        icon={
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 16v-2.336c0-1.631-.47-3.262-1.41-4.636-.939-1.375-2.298-2.482-3.868-3.218-.328-.154-.672-.279-1.026-.388.006-.021.011-.04.017-.06.273-.615.421-1.282.421-1.962 0-2.485-2.015-4.5-4.5-4.5s-4.5 2.015-4.5 4.5c0 .68.148 1.347.421 1.962-.354.109-.698.234-1.026.388-1.57.736-2.929 1.843-3.868 3.218-.939 1.374-1.41 3.005-1.41 4.636v2.336h16zM8 20v-2h8v2h-8z"/></svg>
+        }
       />
       <div className="flex items-center justify-center text-gray-300">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </div>
       <NodeComponent
         label={topCourse?.courseName || "Unknown Course"}
-        icon={<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 21L21 12L12 3L3 12L12 21z"/></svg>}
+        icon={
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 21L21 12L12 3L3 12L12 21z"/></svg>
+        }
       />
       <div className="flex items-center justify-center text-gray-300">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </div>
       <NodeComponent
         label={topCollege?.collegeName || "Unknown College"}
-        icon={<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20s-8-4-8-12c0-4.418 3.582-8 8-8s8 3.582 8 8c0 8-8 12-8 12z"/><circle cx="12" cy="12" r="3"/></svg>}
+        icon={
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20s-8-4-8-12c0-4.418 3.582-8 8-8s8 3.582 8 8c0 8-8 12-8 12z"/><circle cx="12" cy="12" r="3"/></svg>
+        }
       />
     </div>
   );
@@ -226,10 +234,10 @@ export default function Dashboard() {
     <div className="mt-20 space-y-8 px-4 md:px-8">
       {/* Profile Card */}
       {profile && (
-        <Card className="bg-gradient-to-r from-indigo-50 via-white to-indigo-50 hover:shadow-2xl transition-shadow duration-300">
-          <CardContent className="py-6 flex flex-wrap items-center justify-between gap-6">
+        <Card className="rounded-3xl bg-white border-gray-200 shadow-lg transition-transform duration-300 hover:scale-[1.01]">
+          <CardContent className="py-8 flex flex-wrap items-center justify-between gap-6">
             <div>
-              <p className="text-lg font-semibold text-gray-800">
+              <p className="text-xl font-bold text-gray-900">
                 Hi {profile.name?.split(" ")[0]} 👋
               </p>
               <p className="text-sm text-gray-500">
@@ -239,14 +247,14 @@ export default function Dashboard() {
             <div className="min-w-[260px]">
               <div className="mb-2 flex items-center justify-between text-xs text-gray-400">
                 <span>Profile Progress</span>
-                <span>{completion}%</span>
+                <span className="font-semibold text-blue-600">{completion}%</span>
               </div>
-              <Progress value={completion} className="h-3 rounded-full" />
+              <Progress value={completion} className="h-2 rounded-full bg-blue-100" />
             </div>
             {profile.interests?.length! > 0 && (
               <div className="flex flex-wrap gap-2">
                 {profile.interests!.map((t) => (
-                  <Badge key={t} variant="outline" className="bg-indigo-50 text-indigo-700 border-indigo-200">
+                  <Badge key={t} variant="outline" className="bg-blue-50 text-blue-700 border-blue-200 rounded-full px-3 py-1 text-sm">
                     {t}
                   </Badge>
                 ))}
@@ -258,25 +266,27 @@ export default function Dashboard() {
 
       {/* Quiz Result Card */}
       {quiz && quiz.stream && (
-        <Card className="hover:shadow-xl transition-shadow duration-300">
-          <CardHeader>
-            <CardTitle>Assessment Result</CardTitle>
-            <CardDescription>
+        <Card className="rounded-3xl border-gray-200 shadow-md transition-transform duration-300 hover:scale-[1.01]">
+          <CardHeader className="p-8">
+            <CardTitle className="text-xl font-bold text-gray-900">Assessment Result</CardTitle>
+            <CardDescription className="text-sm text-gray-500">
               Your career interests based on the assessment
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="px-8 pb-8 space-y-4">
             <div className="flex items-center gap-2">
-              <span>Recommended Stream:</span>
-              <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">{quiz.stream}</Badge>
+              <span className="text-gray-600 font-medium">Recommended Stream:</span>
+              <Badge variant="outline" className="bg-green-100 text-green-700 border-green-300 rounded-full px-3 py-1 text-sm">
+                {quiz.stream}
+              </Badge>
             </div>
-            <p className="text-gray-600 font-medium">Score: {quiz.score}%</p>
+            <p className="text-gray-600 font-medium">Score: <span className="text-gray-900 font-bold">{quiz.score}%</span></p>
             {quiz.strengths?.length! > 0 && (
               <div>
                 <span className="font-medium text-gray-700">Strengths: </span>
-                <div className="mt-1 flex flex-wrap gap-2">
+                <div className="mt-2 flex flex-wrap gap-2">
                   {quiz.strengths!.map((s) => (
-                    <Badge key={s} variant="secondary">{s}</Badge>
+                    <Badge key={s} variant="secondary" className="bg-green-50 text-green-700 border-green-200 rounded-full">{s}</Badge>
                   ))}
                 </div>
               </div>
@@ -284,14 +294,14 @@ export default function Dashboard() {
             {quiz.weaknesses?.length! > 0 && (
               <div>
                 <span className="font-medium text-gray-700">Areas to Improve: </span>
-                <div className="mt-1 flex flex-wrap gap-2">
+                <div className="mt-2 flex flex-wrap gap-2">
                   {quiz.weaknesses!.map((w) => (
-                    <Badge key={w} variant="destructive">{w}</Badge>
+                    <Badge key={w} variant="destructive" className="bg-red-50 text-red-700 border-red-200 rounded-full">{w}</Badge>
                   ))}
                 </div>
               </div>
             )}
-            <Button asChild className="mt-2">
+            <Button asChild className="mt-4 rounded-full px-6 py-2 text-sm">
               <Link to="/career-quiz">Retake Assessment</Link>
             </Button>
           </CardContent>
@@ -299,10 +309,10 @@ export default function Dashboard() {
       )}
 
       {/* Career Roadmap */}
-      <Card className="hover:shadow-xl transition-shadow duration-300">
-        <CardHeader>
-          <CardTitle>Career Roadmap</CardTitle>
-          <CardDescription>
+      <Card className="rounded-3xl border-gray-200 shadow-md transition-transform duration-300 hover:scale-[1.01]">
+        <CardHeader className="p-8">
+          <CardTitle className="text-xl font-bold text-gray-900">Career Roadmap</CardTitle>
+          <CardDescription className="text-sm text-gray-500">
             Interactive flowchart. Click a node to see details.
           </CardDescription>
         </CardHeader>
@@ -316,21 +326,21 @@ export default function Dashboard() {
       </Card>
 
       {/* Scholarships */}
-      <Card className="hover:shadow-xl transition-shadow duration-300">
-        <CardHeader>
-          <CardTitle>Scholarships</CardTitle>
-          <CardDescription>Handpicked opportunities for you</CardDescription>
+      <Card className="rounded-3xl border-gray-200 shadow-md transition-transform duration-300 hover:scale-[1.01]">
+        <CardHeader className="p-8">
+          <CardTitle className="text-xl font-bold text-gray-900">Scholarships</CardTitle>
+          <CardDescription className="text-sm text-gray-500">Handpicked opportunities for you</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-3">
+        <CardContent className="px-8 pb-8 space-y-4">
           {staticScholarships.map((s) => {
             const left = daysLeft(s.deadline);
             const urgent = left <= 7;
             return (
-              <div key={s.title} className="flex flex-wrap items-center justify-between gap-3 border-b pb-3 last:border-b-0 hover:bg-gray-50 rounded-md transition-colors duration-200">
-                <div className="min-w-0">
-                  <p className="font-semibold leading-tight truncate">{s.title}</p>
+              <div key={s.title} className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-xl border border-gray-200 bg-white shadow-sm hover:bg-gray-50 transition-colors duration-200">
+                <div className="min-w-0 flex-1">
+                  <p className="font-semibold leading-tight truncate text-gray-800">{s.title}</p>
                   <div className="mt-1 flex items-center gap-2 text-sm text-gray-500">
-                    <Badge variant="outline">{s.tag}</Badge>
+                    <Badge variant="outline" className="rounded-full px-2 py-0.5 bg-blue-50 text-blue-700 border-blue-200">{s.tag}</Badge>
                     <span className="inline-flex items-center gap-1">
                       <CalendarDays className="h-4 w-4" />{" "}
                       {new Date(s.deadline).toLocaleDateString()}
@@ -338,44 +348,46 @@ export default function Dashboard() {
                   </div>
                 </div>
                 <div className="shrink-0">
-                  <Badge className={urgent ? "bg-red-500 text-white" : "bg-amber-500 text-white"}>
+                  <Badge className={urgent ? "bg-red-500 text-white rounded-full px-3 py-1 text-xs font-semibold" : "bg-amber-500 text-white rounded-full px-3 py-1 text-xs font-semibold"}>
                     {left > 0 ? `${left} days left` : "Closed"}
                   </Badge>
                 </div>
               </div>
             );
           })}
-          <Button asChild variant="outline" className="mt-2">
+          <Button asChild variant="outline" className="mt-4 w-full rounded-full px-6 py-2">
             <Link to="/scholarships">View all scholarships</Link>
           </Button>
         </CardContent>
       </Card>
 
       {/* Reminders */}
-      <Card className="hover:shadow-xl transition-shadow duration-300">
-        <CardHeader>
-          <CardTitle>Reminders</CardTitle>
-          <CardDescription>Stay on top of deadlines</CardDescription>
+      <Card className="rounded-3xl border-gray-200 shadow-md transition-transform duration-300 hover:scale-[1.01]">
+        <CardHeader className="p-8">
+          <CardTitle className="text-xl font-bold text-gray-900">Reminders</CardTitle>
+          <CardDescription className="text-sm text-gray-500">Stay on top of deadlines</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-3">
+        <CardContent className="px-8 pb-8 space-y-4">
           {staticReminders.map((r) => {
             const left = daysLeft(r.due);
             const urgent = left <= 7;
             return (
-              <div key={r.id} className="flex items-center justify-between gap-3 border-b pb-3 last:border-b-0 hover:bg-gray-50 rounded-md transition-colors duration-200">
-                <div className="flex items-center gap-2 min-w-0">
-                  <Bell className="h-4 w-4 text-gray-400" />
-                  <span className="truncate">{r.title}</span>
+              <div key={r.id} className="flex items-center justify-between gap-4 p-4 rounded-xl border border-gray-200 bg-white shadow-sm hover:bg-gray-50 transition-colors duration-200">
+                <div className="flex items-center gap-4 min-w-0">
+                  <div className="p-2 rounded-full bg-gray-100 text-gray-500">
+                    <Bell className="h-5 w-5" />
+                  </div>
+                  <span className="truncate text-gray-800 font-medium">{r.title}</span>
                 </div>
                 <div className="text-sm">
-                  <Badge variant="outline" className={urgent ? "border-transparent bg-red-500 text-white" : ""}>
+                  <Badge variant="outline" className={urgent ? "bg-red-500 text-white rounded-full px-3 py-1 text-xs font-semibold" : "bg-gray-500 text-white rounded-full px-3 py-1 text-xs font-semibold"}>
                     {left > 0 ? `${left} days` : "Today"}
                   </Badge>
                 </div>
               </div>
             );
           })}
-          <Button asChild variant="outline" className="mt-2">
+          <Button asChild variant="outline" className="mt-4 w-full rounded-full px-6 py-2">
             <Link to="/notifications">View all reminders</Link>
           </Button>
         </CardContent>

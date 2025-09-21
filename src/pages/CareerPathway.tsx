@@ -1,4 +1,3 @@
-
 import { useEffect, useMemo, useState } from "react";
 import {
   Card,
@@ -202,17 +201,17 @@ function NodeView({
     <foreignObject x={n.x} y={n.y} width={220} height={64}>
       <div
         onClick={() => onSelect(n)}
-        className={`cursor-pointer ${colors.bg} ${colors.border} border rounded-md shadow-sm px-3 py-2 flex items-start gap-2 hover:shadow-md transition-shadow ${selected ? "ring-2 ring-primary" : ""}`}
+        className={`cursor-pointer ${colors.bg} ${colors.border} border rounded-xl shadow-sm px-4 py-3 flex items-start gap-3 hover:shadow-md transition-shadow duration-200 ${selected ? "ring-2 ring-blue-600 ring-offset-2" : ""}`}
       >
-        <div className={`rounded-md p-1.5 ${colors.text} bg-white/60`}>
+        <div className={`rounded-full p-2 ${colors.text} bg-white/70`}>
           {branchIcon(n.branch)}
         </div>
         <div className="min-w-0">
-          <p className={`text-sm font-medium leading-tight ${colors.text}`}>
+          <p className={`text-base font-medium leading-tight ${colors.text}`}>
             {n.label}
           </p>
           {n.meta?.salary && (
-            <p className="text-xs text-muted-foreground truncate">{`Avg: ${n.meta.salary}`}</p>
+            <p className="text-xs text-gray-500 truncate">{`Avg: ${n.meta.salary}`}</p>
           )}
         </div>
       </div>
@@ -289,19 +288,19 @@ export default function CareerPathway() {
   );
 
   return (
-    <div className="ml-60 grid gap-6 lg:grid-cols-1 mt-20">
-      {/* Left Filters */}
-      <div className="space-y-4">
-        <Card>
+    <div className="space-y-8 px-4 md:px-8 mt-20">
+      <div className="grid gap-6 grid-cols-3">
+        {/* Left Filters */}
+        <Card className="rounded-3xl shadow-xl border-gray-200">
           <CardHeader>
-            <CardTitle>Filters</CardTitle>
-            <CardDescription>Select Career → See Pathways</CardDescription>
+            <CardTitle className="text-xl font-bold text-gray-900">Filters</CardTitle>
+            <CardDescription className="text-sm text-gray-500">Select Career → See Pathways</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <label className="text-sm font-medium">Career</label>
+              <label className="text-sm font-medium text-gray-700">Career</label>
               <Select value={degreeId || ""} onValueChange={setDegreeId}>
-                <SelectTrigger>
+                <SelectTrigger className="h-12 rounded-xl focus-visible:ring-2 focus-visible:ring-blue-500">
                   <SelectValue placeholder="Choose career" />
                 </SelectTrigger>
                 <SelectContent>
@@ -313,16 +312,21 @@ export default function CareerPathway() {
                 </SelectContent>
               </Select>
             </div>
-            <Separator />
+            <Separator className="bg-gray-200" />
             <div className="space-y-2">
-              <p className="text-sm font-medium">Legend</p>
-              <div className="flex flex-col gap-2 text-sm">
+              <p className="text-sm font-medium text-gray-700">Legend</p>
+              <div className="flex flex-col gap-2 text-sm text-gray-600">
                 <div className="flex items-center gap-2">
-                  <span className="h-2 w-2 rounded-full bg-blue-500" /> Colleges
+                  <span className="h-3 w-3 rounded-full bg-slate-500" /> Professional Degree
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="h-2 w-2 rounded-full bg-emerald-500" />{" "}
-                  Courses
+                  <span className="h-3 w-3 rounded-full bg-blue-500" /> College
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="h-3 w-3 rounded-full bg-emerald-500" /> Government Career
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="h-3 w-3 rounded-full bg-orange-500" /> Private Sector Career
                 </div>
               </div>
             </div>
@@ -331,17 +335,17 @@ export default function CareerPathway() {
       </div>
 
       {/* Center Diagram */}
-      <Card className="w-full">
-        <CardHeader className="pb-0">
-          <CardTitle>Career Roadmap</CardTitle>
-          <CardDescription>
+      <Card className="w-full rounded-3xl shadow-xl border-gray-200 lg:col-span-2">
+        <CardHeader className="p-8 pb-0">
+          <CardTitle className="text-xl font-bold text-gray-900">Career Roadmap</CardTitle>
+          <CardDescription className="text-sm text-gray-500">
             Interactive flowchart. Click a node to see details.
           </CardDescription>
         </CardHeader>
-        <CardContent className="pt-4 space-y-6">
+        <CardContent className="p-8 pt-4 space-y-12">
           <div>
-            <h4 className="text-sm font-medium mb-2">Demo Roadmap</h4>
-            <div className="relative">
+            <h4 className="text-sm font-medium text-gray-700 mb-4">Demo Roadmap</h4>
+            <div className="relative overflow-auto p-4 border border-gray-200 rounded-xl bg-gray-50">
               <svg
                 width={demoLayout.size.width}
                 height={demoLayout.size.height}
@@ -377,13 +381,13 @@ export default function CareerPathway() {
           </div>
 
           <div>
-            <h4 className="text-sm font-medium mb-2">Live Roadmap</h4>
+            <h4 className="text-sm font-medium text-gray-700 mb-4">Live Roadmap</h4>
             {!liveLayout ? (
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-gray-500">
                 Choose a career to view the live roadmap.
               </p>
             ) : (
-              <div className="relative">
+              <div className="relative overflow-auto p-4 border border-gray-200 rounded-xl bg-gray-50">
                 <svg
                   width={liveLayout.size.width}
                   height={liveLayout.size.height}
@@ -422,73 +426,69 @@ export default function CareerPathway() {
       </Card>
 
       {/* Right Details */}
-      <div className="space-y-4">
-        <Card>
-          <CardHeader>
-            <CardTitle>Details</CardTitle>
-            <CardDescription>
-              Information about the selected node
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            {!selected ? (
-              <p className="text-sm text-muted-foreground">
-                Select any node to see details.
-              </p>
-            ) : (
-              <div className="space-y-3">
-                <div className="flex items-center gap-2">
-                  <div
-                    className={`rounded-md p-2 ${BRANCH_COLORS[selected.branch].bg} ${BRANCH_COLORS[selected.branch].border} border`}
-                  >
-                    {branchIcon(selected.branch)}
-                  </div>
-                  <div>
-                    <p className="font-medium leading-tight">
-                      {selected.label}
-                    </p>
-                    <p className="text-xs text-muted-foreground capitalize">
-                      {selected.branch}
-                    </p>
+      <Card className="rounded-3xl shadow-xl border-gray-200">
+        <CardHeader>
+          <CardTitle className="text-xl font-bold text-gray-900">Details</CardTitle>
+          <CardDescription className="text-sm text-gray-500">
+            Information about the selected node
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          {!selected ? (
+            <p className="text-sm text-gray-500">
+              Select any node to see details.
+            </p>
+          ) : (
+            <div className="space-y-4">
+              <div className="flex items-center gap-3">
+                <div
+                  className={`rounded-xl p-3 ${BRANCH_COLORS[selected.branch].bg} ${BRANCH_COLORS[selected.branch].border} border`}
+                >
+                  {branchIcon(selected.branch)}
+                </div>
+                <div>
+                  <p className="font-semibold text-gray-900 leading-tight text-lg">
+                    {selected.label}
+                  </p>
+                  <p className="text-sm text-gray-500 capitalize">
+                    {selected.branch}
+                  </p>
+                </div>
+              </div>
+              {selected.meta?.salary && (
+                <div className="text-base">
+                  <span className="text-gray-500 font-medium">
+                    Average salary:
+                  </span>{" "}
+                  <span className="font-semibold text-gray-900">{selected.meta.salary}</span>
+                </div>
+              )}
+              {selected.meta?.skills && (
+                <div className="space-y-2">
+                  <p className="text-sm text-gray-500 font-medium">Skills:</p>
+                  <div className="flex flex-wrap gap-2">
+                    {selected.meta.skills.map((s) => (
+                      <Badge key={s} variant="outline" className="rounded-full bg-gray-100 text-gray-700 border-gray-200">{s}</Badge>
+                    ))}
                   </div>
                 </div>
-                {selected.meta?.salary && (
-                  <div className="text-sm">
-                    <span className="text-muted-foreground">
-                      Average salary:
-                    </span>{" "}
-                    {selected.meta.salary}
-                  </div>
-                )}
-                {selected.meta?.skills && (
-                  <div className="space-y-1">
-                    <p className="text-sm text-muted-foreground">Skills:</p>
-                    <div className="flex flex-wrap gap-2">
-                      {selected.meta.skills.map((s) => (
-                        <Badge key={s} variant="outline">
-                          {s}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                {selected.meta?.opportunities && (
-                  <div className="space-y-1">
-                    <p className="text-sm text-muted-foreground">
-                      Opportunities:
-                    </p>
-                    <ul className="list-disc pl-5 text-sm space-y-1">
-                      {selected.meta.opportunities.map((o) => (
-                        <li key={o}>{o}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      </div>
+              )}
+              {selected.meta?.opportunities && (
+                <div className="space-y-2">
+                  <p className="text-sm text-gray-500 font-medium">
+                    Opportunities:
+                  </p>
+                  <ul className="list-disc pl-5 text-sm space-y-1 text-gray-700">
+                    {selected.meta.opportunities.map((o) => (
+                      <li key={o}>{o}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          )}
+        </CardContent>
+      </Card>
     </div>
   );
 }

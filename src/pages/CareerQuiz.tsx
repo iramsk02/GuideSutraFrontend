@@ -1,17 +1,17 @@
-
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import {
   Card,
   CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
-  CardDescription,
 } from "../components/ui/card";
 import { Button } from "../components/ui/button";
 import { Progress } from "../components/ui/progress";
 import { Badge } from "../components/ui/badge";
 import { toast } from "sonner";
-import { ArrowLeft, ArrowRight, Brain } from "lucide-react";
+import { useEffect, useRef } from "react";
+import { ArrowLeft, ArrowRight, Brain, Check } from "lucide-react";
 
 // Types
 type QType = "mcq" | "order";
@@ -234,7 +234,7 @@ export default function CareerQuiz() {
 
   const profileData = useMemo(() => {
     try {
-      const stored = localStorage.getItem("GuideSutra_profile");
+      const stored = localStorage.getItem("novapath_profile");
       return stored ? JSON.parse(stored) : null;
     } catch {
       return null;
@@ -303,87 +303,88 @@ export default function CareerQuiz() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-12 px-4 md:px-8 mt-20">
       {/* Page Header */}
-      <div className="page-header">
-        <h1 className="page-title">Career Assessment</h1>
-        <p className="page-description">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold text-gray-900 tracking-tight">Career Assessment</h1>
+        <p className="mt-3 text-lg text-gray-600 max-w-2xl mx-auto">
           Discover your ideal career path through our comprehensive assessment.
         </p>
       </div>
 
-      <div className="sticky top-0 z-10 mb-6 glass-effect border rounded-lg shadow-sm">
-        <div className="flex items-center justify-between p-4">
-          <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
-              <Brain className="h-5 w-5 text-primary" />
+      <div className="sticky top-16 z-10 bg-white/80 backdrop-blur-md border border-gray-200 rounded-2xl shadow-xl transition-all duration-300">
+        <div className="flex items-center justify-between p-6">
+          <div className="flex items-center gap-4">
+            <div className="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center">
+              <Brain className="h-6 w-6 text-blue-600" />
             </div>
             <div>
-              <span className="font-semibold text-lg">GuideSutra Quiz</span>
-              <p className="text-sm text-muted-foreground">Question {index + 1} of {total}</p>
+              <span className="font-bold text-lg text-gray-900">GuideSutra Quiz</span>
+              <p className="text-sm text-gray-600">Question {index + 1} of {total}</p>
             </div>
           </div>
           <div className="min-w-[240px]">
-            <div className="flex items-center justify-between text-sm font-medium text-foreground mb-2">
+            <div className="flex items-center justify-between text-sm font-medium text-gray-700 mb-2">
               <span>Progress</span>
-              <span className="text-primary">{percent}% Completed</span>
+              <span className="text-blue-600">{percent}% Completed</span>
             </div>
-            <Progress value={percent} className="h-2" />
+            <Progress value={percent} className="h-2 bg-gray-200" />
           </div>
         </div>
       </div>
 
       {!done ? (
-        <div className="grid gap-6 lg:grid-cols-[1fr_400px]">
-          <Card className="card-hover animate-slide-up">
-            <CardHeader className="pb-4">
-              <CardTitle className="flex items-center gap-2">
-                <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
-                  <span className="text-primary text-sm font-bold">{index + 1}</span>
+        <div className="grid gap-8 ">
+          <Card className="rounded-3xl shadow-xl border-gray-200 transition-transform duration-300 hover:scale-[1.01]">
+            <CardHeader className="p-8 pb-4">
+              <CardTitle className="flex items-center gap-4 text-2xl font-bold text-gray-900">
+                <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                  <span className="text-xl font-bold">{index + 1}</span>
                 </div>
                 Question {index + 1} of {total}
               </CardTitle>
-              <CardDescription className="text-base">{tip}</CardDescription>
+              <CardDescription className="text-base text-gray-600 mt-2">{tip}</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-6">
-              <p className="text-lg font-medium text-foreground leading-relaxed">{current.prompt}</p>
-              <div className="grid gap-3">
+            <CardContent className="p-8 space-y-6">
+              <p className="text-xl font-semibold text-gray-800 leading-relaxed">{current.prompt}</p>
+              <div className="grid gap-4">
                 {current.options.map(opt => (
                   <Button
                     key={opt}
                     variant={answers[current.id] === opt ? "default" : "outline"}
                     onClick={() => select(opt)}
-                    className="justify-start h-12 text-left font-medium hover:bg-accent/50"
+                    className={`h-14 justify-start text-left font-medium rounded-xl transition-colors ${answers[current.id] === opt ? "bg-blue-600 hover:bg-blue-700 text-white" : "border-gray-300 hover:bg-gray-100 text-gray-800"}`}
                   >
                     {opt}
                   </Button>
                 ))}
               </div>
             </CardContent>
-            <div className="flex justify-between p-6 border-t">
-              <Button variant="outline" onClick={back} disabled={index === 0} className="px-6">
-                <ArrowLeft className="mr-2 h-4 w-4" /> Back
+            <div className="flex justify-between p-8 border-t border-gray-200">
+              <Button variant="outline" onClick={back} disabled={index === 0} className="rounded-full px-6 gap-2">
+                <ArrowLeft className="h-4 w-4" /> Back
               </Button>
-              <Button onClick={next} className="gradient-primary hover:opacity-90 px-6">
-                Next <ArrowRight className="ml-2 h-4 w-4" />
+              <Button onClick={next} className="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-6 gap-2">
+                Next <ArrowRight className="h-4 w-4" />
               </Button>
             </div>
           </Card>
+          
         </div>
       ) : (
-        <div className="relative text-center py-12">
+        <div className="relative text-center py-20">
           <div className="animate-scale-in">
-            <div className="h-20 w-20 rounded-full bg-gradient-primary flex items-center justify-center text-white text-3xl font-bold mx-auto mb-6">
-              🎉
+            <div className="h-20 w-20 rounded-full bg-blue-600 flex items-center justify-center text-white text-3xl font-bold mx-auto mb-6">
+              <Check className="h-10 w-10" />
             </div>
-            <h2 className="text-4xl font-bold mb-6 text-foreground">Congratulations!</h2>
+            <h2 className="text-5xl font-bold mb-6 text-gray-900">Congratulations!</h2>
             <div className="mb-8 flex justify-center items-center gap-3 flex-wrap">
-              <span className="text-xl text-muted-foreground">
-                You scored <span className="text-3xl font-bold text-primary">{result!.score}%</span> and your recommended stream is
+              <span className="text-2xl text-gray-600">
+                You scored <span className="text-4xl font-bold text-blue-600">{result!.score}%</span> and your recommended stream is
               </span>
-              <Badge variant="secondary" className="text-lg px-4 py-2">{result!.stream}</Badge>
+              <Badge variant="secondary" className="text-2xl px-6 py-3 rounded-full bg-blue-50 text-blue-700 border-blue-200 font-bold">{result!.stream}</Badge>
             </div>
-            <Button onClick={saveAssessment} disabled={saving || saved} className="gradient-primary hover:opacity-90 px-8 py-3 text-lg font-semibold">
+            <Button onClick={saveAssessment} disabled={saving || saved} className="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-8 py-3 text-lg font-semibold shadow-lg">
               {saving ? "Saving..." : saved ? "Saved" : "Save Assessment"}
             </Button>
           </div>

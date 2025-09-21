@@ -1,3 +1,4 @@
+
 import { useEffect, useMemo, useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
 import { Badge } from "../components/ui/badge";
@@ -6,7 +7,7 @@ import { Input } from "../components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
 import { Progress } from "../components/ui/progress";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "../components/ui/pagination";
-import { CalendarDays, DollarSign, MapPin, Save, BookmarkPlus } from "lucide-react";
+import { CalendarDays, DollarSign, MapPin, Save, BookmarkPlus, Search, GraduationCap } from "lucide-react";
 
 interface College {
   id: string;
@@ -34,7 +35,6 @@ export default function Colleges() {
   const [page, setPage] = useState(1);
   const perPage = 6;
   const apiUrl = import.meta.env.VITE_API_URL;
-
 
   // Fetch colleges from backend
   useEffect(() => {
@@ -75,23 +75,23 @@ export default function Colleges() {
     return Math.round((elapsed / total) * 100);
   };
 
-const filtered = useMemo(() => {
-  const query = q.trim().toLowerCase();
-  return colleges.filter((c) => {
-    const city = c.location?.split(", ").pop() || c.location;
-    const matchLoc = loc === "All" || city?.toLowerCase().includes(loc.toLowerCase());
+  const filtered = useMemo(() => {
+    const query = q.trim().toLowerCase();
+    return colleges.filter((c) => {
+      const city = c.location?.split(", ").pop() || c.location;
+      const matchLoc = loc === "All" || city?.toLowerCase().includes(loc.toLowerCase());
 
-    const matchQ =
-      !query ||
-      (c.name?.toLowerCase().includes(query)) ||
-      (c.courses?.some((x) => x?.toLowerCase().includes(query)));
+      const matchQ =
+        !query ||
+        (c.name?.toLowerCase().includes(query)) ||
+        (c.courses?.some((x) => x?.toLowerCase().includes(query)));
 
-    const matchStream = !stream || c.streams?.includes(stream);
-    const matchDegree = !degree || c.degrees?.includes(degree);
+      const matchStream = !stream || c.streams?.includes(stream);
+      const matchDegree = !degree || c.degrees?.includes(degree);
 
-    return matchLoc && matchQ && matchStream && matchDegree;
-  });
-}, [colleges, q, loc, stream, degree]);
+      return matchLoc && matchQ && matchStream && matchDegree;
+    });
+  }, [colleges, q, loc, stream, degree]);
 
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / perPage));
@@ -99,180 +99,194 @@ const filtered = useMemo(() => {
   const paged = filtered.slice((pageClamped - 1) * perPage, pageClamped * perPage);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-12 py-12 px-4 md:px-8 bg-slate-50 min-h-screen">
       {/* Page Header */}
-      <div className="page-header">
-        <h1 className="page-title">College Directory</h1>
-        <p className="page-description">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold text-gray-900 tracking-tight">College Directory</h1>
+        <p className="mt-3 text-lg text-gray-600 max-w-2xl mx-auto">
           Explore colleges in Jammu & Kashmir and find the perfect match for your career goals.
         </p>
       </div>
 
       {/* Filters */}
-      <Card className="card-hover animate-slide-up">
-        <CardHeader className="pb-4">
-          <CardTitle className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
-              <span className="text-primary text-sm">🔍</span>
-            </div>
-            Search & Filter
-          </CardTitle>
-          <CardDescription>Find colleges that match your preferences</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="grid gap-4 md:grid-cols-4">
-            {/* Location */}
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-foreground">Location</label>
-              <Select value={loc} onValueChange={(v) => setLoc(v)}>
-                <SelectTrigger className="h-11 focus-ring">
-                  <SelectValue placeholder="All locations" />
-                </SelectTrigger>
-                <SelectContent>
-                  {LOCATION_OPTIONS.map((l, idx) => (
-                    <SelectItem key={`${l}-${idx}`} value={l}>{l}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+      <div className="rounded-3xl shadow-xl border border-gray-200 bg-white">
+  {/* Header */}
+  <div className="p-8 pb-4 border-b border-gray-100">
+    <div className="flex items-center gap-4 text-2xl font-bold text-gray-900">
+      <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+        <Search className="w-5 h-5" />
+      </div>
+      Search & Filter
+    </div>
+    <p className="mt-2 text-base text-gray-600">
+      Find colleges that match your preferences
+    </p>
+  </div>
 
-            {/* Stream */}
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-foreground">Stream</label>
-              <Select value={stream} onValueChange={(v) => setStream(v === "all" ? undefined : v)}>
-                <SelectTrigger className="h-11 focus-ring">
-                  <SelectValue placeholder="All streams" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All</SelectItem>
-                  {Array.from(new Set(allStreams)).map((s, idx) => (
-                    <SelectItem key={`${s}-${idx}`} value={s}>{s}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+  {/* Content */}
+  <div className="p-8 pt-4 ">
+    <div className="grid gap-6 md:grid-cols-4">
+      {/* Location */}
+      <div className="space-y-2 ">
+        <label className="text-sm font-medium text-gray-700">Location</label>
+        <select
+          value={loc}
+          onChange={(e) => setLoc(e.target.value)}
+          className="h-12 w-full rounded-xl border border-gray-300 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          {LOCATION_OPTIONS.map((l, idx) => (
+            <option key={`${l}-${idx}`} value={l}>
+              {l}
+            </option>
+          ))}
+        </select>
+      </div>
 
-            {/* Degree */}
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-foreground">Degree</label>
-              <Select value={degree} onValueChange={(v) => setDegree(v === "all" ? undefined : v)}>
-                <SelectTrigger className="h-11 focus-ring">
-                  <SelectValue placeholder="All degrees" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All</SelectItem>
-                  {Array.from(new Set(allDegrees)).map((d, idx) => (
-                    <SelectItem key={`${d}-${idx}`} value={d}>{d}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+      {/* Stream */}
+      <div className="space-y-2">
+        <label className="text-sm font-medium text-gray-700">Stream</label>
+        <select
+          value={stream}
+          onChange={(e) =>
+            setStream(e.target.value === "all" ? undefined : e.target.value)
+          }
+          className="h-12 w-full rounded-xl border border-gray-300 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="all">All</option>
+          {Array.from(new Set(allStreams)).map((s, idx) => (
+            <option key={`${s}-${idx}`} value={s}>
+              {s}
+            </option>
+          ))}
+        </select>
+      </div>
 
-            {/* Search */}
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-foreground">Search</label>
-              <Input 
-                value={q} 
-                onChange={(e) => setQ(e.target.value)} 
-                placeholder="Search by college or course" 
-                className="h-11 focus-ring"
-              />
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      {/* Degree */}
+      <div className="space-y-2">
+        <label className="text-sm font-medium text-gray-700">Degree</label>
+        <select
+          value={degree}
+          onChange={(e) =>
+            setDegree(e.target.value === "all" ? undefined : e.target.value)
+          }
+          className="h-12 w-full rounded-xl border border-gray-300 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="all">All</option>
+          {Array.from(new Set(allDegrees)).map((d, idx) => (
+            <option key={`${d}-${idx}`} value={d}>
+              {d}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Search */}
+      <div className="space-y-2">
+        <label className="text-sm font-medium text-gray-700">Search</label>
+        <input
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          placeholder="Search by college or course"
+          className="h-12 w-full rounded-xl border border-gray-300 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
 
       {/* College Cards */}
-      <div className="grid gap-6">
+      <div className="grid gap-8 grid-cols-1">
         {paged.map((c, index) => {
           const left = daysUntil(c.deadline);
           const pct = deadlineProgress(c.deadline);
           const isSaved = !!saved[c.id];
           return (
-            <Card key={c.id} className="card-hover animate-slide-up" style={{ animationDelay: `${index * 100}ms` }}>
-              <CardContent className="p-6">
+            <Card key={c.id} className="rounded-3xl shadow-lg border-gray-200 transition-transform duration-300 hover:scale-[1.01]">
+              <CardContent className="p-8">
                 <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
                   <div className="min-w-0 flex-1">
-                    <div className="flex items-start gap-3 mb-3">
-                      <div className="h-12 w-12 rounded-lg bg-gradient-primary flex items-center justify-center text-white font-bold text-lg">
-                        {c.name.charAt(0)}
+                    <div className="flex items-start gap-4 mb-4">
+                      <div className="h-16 w-16 rounded-xl bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center text-white font-bold text-2xl shadow-md">
+                        <GraduationCap className="h-8 w-8" />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <h3 className="text-xl font-bold leading-tight text-foreground mb-1">{c.name}</h3>
-                        <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
-                          <MapPin className="h-4 w-4" /> 
+                        <h3 className="text-2xl font-bold leading-tight text-gray-900 mb-1">{c.name}</h3>
+                        <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
+                          <MapPin className="h-4 w-4 text-blue-500" />
                           <span>{c.location}</span>
                         </div>
                         <div className="flex flex-wrap gap-2">
                           {c.degrees.map((degree, i) => (
-                            <Badge key={`${degree}-${i}`} variant="secondary" className="text-xs">{degree}</Badge>
+                            <Badge key={`${degree}-${i}`} variant="secondary" className="text-xs bg-gray-100 text-gray-700 rounded-full">{degree}</Badge>
                           ))}
                         </div>
                       </div>
                     </div>
-                    
+
                     <div className="mb-4">
-                      <h4 className="text-sm font-medium text-foreground mb-2">Available Courses</h4>
+                      <h4 className="text-sm font-medium text-gray-700 mb-2">Available Courses</h4>
                       <div className="flex flex-wrap gap-2">
                         {Array.from(new Set(c.courses)).slice(0, 4).map((course, i) => (
-                          <Badge key={`${course}-${i}`} variant="outline" className="text-xs bg-accent/40">{course}</Badge>
+                          <Badge key={`${course}-${i}`} variant="outline" className="text-xs bg-gray-100 text-gray-700 rounded-full border-gray-200">{course}</Badge>
                         ))}
                         {c.courses.length > 4 && (
-                          <Badge variant="outline" className="text-xs">+{c.courses.length - 4} more</Badge>
+                          <Badge variant="outline" className="text-xs bg-gray-100 text-gray-500 rounded-full border-gray-200">+{c.courses.length - 4} more</Badge>
                         )}
                       </div>
                     </div>
 
-                    <div className="mb-4 p-4 rounded-lg bg-muted/30">
-                      <p className="text-sm text-foreground/80">
-                        <span className="font-medium">Eligibility:</span> {c.eligibility}
+                    <div className="mb-4 p-4 rounded-xl bg-blue-50 border border-blue-100">
+                      <p className="text-sm text-gray-700 leading-relaxed">
+                        <span className="font-semibold text-blue-800">Eligibility:</span> {c.eligibility}
                       </p>
                     </div>
 
                     <div className="grid gap-4 sm:grid-cols-2">
-                      <div className="flex items-center gap-2 text-sm">
-                        <DollarSign className="h-4 w-4 text-green-600" /> 
-                        <span className="font-medium">Annual Fees: ₹{c.fees.toLocaleString()}</span>
+                      <div className="flex items-center gap-3 text-sm">
+                        <DollarSign className="h-5 w-5 text-green-600" />
+                        <span className="font-semibold text-gray-800">Annual Fees: ₹{c.fees.toLocaleString()}</span>
                       </div>
-                      <div className="flex items-center gap-2 text-sm">
-                        <CalendarDays className="h-4 w-4 text-blue-600" /> 
-                        <span className="font-medium">Deadline: {new Date(c.deadline).toLocaleDateString()}</span>
-                        <Badge 
-                          variant="outline" 
-                          className={`text-xs ${
-                            left <= 14 
-                              ? "border-transparent bg-red-500 text-white" 
-                              : left <= 30 
-                                ? "border-transparent bg-amber-500 text-white" 
-                                : "bg-muted text-foreground"
+                      <div className="flex items-center gap-3 text-sm">
+                        <CalendarDays className="h-5 w-5 text-blue-600" />
+                        <span className="font-semibold text-gray-800">Deadline: {new Date(c.deadline).toLocaleDateString()}</span>
+                        <Badge
+                          variant="outline"
+                          className={`text-xs px-2 py-0.5 rounded-full font-semibold ${
+                            left <= 14
+                              ? "border-transparent bg-red-500 text-white"
+                              : left <= 30
+                                ? "border-transparent bg-amber-500 text-white"
+                                : "bg-gray-100 text-gray-700"
                           }`}
                         >
                           {left > 0 ? `${left} days left` : "Closed"}
                         </Badge>
                       </div>
                     </div>
-                    
-                    <div className="mt-4">
-                      <div className="flex items-center justify-between text-xs text-muted-foreground mb-1">
+
+                    <div className="mt-6">
+                      <div className="flex items-center justify-between text-xs text-gray-500 mb-1">
                         <span>Application Progress</span>
                         <span>{pct}%</span>
                       </div>
-                      <Progress value={pct} className="h-2" />
+                      <Progress value={pct} className="h-2 bg-gray-200" />
                     </div>
                   </div>
-                  
-                  <div className="shrink-0 flex flex-col gap-3">
-                    <Button 
-                      onClick={() => setSaved((s) => ({ ...s, [c.id]: !isSaved }))} 
-                      variant={isSaved ? "secondary" : "default"} 
-                      className="gap-2 min-w-[160px]"
+
+                  <div className="shrink-0 flex flex-col gap-4 md:pl-6 md:border-l border-gray-200">
+                    <Button
+                      onClick={() => setSaved((s) => ({ ...s, [c.id]: !isSaved }))}
+                      variant={isSaved ? "secondary" : "default"}
+                      className="gap-2 min-w-[180px] rounded-full shadow-md transition-colors"
                     >
-                      {isSaved ? <Save className="h-4 w-4" /> : <BookmarkPlus className="h-4 w-4" />} 
+                      {isSaved ? <Save className="h-4 w-4" /> : <BookmarkPlus className="h-4 w-4" />}
                       {isSaved ? "Saved" : "Save to Dashboard"}
                     </Button>
-                    <Button variant="outline" className="gap-2 min-w-[160px]">
+                    <Button variant="outline" className="min-w-[180px] rounded-full">
                       View Details
                     </Button>
+                    
                   </div>
                 </div>
               </CardContent>
@@ -280,17 +294,18 @@ const filtered = useMemo(() => {
           );
         })}
         {paged.length === 0 && (
-          <Card className="animate-fade-in">
+          <Card className="rounded-3xl shadow-lg border-gray-200 lg:col-span-2">
             <CardContent className="py-16 text-center">
-              <div className="h-16 w-16 rounded-full bg-muted flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">🔍</span>
+              <div className="h-16 w-16 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4 text-gray-500">
+                <Search className="h-8 w-8" />
               </div>
-              <h3 className="text-lg font-semibold text-foreground mb-2">No results found</h3>
-              <p className="text-muted-foreground">Try adjusting your filters to find more colleges.</p>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">No results found</h3>
+              <p className="text-gray-600">Try adjusting your filters to find more colleges.</p>
             </CardContent>
           </Card>
         )}
       </div>
+
 
       {/* Pagination */}
       {filtered.length > 0 && (
