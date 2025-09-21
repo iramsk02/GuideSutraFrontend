@@ -1,18 +1,18 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Button } from "../components/ui/button";
-import { Input } from "../components/ui/input";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "../components/ui/tooltip";
+} from "./ui/tooltip";
 import {
   Drawer,
   DrawerContent,
   DrawerHeader,
   DrawerTitle,
-} from "../components/ui/drawer";
-import { ScrollArea } from "../components/ui/scroll-area";
+} from "./ui/drawer";
+import { ScrollArea } from "./ui/scroll-area";
 import { MessageCircle, Send, X, Bot } from "lucide-react";
 import { Link } from "react-router-dom";
 

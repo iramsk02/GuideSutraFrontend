@@ -1,29 +1,29 @@
 
-import { Toaster as Sonner } from "./client/components/ui/sonner";
-import { Toaster } from "./client/components/ui/toaster";
-import { TooltipProvider } from "./client/components/ui/tooltip";
+import { Toaster as Sonner } from "./components/ui/sonner";
+import { Toaster } from "./components/ui/toaster";
+import { TooltipProvider } from "./components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { createRoot } from "react-dom/client";
 
-import Index from "./client/pages/Index";
-import NotFound from "./client/pages/NotFound";
-import StudentLayout from "./client/components/layout/StudentLayout";
-import CareerPathway from "./client/pages/CareerPathway";
-import Colleges from "./client/pages/Colleges";
-import Scholarships from "./client/pages/Scholarships";
-import Notifications from "./client/pages/Notifications";
-import Mentorship from "./client/pages/Mentorship";
-import Parents from "./client/pages/Parents";
-import Landing from "./client/pages/Landing";
-import CareerQuiz from "./client/pages/CareerQuiz";
-import Signup from "./client/pages/Signup";
-import Signin from "./client/pages/Signin";
-import Timeline from "./client/pages/Timeline";
-import Recommendations from "./client/pages/Recommendations";
-import Outcomes from "./client/pages/Outcomes";
-import Resources from "./client/pages/Resources";
-import Admin from "./client/pages/admin/Admin";
+import Index from "./pages/Index";
+import NotFound from "./pages/NotFound";
+import StudentLayout from "./components/layout/StudentLayout";
+import CareerPathway from "./pages/CareerPathway";
+import Colleges from "./pages/Colleges";
+import Scholarships from "./pages/Scholarships";
+import Notifications from "./pages/Notifications";
+import Mentorship from "./pages/Mentorship";
+import Parents from "./pages/Parents";
+import Landing from "./pages/Landing";
+import CareerQuiz from "./pages/CareerQuiz";
+import Signup from "./pages/Signup";
+import Signin from "./pages/Signin";
+import Timeline from "./pages/Timeline";
+import Recommendations from "./pages/Recommendations";
+import Outcomes from "./pages/Outcomes";
+import Resources from "./pages/Resources";
+import Admin from "./pages/admin/Admin";
 
 import "./App.css";
 
